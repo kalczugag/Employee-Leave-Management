@@ -41,7 +41,7 @@ To get started with the Employee Leave Management app, follow the steps below:
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/kalczugag/Employee-Leave-Management](https://github.com/kalczugag/Employee-Leave-Management.git)
+   git clone https://github.com/kalczugag/Employee-Leave-Management.git
    cd Employee-Leave-Management
 
 2. Install dependencies for the server and client:
