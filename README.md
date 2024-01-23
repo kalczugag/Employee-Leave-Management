@@ -60,4 +60,4 @@ To get started with the Employee Leave Management app, follow the steps below:
 Contributions are welcome! Please follow the [Contributing Guidelines](https://github.com/kalczugag/Employee-Leave-Management).
 
 ## License
-This project is licensed under the [MIT License](https://github.com/kalczugag/Employee-Leave-Management/LICENSE).
+This project is licensed under the MIT License.
