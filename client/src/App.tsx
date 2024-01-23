@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import SignPage, { SignType } from "./pages/SignPage";
+import DashboardPage from "./pages/DashboardPage";
 
 const App = () => {
     return (
@@ -13,6 +14,9 @@ const App = () => {
                     path="/register"
                     element={<SignPage action={SignType.Register} />}
                 />
+                <Route path="/dashboard" element={<DashboardPage />}>
+                    {/* sub routes coming soon */}
+                </Route>
             </Routes>
         </div>
     );

@@ -13,6 +13,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CopyrightsFooter from "./CopyrightsFooter";
+import Logo from "./Logo";
 
 const LoginWindow = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -32,12 +33,7 @@ const LoginWindow = () => {
     return (
         <div>
             <div className="flex flex-col bg-white shadow rounded min-w-80">
-                <header className="relative flex items-center justify-center bg-blue-500 p-4">
-                    <div className="relative w-5 h-5 bg-cyan-500 rounded-full z-10">
-                        <div className="absolute -left-3 w-5 h-5 bg-white rounded-full -z-10" />
-                    </div>
-                    <h1 className="text-white text-2xl">INVENTORY</h1>
-                </header>
+                <Logo primary />
                 <div className="flex flex-col text-center p-8">
                     <h3 className="text-lg text-gray-700 font-semibold">
                         Sign In
@@ -62,7 +58,7 @@ const LoginWindow = () => {
                                         name={props.input.name}
                                         value={props.input.value}
                                         onChange={props.input.onChange}
-                                        className="w-full"
+                                        fullWidth
                                     />
                                 )}
                             </Field>
@@ -77,7 +73,7 @@ const LoginWindow = () => {
                                         </Link>
                                         <FormControl
                                             variant="outlined"
-                                            className="w-full"
+                                            fullWidth
                                         >
                                             <InputLabel htmlFor="outlined-adornment-password">
                                                 Password
