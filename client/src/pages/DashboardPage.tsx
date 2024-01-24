@@ -4,10 +4,10 @@ import Sidebar from "../components/sidebar/Sidebar";
 
 const DashboardPage = () => {
     return (
-        <div className="flex flex-col">
+        <div>
             <Header />
-            <div className="flex flex-row">
-                <Sidebar />
+            <Sidebar />
+            <div className="bg-login-2 w-screen h-screen">
                 <Outlet />
             </div>
         </div>

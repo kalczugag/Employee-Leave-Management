@@ -3,7 +3,9 @@ module.exports = {
     content: ["./src/**/*.{js,jsx,ts,tsx}"],
     theme: {
         extend: {
-            spacing: {},
+            spacing: {
+                18: "72px",
+            },
             colors: {
                 "login-1": "#f8fbff",
                 "login-2": "#eff3ff",
