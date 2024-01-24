@@ -6,11 +6,11 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import ToolsMenu from "./ToolsMenu";
 
 const AccountMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -22,6 +22,7 @@ const AccountMenu = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     return (
         <>
             <Box
@@ -31,18 +32,23 @@ const AccountMenu = () => {
                     textAlign: "center",
                 }}
             >
-                <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-                <Typography sx={{ minWidth: 100 }}>Profile</Typography>
+                <ToolsMenu />
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
                         size="small"
-                        sx={{ ml: 2 }}
+                        sx={{ ml: 2, borderRadius: 0 }}
                         aria-controls={open ? "account-menu" : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                        <div className="flex flex-row items-center space-x-2">
+                            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                            <div className="flex flex-col items-start text-sm text-gray-500 font-semibold">
+                                <p>Gabriel Kałczuga</p>
+                                <p>ADMIN</p>
+                            </div>
+                        </div>
                     </IconButton>
                 </Tooltip>
             </Box>

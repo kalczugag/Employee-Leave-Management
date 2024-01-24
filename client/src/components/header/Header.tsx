@@ -2,8 +2,8 @@ import { Form, Field } from "react-final-form";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "./Logo";
-import LanguagesMenu from "./LanguagesMenu";
+import CustomIconButtom from "../CustomIconButton";
+import Logo from "../Logo";
 import AccountMenu from "./AccountMenu";
 
 const Header = () => {
@@ -12,12 +12,14 @@ const Header = () => {
     };
 
     return (
-        <div className="flex flex-row items-center justify-center p-2 px-6 md:justify-between">
+        <div className="flex flex-row items-center justify-center shadow p-2 px-6 md:space-x-14 md:justify-between">
             <section>
                 <Logo />
             </section>
-            <section className="flex flex-row items-center md:space-x-4">
-                <MenuIcon />
+            <section className="flex-1 flex flex-row items-center md:space-x-4">
+                <CustomIconButtom>
+                    <MenuIcon />
+                </CustomIconButtom>
                 {/* change to reusable */}
                 <Form
                     onSubmit={onSubmit}
@@ -49,7 +51,7 @@ const Header = () => {
                 />
             </section>
             <section className="flex-row hidden md:flex">
-                <LanguagesMenu />
+                {/* <LanguagesMenu /> */}
                 <AccountMenu />
             </section>
         </div>
