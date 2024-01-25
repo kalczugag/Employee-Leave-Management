@@ -12,7 +12,7 @@ const Header = () => {
     };
 
     return (
-        <div className="fixed top-0 left-0 right-0 flex flex-row items-center justify-center bg-white p-2 px-6 md:space-x-14 md:justify-between">
+        <div className="fixed top-0 left-0 right-0 flex flex-row items-center justify-center bg-white p-2 px-10 md:justify-between">
             <section>
                 <Logo />
             </section>

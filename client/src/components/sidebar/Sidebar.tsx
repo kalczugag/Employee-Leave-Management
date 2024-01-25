@@ -1,13 +1,12 @@
-import CustomIconButtom from "../CustomIconButton";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
+import LinksList from "./LinksList";
 
 const Sidebar = () => {
     return (
-        <div className="fixed top-20 bottom-0 left-0 flex flex-col bg-white p-4 px-8">
-            <h5 className="text-sm font-semibold text-gray-500">
+        <div className="fixed top-20 bottom-0 left-0 flex flex-col bg-white space-y-6 p-4 px-12">
+            <h5 className="text-xs font-semibold text-gray-500">
                 ADMIN ROUTES
             </h5>
+            <LinksList />
         </div>
     );
 };

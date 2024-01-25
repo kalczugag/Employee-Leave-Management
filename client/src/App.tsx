@@ -16,6 +16,9 @@ const App = () => {
                 />
                 <Route path="/dashboard" element={<DashboardPage />}>
                     {/* sub routes coming soon */}
+                    <Route path="department" element={<DashboardPage />} />
+                    <Route path="leavetype" element={<DashboardPage />} />
+                    <Route path="employee" element={<DashboardPage />} />
                 </Route>
             </Routes>
         </div>
