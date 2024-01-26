@@ -17,12 +17,14 @@ const LinksListItem = ({ label, to, element }: Props) => {
     return (
         <Link
             to={`/dashboard${isDashboard ? "" : `/${pathRecognition}`}`}
-            className={`link-icon py-1 space-x-3 ${
+            className={`link-icon py-1 ${
                 pathname.endsWith(pathRecognition) && "link-icon--active"
             }`}
         >
-            {element}
-            <span>{label.charAt(0).toUpperCase() + label.slice(1)}</span>
+            <div className="link-icon__first-child space-x-3">
+                {element}
+                <span>{label.charAt(0).toUpperCase() + label.slice(1)}</span>
+            </div>
             <NavigateNextOutlinedIcon />
         </Link>
     );
