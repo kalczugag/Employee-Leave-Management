@@ -1,18 +1,29 @@
+import { useState } from "react";
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import CallMadeIcon from "@mui/icons-material/CallMade";
+import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
 import LinksListItem from "./LinksListItem";
 
+const options = [
+    { label: "dashboard", element: <DashboardOutlinedIcon /> },
+    {
+        label: "Leave Type",
+        to: "leavetype",
+        element: <CallMadeOutlinedIcon />,
+    },
+    { label: "employee", element: <CallMadeOutlinedIcon /> },
+    { label: "leave", element: <CallMadeOutlinedIcon /> },
+];
+
 const LinksList = () => {
-    const options = [
-        { label: "dashboard", element: <DashboardOutlinedIcon /> },
-        {
-            label: "Leave Type",
-            to: "leavetype",
-            element: <CallMadeIcon />,
-        },
-        { label: "employee", element: <CallMadeIcon /> },
-        { label: "leave", element: <CallMadeIcon /> },
-    ];
+    const [expanded, setExpanded] = useState<string | false>(false);
+
+    const handleChange =
+        (panel: string) =>
+        (event: React.SyntheticEvent, isExpanded: boolean) => {
+            setExpanded(isExpanded ? panel : false);
+        };
 
     const renderedLinks = options.map(({ label, to, element }) => {
         return (
@@ -21,6 +32,8 @@ const LinksList = () => {
                 label={label}
                 to={to}
                 element={element}
+                expanded={expanded}
+                handleChange={handleChange}
             />
         );
     });
