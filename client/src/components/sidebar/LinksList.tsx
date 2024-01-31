@@ -1,12 +1,11 @@
 import { useState } from "react";
-import ListSubheader from "@mui/material/ListSubheader";
-import List from "@mui/material/List";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
 import LinksListItem from "./LinksListItem";
 
 const options = [
     { label: "dashboard", element: <DashboardOutlinedIcon /> },
+    { label: "department", element: <CallMadeOutlinedIcon /> },
     {
         label: "Leave Type",
         to: "leavetype",
@@ -21,24 +20,25 @@ const LinksList = () => {
 
     const handleChange =
         (panel: string) =>
-        (event: React.SyntheticEvent, isExpanded: boolean) => {
-            setExpanded(isExpanded ? panel : false);
+        (event: React.SyntheticEvent, newExpanded: boolean) => {
+            setExpanded(newExpanded ? panel : false);
         };
 
-    const renderedLinks = options.map(({ label, to, element }) => {
+    const renderedLinks = options.map(({ label, to, element }, index) => {
         return (
             <LinksListItem
                 key={label}
                 label={label}
                 to={to}
                 element={element}
+                index={index++}
                 expanded={expanded}
                 handleChange={handleChange}
             />
         );
     });
 
-    return <div className="flex flex-col space-y-4">{renderedLinks}</div>;
+    return <div className="flex flex-col space-y-2">{renderedLinks}</div>;
 };
 
 export default LinksList;

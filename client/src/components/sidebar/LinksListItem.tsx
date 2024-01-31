@@ -1,27 +1,25 @@
-import "../../assets/styles/sidebar.css";
-import { useState } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
+import { Accordion } from "./CustomAccordion";
+import { AccordionSummary } from "./CustomAccordionSummary";
+import { AccordionDetails } from "./CustomAccordionDetails";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { createTheme } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 
 type Props = {
     label: string;
     to?: string;
     element: JSX.Element;
+    index: number;
     expanded: string | false;
     handleChange: (
         panel: string
-    ) => (event: React.SyntheticEvent, isExpanded: boolean) => void;
+    ) => (event: React.SyntheticEvent, newExpanded: boolean) => void;
 };
 
 const LinksListItem = ({
     label,
     to,
     element,
+    index,
     expanded,
     handleChange,
 }: Props) => {
@@ -34,25 +32,26 @@ const LinksListItem = ({
 
     return (
         <Accordion
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
-            elevation={0}
-            style={{
-                border: "none",
-                margin: 0,
-            }}
+            expanded={expanded === `panel${index}`}
+            onChange={handleChange(`panel${index}`)}
         >
             <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
+                aria-controls={`panel${index}d-content`}
+                id={`panel${index}d-header`}
             >
-                <Typography>
+                <div className="flex flex-row justify-center text-gray-500">
+                    {element}
                     {label.charAt(0).toUpperCase() + label.slice(1)}
-                </Typography>
+                </div>
             </AccordionSummary>
             <AccordionDetails>
-                <Typography>{/* nested links */}</Typography>
+                {/* <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget. Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit. Suspendisse malesuada lacus ex, sit amet
+                    blandit leo lobortis eget.
+                </Typography> */}
             </AccordionDetails>
         </Accordion>
     );
