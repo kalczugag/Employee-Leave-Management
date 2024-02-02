@@ -7,7 +7,7 @@ const DashboardPage = () => {
         <div>
             <Header />
             <Sidebar />
-            <div className="bg-login-2 w-screen h-screen">
+            <div className="bg-login-2 pt-80 pl-273 w-screen h-screen">
                 <Outlet />
             </div>
         </div>

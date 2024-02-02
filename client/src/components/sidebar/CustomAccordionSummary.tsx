@@ -6,15 +6,13 @@ import MuiAccordionSummary, {
 
 export const AccordionSummary = styled((props: AccordionSummaryProps) => (
     <MuiAccordionSummary
-        expandIcon={
-            <ArrowForwardIosSharpIcon
-                sx={{ fontSize: "0.9rem", marginLeft: 5 }}
-            />
-        }
+        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
         {...props}
     />
 ))(({ theme }) => ({
     flexDirection: "row",
+    alignItems: "center", // Center items vertically
+    justifyContent: "space-between", // Distribute items evenly along the row
     "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
         transform: "rotate(90deg)",
     },

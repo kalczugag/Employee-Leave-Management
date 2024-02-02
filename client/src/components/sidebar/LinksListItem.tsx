@@ -8,6 +8,7 @@ type Props = {
     label: string;
     to?: string;
     element: JSX.Element;
+    expendable?: boolean;
     index: number;
     expanded: string | false;
     handleChange: (
@@ -18,6 +19,7 @@ type Props = {
 const LinksListItem = ({
     label,
     to,
+    expendable,
     element,
     index,
     expanded,
@@ -25,7 +27,7 @@ const LinksListItem = ({
 }: Props) => {
     const { pathname } = useLocation();
     const pathRecognition = to ? to : label;
-    const isDashboard =
+    const isIndexRoute =
         label.startsWith("dashboard") || to?.startsWith("dashboard");
 
     // to={`/dashboard${isDashboard ? "" : `/${pathRecognition}`}`}
@@ -38,10 +40,13 @@ const LinksListItem = ({
             <AccordionSummary
                 aria-controls={`panel${index}d-content`}
                 id={`panel${index}d-header`}
+                className="space-x-16"
             >
-                <div className="flex flex-row justify-center text-gray-500">
-                    {element}
-                    {label.charAt(0).toUpperCase() + label.slice(1)}
+                <div className="flex flex-row text-gray-500 items-center md:space-x-2">
+                    <div>{element}</div>
+                    <div className="hidden md:block">
+                        {label.charAt(0).toUpperCase() + label.slice(1)}
+                    </div>
                 </div>
             </AccordionSummary>
             <AccordionDetails>

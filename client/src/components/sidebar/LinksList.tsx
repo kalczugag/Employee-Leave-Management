@@ -1,19 +1,6 @@
 import { useState } from "react";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
+import { LinksConfig as options } from "../../utils/config/LinksConfig";
 import LinksListItem from "./LinksListItem";
-
-const options = [
-    { label: "dashboard", element: <DashboardOutlinedIcon /> },
-    { label: "department", element: <CallMadeOutlinedIcon /> },
-    {
-        label: "Leave Type",
-        to: "leavetype",
-        element: <CallMadeOutlinedIcon />,
-    },
-    { label: "employee", element: <CallMadeOutlinedIcon /> },
-    { label: "leave", element: <CallMadeOutlinedIcon /> },
-];
 
 const LinksList = () => {
     const [expanded, setExpanded] = useState<string | false>(false);
@@ -24,19 +11,22 @@ const LinksList = () => {
             setExpanded(newExpanded ? panel : false);
         };
 
-    const renderedLinks = options.map(({ label, to, element }, index) => {
-        return (
-            <LinksListItem
-                key={label}
-                label={label}
-                to={to}
-                element={element}
-                index={index++}
-                expanded={expanded}
-                handleChange={handleChange}
-            />
-        );
-    });
+    const renderedLinks = options.map(
+        ({ label, to, element, expendable }, index) => {
+            return (
+                <LinksListItem
+                    key={label}
+                    label={label}
+                    to={to}
+                    element={element}
+                    expendable={expendable}
+                    index={index++}
+                    expanded={expanded}
+                    handleChange={handleChange}
+                />
+            );
+        }
+    );
 
     return <div className="flex flex-col space-y-2">{renderedLinks}</div>;
 };
