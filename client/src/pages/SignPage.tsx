@@ -1,6 +1,6 @@
-import CircleBackground from "@components/CircleBackground";
-import LoginWindow from "@components/header/LoginWindow";
-import RegisterWindow from "@components/RegisterWindow";
+import CircleBackground from "../components/CircleBackground";
+import LoginWindow from "../components/header/LoginWindow";
+import RegisterWindow from "../components/RegisterWindow";
 
 export enum SignType {
     Login = "login",

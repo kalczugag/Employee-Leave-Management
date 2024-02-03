@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LinksConfig as options } from "@/config/LinksConfig";
+import { LinksConfig as options } from "../../config/LinksConfig";
 import LinksListItem from "./LinksListItem";
 
 const LinksList = () => {
