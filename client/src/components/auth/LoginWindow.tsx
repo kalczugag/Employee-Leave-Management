@@ -32,7 +32,7 @@ const LoginWindow = () => {
 
     return (
         <div>
-            <div className="flex flex-col bg-white shadow rounded min-w-80">
+            <div className="flex flex-col bg-white shadow rounded w-screen md:min-w-96 md:w-full">
                 <Logo primary />
                 <div className="flex flex-col text-center p-8">
                     <h3 className="text-lg text-gray-700 font-semibold">

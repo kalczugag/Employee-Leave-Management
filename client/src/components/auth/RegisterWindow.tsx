@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CopyrightsFooter from "./CopyrightsFooter";
-import Logo from "./Logo";
+import CopyrightsFooter from "../CopyrightsFooter";
+import Logo from "../Logo";
 
 const RegisterWindow = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const RegisterWindow = () => {
 
     return (
         <div>
-            <div className="flex flex-col bg-white shadow rounded min-w-80">
+            <div className="flex flex-col bg-white shadow rounded w-screen md:min-w-96 md:w-full">
                 <Logo primary />
                 <div className="flex flex-col text-center p-8">
                     <h3 className="text-lg text-gray-700 font-semibold">
