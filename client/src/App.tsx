@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import SignPage, { SignType } from "./pages/SignPage";
 import DashboardPage from "./pages/DashboardPage";
+import Test from "./pages/test";
 
 const App = () => {
     return (
@@ -14,11 +15,20 @@ const App = () => {
                     path="/register"
                     element={<SignPage action={SignType.Register} />}
                 />
-                <Route path="/dashboard" element={<DashboardPage />}>
-                    {/* sub routes coming soon */}
-                    <Route path="department" element={<DashboardPage />} />
-                    <Route path="leavetype" element={<DashboardPage />} />
-                    <Route path="employee" element={<DashboardPage />} />
+                <Route path="/" element={<DashboardPage />}>
+                    <Route path="/dashboard" element={<Test />} />
+                    <Route path="/department">
+                        <Route path="new" element={<Test />} />
+                        <Route path="list" element={<Test />} />
+                    </Route>
+                    <Route path="/leavetype">
+                        <Route path="list" element={<Test />} />
+                    </Route>
+                    <Route path="/employee">
+                        <Route path="new" element={<Test />} />
+                        <Route path="list" element={<Test />} />
+                    </Route>
+                    <Route path="/leave"></Route>
                 </Route>
             </Routes>
         </div>

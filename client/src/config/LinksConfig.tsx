@@ -1,25 +1,15 @@
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
-
 interface IOptions {
-    label: string;
-    to?: string;
-    element: JSX.Element;
-    expendable?: boolean;
+    [key: string]: { label: string; to: string; element?: JSX.Element }[];
 }
 
-export const LinksConfig: IOptions[] = [
-    {
-        label: "dashboard",
-        expendable: false,
-        element: <DashboardOutlinedIcon />,
-    },
-    { label: "department", element: <CallMadeOutlinedIcon /> },
-    {
-        label: "Leave Type",
-        to: "leavetype",
-        element: <CallMadeOutlinedIcon />,
-    },
-    { label: "employee", element: <CallMadeOutlinedIcon /> },
-    { label: "leave", element: <CallMadeOutlinedIcon /> },
-];
+export const LinksConfig: IOptions = {
+    department: [
+        { label: "New Department", to: "new" },
+        { label: "Department List", to: "list" },
+    ],
+    leaveType: [{ label: "Leave Type List", to: "list" }],
+    employee: [
+        { label: "New Employee", to: "new" },
+        { label: "Employee List", to: "list" },
+    ],
+};

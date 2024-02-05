@@ -1,34 +1,31 @@
-import { useState } from "react";
-import { LinksConfig as options } from "../../config/LinksConfig";
 import LinksListItem from "./LinksListItem";
+import { LinksConfig as options } from "../../config/LinksConfig";
 
-const LinksList = () => {
-    const [expanded, setExpanded] = useState<string | false>(false);
+type Props = {
+    target: string;
+};
 
-    const handleChange =
-        (panel: string) =>
-        (event: React.SyntheticEvent, newExpanded: boolean) => {
-            setExpanded(newExpanded ? panel : false);
-        };
+const LinksList = ({ target }: Props) => {
+    let renderedLinks: null | any;
 
-    const renderedLinks = options.map(
-        ({ label, to, element, expendable }, index) => {
+    if (target in options) {
+        renderedLinks = options[target].map(({ label, to, element }) => {
             return (
                 <LinksListItem
                     key={label}
                     label={label}
-                    to={to}
+                    to={target.toLowerCase() + "/" + to}
                     element={element}
-                    expendable={expendable}
-                    index={index++}
-                    expanded={expanded}
-                    handleChange={handleChange}
                 />
             );
-        }
-    );
+        });
+    }
 
-    return <div className="flex flex-col space-y-2">{renderedLinks}</div>;
+    return (
+        <div className="flex flex-col space-y-2 text-gray-500">
+            {renderedLinks}
+        </div>
+    );
 };
 
 export default LinksList;

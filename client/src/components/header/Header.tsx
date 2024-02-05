@@ -25,7 +25,7 @@ const Header = () => {
                     onSubmit={onSubmit}
                     render={({ handleSubmit }) => (
                         <form
-                            className="hidden md:block"
+                            className="hidden lg:block"
                             onSubmit={handleSubmit}
                         >
                             <Field name="search">
