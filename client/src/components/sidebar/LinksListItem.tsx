@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type Props = {
     label: string;
@@ -7,10 +7,13 @@ type Props = {
 };
 
 const LinksListItem = ({ label, to, element }: Props) => {
+    const { pathname } = useLocation();
+    console.log(to.split("/")[1]);
+
     return (
         <Link
             to={`/${to}`}
-            className={`flex flex-row items-center hover:text-gray-700 md:space-x-2`}
+            className={`flex flex-row items-center md:space-x-2`}
         >
             <div>{element}</div>
             <div className="hidden md:block">

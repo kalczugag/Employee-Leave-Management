@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Accordion } from "./CustomAccordion";
 import { AccordionSummary } from "./CustomAccordionSummary";
 import { AccordionDetails } from "./CustomAccordionDetails";
@@ -30,9 +29,9 @@ const CategoryListItem = ({
     handleChange,
 }: Props) => {
     const { pathname } = useLocation();
-    const isActive = to.endsWith(pathname.split("/")[1])
-        ? " text-blue-500"
-        : "text-gray-500";
+    // const isActive = to.endsWith(pathname.split("/")[1])
+    //     ? " text-blue-500"
+    //     : "text-gray-500";
     const resultLabel = removeSpacesAndCamelCase(label);
 
     return (
@@ -49,14 +48,13 @@ const CategoryListItem = ({
                             expendable && (
                                 <ArrowForwardIosSharpIcon
                                     sx={{ fontSize: "0.9rem" }}
-                                    className={isActive}
                                 />
                             )
                         }
                         className="space-x-16"
                     >
                         <div
-                            className={`flex flex-row items-center ${isActive} hover:text-gray-700 md:space-x-2`}
+                            className={`flex flex-row items-center hover:text-gray-700 md:space-x-2`}
                         >
                             <div>{element}</div>
                             <div className="hidden md:block">{label}</div>
@@ -67,14 +65,14 @@ const CategoryListItem = ({
                     </AccordionDetails>
                 </Accordion>
             ) : (
-                <Link to={to}>
+                <NavLink to={to}>
                     <div
-                        className={`flex flex-row items-center px-4 my-3 ${isActive} md:space-x-2`}
+                        className={`flex flex-row items-center px-4 my-3 md:space-x-2`}
                     >
                         <div>{element}</div>
                         <div className="hidden md:block">{label}</div>
                     </div>
-                </Link>
+                </NavLink>
             )}
         </>
     );

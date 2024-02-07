@@ -11,7 +11,7 @@ interface IOptions {
 export const CategoriesConfig: IOptions[] = [
     {
         label: "Dashboard",
-        to: "/dashboard",
+        to: "/",
         expendable: false,
         element: <DashboardOutlinedIcon />,
     },

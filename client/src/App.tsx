@@ -15,8 +15,8 @@ const App = () => {
                     path="/register"
                     element={<SignPage action={SignType.Register} />}
                 />
-                <Route path="/" element={<DashboardPage />}>
-                    <Route path="/dashboard" element={<Test />} />
+                <Route element={<DashboardPage />}>
+                    <Route index element={<Test />} />
                     <Route path="/department">
                         <Route path="new" element={<Test />} />
                         <Route path="list" element={<Test />} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CategoriesConfig as options } from "../../config/CategoriesConfig";
 import CategoryListItem from "./CategoryListItem";
 
@@ -10,10 +10,6 @@ const CategoryList = () => {
         (event: React.SyntheticEvent, newExpanded: boolean) => {
             setExpanded(newExpanded ? panel : false);
         };
-
-    useEffect(() => {
-        handleChange("panel1");
-    }, []);
 
     const renderedCategories = options.map(
         ({ label, to, element, expendable }, index) => {
