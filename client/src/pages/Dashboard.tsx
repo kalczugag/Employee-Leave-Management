@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/header/Header";
-import Sidebar from "../components/sidebar/Sidebar";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
 
-const DashboardPage = () => {
+const Dashboard = () => {
     return (
         <div>
             <Header />
@@ -14,4 +14,4 @@ const DashboardPage = () => {
     );
 };
 
-export default DashboardPage;
+export default Dashboard;

@@ -1,7 +1,7 @@
 import AppsIcon from "@mui/icons-material/Apps";
 import NightlightOutlinedIcon from "@mui/icons-material/NightlightOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import CustomIconButtom from "../CustomIconButton";
+import CustomIconButtom from "../customIconButton";
 
 const ToolsMenu = () => {
     return (

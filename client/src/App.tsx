@@ -1,21 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import SignPage, { SignType } from "./pages/SignPage";
-import DashboardPage from "./pages/DashboardPage";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
 import Test from "./pages/test";
 
 const App = () => {
     return (
         <div>
             <Routes>
-                <Route
-                    path="/login"
-                    element={<SignPage action={SignType.Login} />}
-                />
-                <Route
-                    path="/register"
-                    element={<SignPage action={SignType.Register} />}
-                />
-                <Route element={<DashboardPage />}>
+                <Route path="/login" element={<Auth />} />
+                <Route path="/register" element={<Auth />} />
+                <Route element={<Dashboard />}>
                     <Route index element={<Test />} />
                     <Route path="/department">
                         <Route path="new" element={<Test />} />

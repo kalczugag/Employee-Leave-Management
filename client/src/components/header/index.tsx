@@ -2,8 +2,8 @@ import { Form, Field } from "react-final-form";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
-import CustomIconButtom from "../CustomIconButton";
-import Logo from "../Logo";
+import CustomIconButtom from "../customIconButton";
+import Logo from "../logo";
 import AccountMenu from "./AccountMenu";
 
 const Header = () => {
