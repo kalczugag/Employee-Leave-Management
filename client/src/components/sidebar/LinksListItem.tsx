@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Props {
     label: string;
@@ -7,9 +7,6 @@ interface Props {
 }
 
 const LinksListItem = ({ label, to, element }: Props) => {
-    const { pathname } = useLocation();
-    console.log(to.split("/")[1]);
-
     return (
         <Link
             to={`/${to}`}

@@ -1,11 +1,7 @@
 import { useLocation } from "react-router-dom";
 import LoginWindow from "./LoginWindow";
 import RegisterWindow from "./RegisterWindow";
-
-enum SignType {
-    Login = "/login",
-    Register = "/register",
-}
+import { SignType } from "../../enums/signType";
 
 const AuthContainer = () => {
     const { pathname } = useLocation();
