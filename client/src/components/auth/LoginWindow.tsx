@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CopyrightsFooter from "../footer";
-import Logo from "../logo";
+import CopyrightsFooter from "../../layout/Footer";
+import Logo from "../Logo";
 
 const LoginWindow = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);

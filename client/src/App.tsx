@@ -1,25 +1,13 @@
-import { Route, Routes, useLocation } from "react-router-dom";
-import { SignType } from "./enums/signType";
-import Header from "./components/header";
-import Sidebar from "./components/sidebar";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./layout/Layout";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Test from "./pages/test";
 import Dashboard from "./pages/Dashboard";
 
 const App = () => {
-    const { pathname } = useLocation();
-    const isAuthPage =
-        SignType.Login === pathname || SignType.Register === pathname;
-
     return (
-        <div className="h-screen overflow-hidden">
-            {!isAuthPage && (
-                <>
-                    <Header />
-                    <Sidebar />
-                </>
-            )}
+        <Layout>
             <Routes>
                 <Route path="/login" element={<Auth />} />
                 <Route path="/register" element={<Auth />} />
@@ -39,7 +27,7 @@ const App = () => {
                     <Route path="/leave"></Route>
                 </Route>
             </Routes>
-        </div>
+        </Layout>
     );
 };
 

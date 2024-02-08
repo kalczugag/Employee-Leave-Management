@@ -1,5 +1,5 @@
-import Stats from "../components/stats";
-import CopyrightsFooter from "../components/footer";
+import Stats from "../components/Stats";
+import CopyrightsFooter from "../layout/Footer";
 
 const Dashboard = () => {
     return (

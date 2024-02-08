@@ -1,10 +1,9 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Accordion } from "./CustomAccordion";
-import { AccordionSummary } from "./CustomAccordionSummary";
-import { AccordionDetails } from "./CustomAccordionDetails";
+import { Accordion } from "../CustomAccordion";
+import { AccordionSummary } from "../CustomAccordion";
+import { AccordionDetails } from "../CustomAccordion";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { removeSpacesAndCamelCase } from "../../utils/removeSpacesAndCamelCase";
-
 import LinksList from "./LinksList";
 
 interface Props {
