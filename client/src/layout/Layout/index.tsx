@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
-import { SignType } from "../../enums/signType";
+import { SignType } from "../../enums/signType.enum";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 

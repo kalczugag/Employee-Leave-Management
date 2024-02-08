@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./layout/Layout";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
-import Test from "./pages/test";
 import Dashboard from "./pages/Dashboard";
+import DepartmentList from "./pages/DepartmentList";
+import Test from "./pages/test";
 
 const App = () => {
     return (
@@ -15,7 +16,7 @@ const App = () => {
                     <Route index element={<Dashboard />} />
                     <Route path="/department">
                         <Route path="new" element={<Test />} />
-                        <Route path="list" element={<Test />} />
+                        <Route path="list" element={<DepartmentList />} />
                     </Route>
                     <Route path="/leavetype">
                         <Route path="list" element={<Test />} />
