@@ -1,6 +1,6 @@
-type Props = {
+interface Props {
     primary?: boolean;
-};
+}
 
 const Logo = ({ primary = false }: Props) => {
     const color = primary ? "bg-blue-500 text-white" : "bg-white text-black";

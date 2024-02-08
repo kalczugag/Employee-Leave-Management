@@ -1,9 +1,9 @@
 import LinksListItem from "./LinksListItem";
 import { LinksConfig as options } from "../../config/LinksConfig";
 
-type Props = {
+interface Props {
     target: string;
-};
+}
 
 const LinksList = ({ target }: Props) => {
     let renderedLinks: null | any;

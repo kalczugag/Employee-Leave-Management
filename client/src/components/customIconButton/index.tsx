@@ -1,10 +1,10 @@
 import React, { ReactNode, useState } from "react";
 import { IconButton, MenuItem, Menu } from "@mui/material";
 
-type Props = {
+interface Props {
     children: ReactNode;
     options?: any[]; //change to required
-};
+}
 
 const options = [
     "None",

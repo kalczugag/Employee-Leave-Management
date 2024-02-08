@@ -7,7 +7,7 @@ import { removeSpacesAndCamelCase } from "../../utils/removeSpacesAndCamelCase";
 
 import LinksList from "./LinksList";
 
-type Props = {
+interface Props {
     label: string;
     to: string;
     element: JSX.Element;
@@ -17,7 +17,7 @@ type Props = {
     handleChange: (
         panel: string
     ) => (event: React.SyntheticEvent, newExpanded: boolean) => void;
-};
+}
 
 const CategoryListItem = ({
     label,

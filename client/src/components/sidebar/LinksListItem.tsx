@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 
-type Props = {
+interface Props {
     label: string;
     to: string;
     element?: JSX.Element;
-};
+}
 
 const LinksListItem = ({ label, to, element }: Props) => {
     const { pathname } = useLocation();

@@ -1,14 +1,14 @@
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
 
-interface IOptions {
+interface CategoriesConfigProps {
     label: string;
     to: string;
     element: JSX.Element;
     expendable?: boolean;
 }
 
-export const CategoriesConfig: IOptions[] = [
+export const CategoriesConfig: CategoriesConfigProps[] = [
     {
         label: "Dashboard",
         to: "/",

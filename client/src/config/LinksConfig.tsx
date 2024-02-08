@@ -1,8 +1,8 @@
-interface IOptions {
+interface LinksConfigProps {
     [key: string]: { label: string; to: string; element?: JSX.Element }[];
 }
 
-export const LinksConfig: IOptions = {
+export const LinksConfig: LinksConfigProps = {
     department: [
         { label: "New Department", to: "new" },
         { label: "Department List", to: "list" },
