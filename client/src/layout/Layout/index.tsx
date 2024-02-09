@@ -14,7 +14,7 @@ const Layout = ({ children }: Props) => {
         SignType.Login === pathname || SignType.Register === pathname;
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div>
             {!isAuthPage && (
                 <>
                     <Header />

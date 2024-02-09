@@ -11,7 +11,7 @@ interface Props {
 
 const ActionButtons = ({ label }: Props) => {
     return (
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-col-reverse md:justify-between md:flex-row">
             <Button
                 variant="contained"
                 color="warning"
@@ -19,8 +19,8 @@ const ActionButtons = ({ label }: Props) => {
             >
                 {label}
             </Button>
-            <div className="flex flex-row space-x-2">
-                <IconButton size="small" aria-label="settings">
+            <div className="flex flex-row mb-4 space-x-2 md:mb-0">
+                <IconButton aria-label="settings">
                     <SettingsOutlinedIcon />
                 </IconButton>
                 <Button

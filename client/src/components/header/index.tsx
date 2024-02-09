@@ -2,7 +2,7 @@ import { Form, Field } from "react-final-form";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
-import CustomIconButtom from "../CustomIconButton";
+import CustomIconButtom from "../MenuIconButton";
 import Logo from "../Logo";
 import AccountMenu from "./AccountMenu";
 
@@ -12,7 +12,7 @@ const Header = () => {
     };
 
     return (
-        <div className="fixed top-0 left-0 right-0 flex flex-row items-center justify-center space-x-8 bg-white p-2 px-10 md:justify-between">
+        <div className="fixed top-0 left-0 right-0 flex flex-row items-center justify-center space-x-8 bg-white p-2 px-10 z-50 md:justify-between">
             <section>
                 <Logo />
             </section>

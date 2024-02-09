@@ -7,7 +7,7 @@ module.exports = {
                 18: "72px",
                 80: "80px",
                 273: "273px",
-                "screen-fit": "calc(100vh - 80px)",
+                "screen-fit": "min-h-[calc(100vh - 80px)]",
             },
             colors: {
                 "login-1": "#f8fbff",

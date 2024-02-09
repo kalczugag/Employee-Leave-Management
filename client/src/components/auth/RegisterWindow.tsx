@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CopyrightsFooter from "../../layout/Footer";
+import Footer from "../Footer";
 import Logo from "../Logo";
 
 const RegisterWindow = () => {
@@ -149,14 +149,14 @@ const RegisterWindow = () => {
                     )}
                 />
             </div>
-            <CopyrightsFooter>
+            <Footer center>
                 <p>
                     Already have an account?{" "}
                     <Link to="/login" className="hover:text-gray-700">
                         Sign In
                     </Link>
                 </p>
-            </CopyrightsFooter>
+            </Footer>
         </div>
     );
 };

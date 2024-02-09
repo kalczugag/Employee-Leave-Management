@@ -6,10 +6,10 @@ const Dashboard = () => {
         <DefaultPage label="Dashboard">
             <Stats />
             <div className="flex flex-row justify-between space-x-6 text-gray-500">
-                <div className="flex-1 p-6 rounded bg-white">
+                <div className="flex-1 p-6 rounded bg-white shadow">
                     <h3>Department Head</h3>
                 </div>
-                <div className="flex-1 p-6 rounded bg-white">
+                <div className="flex-1 p-6 rounded bg-white shadow">
                     <h3>Department Head</h3>
                 </div>
             </div>

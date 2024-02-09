@@ -1,12 +1,14 @@
 import DefaultPage from "../layout/DefaultPage";
 import ActionButtons from "../components/ActionButtons";
+import ListSearchForm from "../forms/ListSearchForm";
+import BasicTable from "../components/Table";
 
 const DepartmentList = () => {
     return (
-        <DefaultPage label="Department List">
-            <div className="bg-white p-4 rounded">
-                <ActionButtons label="Add Department" />
-            </div>
+        <DefaultPage label="Department List" bg>
+            <ActionButtons label="Add Department" />
+            <ListSearchForm />
+            <BasicTable />
         </DefaultPage>
     );
 };
