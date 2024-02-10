@@ -8,9 +8,9 @@ interface Props {
 
 const Footer = ({ children, buttons = false, center = false }: Props) => {
     return (
-        <div className="py-2">
+        <div className="pt-3 mt-6 border-t">
             {buttons ? (
-                <div className="flex flex-col items-center justify-between text-sm text-gray-500 border-t md:items-start md:flex-row">
+                <div className="flex flex-col items-center justify-between text-sm text-gray-500 md:items-start md:flex-row">
                     <p>2024 &copy; Gabriel Kałczuga</p>
                     <div className="flex flex-row items-end space-x-4">
                         <a href="#">About</a>

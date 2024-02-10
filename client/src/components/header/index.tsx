@@ -17,7 +17,7 @@ const Header = () => {
                 <Logo />
             </section>
             <section className="flex-1 flex flex-row items-center md:space-x-4">
-                <CustomIconButtom>
+                <CustomIconButtom handleOpen={}>
                     <MenuIcon />
                 </CustomIconButtom>
                 {/* change to reusable */}

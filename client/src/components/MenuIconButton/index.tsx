@@ -4,6 +4,7 @@ import { IconButton, MenuItem, Menu } from "@mui/material";
 interface Props {
     children: ReactNode;
     options?: any[]; //change to required
+    handleOpen: () => void;
 }
 
 const options = [
@@ -23,12 +24,13 @@ const options = [
     "Umbriel",
 ];
 
-const CustomIconButtom = ({ children }: Props) => {
+const CustomIconButtom = ({ children, handleOpen }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
+        handleOpen();
     };
     const handleClose = () => {
         setAnchorEl(null);

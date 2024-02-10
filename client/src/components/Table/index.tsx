@@ -138,7 +138,13 @@ const rows = [
     createData("Library dep", "Library dep", "8 Nov 2022", true),
 ].sort((a, b) => (a.createdOn < b.createdOn ? -1 : 1));
 
-const CustomPaginationActionsTable = () => {
+interface CustomPaginationActionsTableProps {
+    input?: string;
+}
+
+const CustomPaginationActionsTable = ({
+    input,
+}: CustomPaginationActionsTableProps) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
