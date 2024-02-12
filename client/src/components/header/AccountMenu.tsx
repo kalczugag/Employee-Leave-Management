@@ -44,7 +44,7 @@ const AccountMenu = () => {
                     >
                         <div className="flex flex-row items-center space-x-2">
                             <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-                            <div className="flex flex-col items-start text-sm text-gray-500 font-semibold">
+                            <div className="hidden flex-col items-start text-sm text-gray-500 font-semibold md:flex">
                                 <p>Gabriel Kałczuga</p>
                                 <p>ADMIN</p>
                             </div>

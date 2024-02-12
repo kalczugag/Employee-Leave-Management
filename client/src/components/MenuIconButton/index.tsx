@@ -4,6 +4,7 @@ import { IconButton, MenuItem, Menu } from "@mui/material";
 interface Props {
     children: ReactNode;
     options?: any[]; //change to required
+    className?: string;
     handleOpen?: () => void;
 }
 
@@ -24,7 +25,7 @@ const options = [
     "Umbriel",
 ];
 
-const CustomIconButtom = ({ children, handleOpen }: Props) => {
+const CustomIconButtom = ({ children, handleOpen, className }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -40,7 +41,7 @@ const CustomIconButtom = ({ children, handleOpen }: Props) => {
     };
 
     return (
-        <div>
+        <div className={className}>
             <IconButton
                 onClick={handleClick}
                 size="small"

@@ -16,12 +16,13 @@ const Header = () => {
     };
 
     return (
-        <div className="fixed top-0 left-0 right-0 flex flex-row items-center justify-center space-x-8 bg-white p-2 px-10 z-50 md:justify-between">
-            <section>
+        <div className="fixed top-0 left-0 right-0 flex flex-row justify-center bg-white px-5 p-2 z-50 md:px-10 md:space-x-8">
+            <section className="hidden md:block">
                 <Logo />
             </section>
-            <section className="flex-1 flex flex-row items-center md:space-x-4">
+            <section className="flex flex-row items-center md:space-x-4 md:flex-1">
                 <CustomIconButtom
+                    className="md:hidden"
                     handleOpen={() => dispatch(toggleSidebar(true))}
                 >
                     <MenuIcon />
@@ -56,8 +57,7 @@ const Header = () => {
                     )}
                 />
             </section>
-            <section className="flex-row hidden md:flex">
-                {/* <LanguagesMenu /> */}
+            <section>
                 <AccountMenu />
             </section>
         </div>
@@ -65,3 +65,5 @@ const Header = () => {
 };
 
 export default Header;
+
+//not centered vertically
