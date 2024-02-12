@@ -1,4 +1,6 @@
 import { Form, Field } from "react-final-form";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../store";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -7,6 +9,8 @@ import Logo from "../Logo";
 import AccountMenu from "./AccountMenu";
 
 const Header = () => {
+    const dispatch = useDispatch();
+
     const onSubmit = (values: any) => {
         console.log(values);
     };
@@ -17,7 +21,9 @@ const Header = () => {
                 <Logo />
             </section>
             <section className="flex-1 flex flex-row items-center md:space-x-4">
-                <CustomIconButtom handleOpen={}>
+                <CustomIconButtom
+                    handleOpen={() => dispatch(toggleSidebar(true))}
+                >
                     <MenuIcon />
                 </CustomIconButtom>
                 {/* change to reusable */}

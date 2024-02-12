@@ -53,10 +53,10 @@ const CategoryListItem = ({
                         className="space-x-16"
                     >
                         <div
-                            className={`flex flex-row items-center hover:text-gray-700 md:space-x-2`}
+                            className={`flex flex-row items-center space-x-2 hover:text-gray-700`}
                         >
                             <div>{element}</div>
-                            <div className="hidden md:block">{label}</div>
+                            <div>{label}</div>
                         </div>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -66,10 +66,10 @@ const CategoryListItem = ({
             ) : (
                 <NavLink to={to}>
                     <div
-                        className={`flex flex-row items-center px-4 my-3 md:space-x-2`}
+                        className={`flex flex-row items-center px-4 my-3 space-x-2`}
                     >
                         <div>{element}</div>
-                        <div className="hidden md:block">{label}</div>
+                        <div>{label}</div>
                     </div>
                 </NavLink>
             )}

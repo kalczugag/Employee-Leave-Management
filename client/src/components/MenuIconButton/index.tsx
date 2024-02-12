@@ -4,7 +4,7 @@ import { IconButton, MenuItem, Menu } from "@mui/material";
 interface Props {
     children: ReactNode;
     options?: any[]; //change to required
-    handleOpen: () => void;
+    handleOpen?: () => void;
 }
 
 const options = [
@@ -30,7 +30,10 @@ const CustomIconButtom = ({ children, handleOpen }: Props) => {
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
-        handleOpen();
+
+        if (handleOpen) {
+            handleOpen();
+        }
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -48,26 +51,28 @@ const CustomIconButtom = ({ children, handleOpen }: Props) => {
             >
                 {children}
             </IconButton>
-            <Menu
-                id="long-menu"
-                MenuListProps={{
-                    "aria-labelledby": "long-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                    style: {
-                        width: "20ch",
-                    },
-                }}
-            >
-                {options.map((option) => (
-                    <MenuItem key={option} onClick={handleClose}>
-                        {option}
-                    </MenuItem>
-                ))}
-            </Menu>
+            {!handleOpen && (
+                <Menu
+                    id="long-menu"
+                    MenuListProps={{
+                        "aria-labelledby": "long-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    PaperProps={{
+                        style: {
+                            width: "20ch",
+                        },
+                    }}
+                >
+                    {options.map((option) => (
+                        <MenuItem key={option} onClick={handleClose}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </Menu>
+            )}
         </div>
     );
 };
