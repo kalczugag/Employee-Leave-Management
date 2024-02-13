@@ -17,6 +17,8 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    wordBreak: "normal",
+    overflowWrap: "normal",
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#e5e7eb",
         color: theme.palette.common.black,
