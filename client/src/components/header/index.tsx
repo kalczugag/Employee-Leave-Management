@@ -16,7 +16,7 @@ const Header = () => {
     };
 
     return (
-        <div className="fixed top-0 left-0 right-0 flex flex-row justify-center bg-white px-5 p-2 z-50 md:px-10 md:space-x-8">
+        <div className="fixed top-0 left-0 right-0 flex flex-row justify-between bg-white px-5 p-2 z-50 md:px-10 md:justify-center md:space-x-8">
             <section className="hidden md:block">
                 <Logo />
             </section>
@@ -57,7 +57,7 @@ const Header = () => {
                     )}
                 />
             </section>
-            <section>
+            <section className="flex items-center">
                 <AccountMenu />
             </section>
         </div>
