@@ -1,4 +1,6 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../store";
 import { Accordion } from "../CustomAccordion";
 import { AccordionSummary } from "../CustomAccordion";
 import { AccordionDetails } from "../CustomAccordion";
@@ -27,10 +29,7 @@ const CategoryListItem = ({
     expanded,
     handleChange,
 }: Props) => {
-    const { pathname } = useLocation();
-    // const isActive = to.endsWith(pathname.split("/")[1])
-    //     ? " text-blue-500"
-    //     : "text-gray-500";
+    const dispatch = useDispatch();
     const resultLabel = removeSpacesAndCamelCase(label);
 
     return (
@@ -64,7 +63,7 @@ const CategoryListItem = ({
                     </AccordionDetails>
                 </Accordion>
             ) : (
-                <NavLink to={to}>
+                <NavLink to={to} onClick={() => dispatch(toggleSidebar(false))}>
                     <div
                         className={`flex flex-row items-center px-4 my-3 space-x-2`}
                     >

@@ -15,7 +15,6 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import RowActionButtons from "./RowActionButtons";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -116,41 +115,25 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
     );
 };
 
-const createData = (
-    name: string,
-    details: string,
-    createdOn: string,
-    status: boolean
-) => {
-    return { name, details, createdOn, status };
-};
-
-const rows = [
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-    createData("Library dep", "Library dep", "8 Nov 2022", true),
-].sort((a, b) => (a.createdOn < b.createdOn ? -1 : 1));
+interface HeaderOption {
+    label: string;
+    render: (row: any) => React.ReactNode;
+}
 
 interface CustomPaginationActionsTableProps {
-    input?: string;
+    headerOptions: HeaderOption[];
+    rowData: any[];
 }
 
 const CustomPaginationActionsTable = ({
-    input,
+    headerOptions,
+    rowData,
 }: CustomPaginationActionsTableProps) => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState<number>(0);
+    const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
-    // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowData.length) : 0;
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -171,48 +154,56 @@ const CustomPaginationActionsTable = ({
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell>Department&nbsp;Name</StyledTableCell>
-                        <StyledTableCell align="right">
-                            Department&nbsp;Details
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                            Created&nbsp;On
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                            Department&nbsp;Status
-                        </StyledTableCell>
-                        <StyledTableCell align="right">Action</StyledTableCell>
+                        {headerOptions.map(({ label }, index) => {
+                            if (index === 0) {
+                                return (
+                                    <StyledTableCell key={index}>
+                                        {label}
+                                    </StyledTableCell>
+                                );
+                            }
+
+                            return (
+                                <StyledTableCell align="right" key={index}>
+                                    {label}
+                                </StyledTableCell>
+                            );
+                        })}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(
+                        ? rowData.slice(
                               page * rowsPerPage,
                               page * rowsPerPage + rowsPerPage
                           )
-                        : rows
-                    ).map((row) => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell style={{ width: 160 }} align="right">
-                                {row.details}
-                            </TableCell>
-                            <TableCell style={{ width: 160 }} align="right">
-                                {row.createdOn}
-                            </TableCell>
-                            <TableCell style={{ width: 160 }} align="right">
-                                {row.status ? "Active" : "Deactivated"}
-                            </TableCell>
-                            <TableCell style={{ width: 160 }} align="right">
-                                <RowActionButtons />
-                            </TableCell>
+                        : rowData
+                    ).map((row, rowIndex) => (
+                        <TableRow key={rowIndex}>
+                            {headerOptions.map(({ render }, colIndex) => {
+                                if (colIndex === 0) {
+                                    return (
+                                        <TableCell
+                                            component="th"
+                                            scope="row"
+                                            key={colIndex}
+                                        >
+                                            {render(row)}
+                                        </TableCell>
+                                    );
+                                }
+
+                                return (
+                                    <TableCell key={colIndex} align="right">
+                                        {render(row)}
+                                    </TableCell>
+                                );
+                            })}
                         </TableRow>
                     ))}
                     {emptyRows > 0 && (
                         <TableRow style={{ height: 53 * emptyRows }}>
-                            <TableCell colSpan={6} />
+                            <TableCell colSpan={headerOptions.length} />
                         </TableRow>
                     )}
                 </TableBody>
@@ -225,15 +216,17 @@ const CustomPaginationActionsTable = ({
                                 25,
                                 { label: "All", value: -1 },
                             ]}
-                            colSpan={3}
-                            count={rows.length}
+                            colSpan={headerOptions.length + 1}
+                            count={rowData.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
-                            SelectProps={{
-                                inputProps: {
-                                    "aria-label": "rows per page",
+                            slotProps={{
+                                select: {
+                                    inputProps: {
+                                        "aria-label": "rows per page",
+                                    },
+                                    native: true,
                                 },
-                                native: true,
                             }}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
