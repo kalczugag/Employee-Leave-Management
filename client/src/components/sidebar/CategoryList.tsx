@@ -1,34 +1,71 @@
-import { useState } from "react";
-import { CategoriesConfig as options } from "../../config/CategoriesConfig";
-import CategoryListItem from "./CategoryListItem";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../store";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { TreeView } from "@mui/x-tree-view/TreeView";
+import { TreeItem } from "@mui/x-tree-view/TreeItem";
+import { CategoriesConfig } from "../../config/CategoriesConfig";
+import { removeSpacesAndCamelCase } from "../../utils/removeSpacesAndCamelCase";
+import { Link } from "react-router-dom";
+import LinksListt from "./LinksList";
 
-const CategoryList = () => {
-    const [expanded, setExpanded] = useState<string | false>(false);
+export default function FirstComponent() {
+    const dispatch = useDispatch();
 
-    const handleChange =
-        (panel: string) =>
-        (event: React.SyntheticEvent, newExpanded: boolean) => {
-            setExpanded(newExpanded ? panel : false);
-        };
+    const renderedOptions = CategoriesConfig.map(
+        ({ label, to, element, expendable = true }, index) => {
+            const resultLabel = removeSpacesAndCamelCase(label);
 
-    const renderedCategories = options.map(
-        ({ label, to, element, expendable }, index) => {
+            const treeItemLabel = (
+                <div
+                    className={`flex flex-row items-center px-4 my-3 space-x-2`}
+                >
+                    <div>{element}</div>
+                    <div>{label}</div>
+                </div>
+            );
+
             return (
-                <CategoryListItem
-                    key={label}
-                    label={label}
-                    to={to}
-                    element={element}
-                    expendable={expendable}
-                    index={index++}
-                    expanded={expanded}
-                    handleChange={handleChange}
-                />
+                <>
+                    {expendable ? (
+                        <TreeItem
+                            key={label + "_" + index.toString()}
+                            nodeId={label + "_" + index.toString()}
+                            label={treeItemLabel}
+                        >
+                            <LinksListt target={resultLabel} />
+                        </TreeItem>
+                    ) : (
+                        <TreeItem
+                            key={label + "_" + index.toString()}
+                            nodeId={label + "_" + index.toString()}
+                            label={
+                                <Link
+                                    to={to}
+                                    onClick={() =>
+                                        dispatch(toggleSidebar(false))
+                                    }
+                                    className={`flex flex-row items-center px-4 my-3 space-x-2`}
+                                >
+                                    <div>{element}</div>
+                                    <div>{label}</div>
+                                </Link>
+                            }
+                        />
+                    )}
+                </>
             );
         }
     );
 
-    return <div className="flex flex-col space-y-2">{renderedCategories}</div>;
-};
-
-export default CategoryList;
+    return (
+        <TreeView
+            aria-label="file system navigator"
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+            sx={{ flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        >
+            {renderedOptions}
+        </TreeView>
+    );
+}

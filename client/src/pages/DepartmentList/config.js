@@ -1,4 +1,5 @@
 import RowActionButtons from "../../components/Table/RowActionButtons";
+import Status from "../../components/Status";
 
 const headerOptions = [
     { label: "Department Name", render: (row) => row.name },
@@ -6,7 +7,7 @@ const headerOptions = [
     { label: "Created On", render: (row) => row.createdOn },
     {
         label: "Department Status",
-        render: (row) => (row.status ? "Active" : "Deactivated"),
+        render: (row) => <Status status={row.status} />,
     },
     { label: "Action", render: () => <RowActionButtons /> },
 ];
@@ -28,7 +29,7 @@ const rows = [
         name: "Library dep",
         details: "Library dep",
         createdOn: "8 Nov 2022",
-        status: true,
+        status: false,
     },
     {
         name: "Library dep",

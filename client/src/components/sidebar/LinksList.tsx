@@ -1,31 +1,45 @@
-import LinksListItem from "./LinksListItem";
-import { LinksConfig as options } from "../../config/LinksConfig";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../store";
+import { TreeItem } from "@mui/x-tree-view/TreeItem";
+import { LinksConfig } from "../../config/LinksConfig";
 
 interface Props {
     target: string;
 }
 
 const LinksList = ({ target }: Props) => {
+    const dispatch = useDispatch();
+
     let renderedLinks: null | any;
 
-    if (target in options) {
-        renderedLinks = options[target].map(({ label, to, element }) => {
-            return (
-                <LinksListItem
-                    key={label}
-                    label={label}
-                    to={target.toLowerCase() + "/" + to}
-                    element={element}
-                />
-            );
-        });
+    if (target in LinksConfig) {
+        renderedLinks = LinksConfig[target].map(
+            ({ label, to, element }, index) => {
+                return (
+                    <TreeItem
+                        key={label + "_" + index.toString()}
+                        nodeId={label + "_" + index.toString()}
+                        label={
+                            <Link
+                                to={`${target}/${to}`}
+                                onClick={() => dispatch(toggleSidebar(false))}
+                                className={`flex flex-row items-center space-x-2`}
+                            >
+                                <div>{element}</div>
+                                <div>
+                                    {label.charAt(0).toUpperCase() +
+                                        label.slice(1)}
+                                </div>
+                            </Link>
+                        }
+                    />
+                );
+            }
+        );
     }
 
-    return (
-        <div className="flex flex-col space-y-2 text-gray-500">
-            {renderedLinks}
-        </div>
-    );
+    return <>{renderedLinks}</>;
 };
 
 export default LinksList;

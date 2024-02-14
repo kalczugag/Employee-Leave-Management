@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import DepartmentList from "./pages/DepartmentList";
 import EmployeeList from "./pages/EmployeeList";
+import LeaveTypeList from "./pages/LeaveTypeList";
 import Test from "./pages/test";
 
 const App = () => {
@@ -20,7 +21,7 @@ const App = () => {
                         <Route path="list" element={<DepartmentList />} />
                     </Route>
                     <Route path="/leavetype">
-                        <Route path="list" element={<Test />} />
+                        <Route path="list" element={<LeaveTypeList />} />
                     </Route>
                     <Route path="/employee">
                         <Route path="new" element={<Test />} />

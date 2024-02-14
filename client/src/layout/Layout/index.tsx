@@ -18,6 +18,7 @@ const Layout = ({ children }: Props) => {
             {!isAuthPage && (
                 <>
                     <Header />
+
                     <Sidebar />
                 </>
             )}
