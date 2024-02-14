@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "scripts": {
         "start": "npm run start --prefix client",
-        "build": "npm install && npm install --prefix client && npm run build --prefix client && tsc --build"
+        "build": "npm config set legacy-peer-deps true && npm config set legacy-peer-deps true --prefix client && npm install && npm install --prefix client && npm run build --prefix client && tsc --build"
     },
     "keywords": [],
     "author": "",
