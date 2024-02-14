@@ -18,7 +18,7 @@ export default function TemporaryDrawer() {
                     open={isOpen}
                     onClose={() => dispatch(toggleSidebar(false))}
                 >
-                    <div className="flex flex-col space-y-4 p-2">
+                    <div className="flex flex-col space-y-4 px-2">
                         <Logo />
                         <CategoryList />
                     </div>
