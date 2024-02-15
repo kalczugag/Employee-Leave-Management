@@ -1,5 +1,5 @@
 import CircleBackground from "../../layout/Background";
-import AuthContainer from "../../components/Auth1";
+import AuthContainer from "../../components/Auth";
 
 const Auth = () => {
     return (

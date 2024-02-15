@@ -5,7 +5,7 @@ import { FormControl, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import CustomIconButtom from "../MenuIconButton";
-import Logo from "../Logo1";
+import Logo from "../Logo";
 import AccountMenu from "./AccountMenu";
 
 const Header = () => {

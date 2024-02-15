@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { SignType } from "../../enums/signType.enum";
-import Header from "../../components/Header1";
-import Sidebar from "../../components/Sidebar1";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
 interface Props {
     children: ReactNode;
