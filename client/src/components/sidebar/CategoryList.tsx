@@ -7,7 +7,7 @@ import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { CategoriesConfig } from "../../config/CategoriesConfig";
 import { removeSpacesAndCamelCase } from "../../utils/removeSpacesAndCamelCase";
 import { Link } from "react-router-dom";
-import LinksListt from "./LinksList";
+import LinksList from "./LinksList";
 
 export default function FirstComponent() {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export default function FirstComponent() {
                             nodeId={label + "_" + index.toString()}
                             label={treeItemLabel}
                         >
-                            <LinksListt target={resultLabel} />
+                            <LinksList target={resultLabel} />
                         </TreeItem>
                     ) : (
                         <TreeItem

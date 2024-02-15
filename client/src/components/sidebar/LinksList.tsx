@@ -24,9 +24,11 @@ const LinksList = ({ target }: Props) => {
                             <Link
                                 to={`${target}/${to}`}
                                 onClick={() => dispatch(toggleSidebar(false))}
-                                className={`flex flex-row items-center space-x-2`}
+                                className={`flex flex-row items-center space-x-2 p-2 text-sm`}
                             >
-                                <div>{element}</div>
+                                <div className="flex items-center">
+                                    {element}
+                                </div>
                                 <div>
                                     {label.charAt(0).toUpperCase() +
                                         label.slice(1)}
