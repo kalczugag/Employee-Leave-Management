@@ -1,5 +1,5 @@
 import DefaultPage from "../../layout/DefaultPage";
-import Stats from "../../components/Stats";
+import Stats from "../../components/Stats1";
 
 const Dashboard = () => {
     return (

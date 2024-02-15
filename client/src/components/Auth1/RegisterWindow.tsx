@@ -13,7 +13,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Footer from "../Footer";
-import Logo from "../Logo";
+import Logo from "../Logo1";
 
 const RegisterWindow = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);

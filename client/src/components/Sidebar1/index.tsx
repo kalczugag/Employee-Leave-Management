@@ -3,7 +3,7 @@ import { RootState, toggleSidebar } from "../../store";
 import useMobileCheck from "../../hooks/useCheckMobileScreen";
 import Drawer from "@mui/material/Drawer";
 import CategoryList from "./CategoryList";
-import Logo from "../Logo";
+import Logo from "../Logo1";
 
 export default function TemporaryDrawer() {
     const dispatch = useDispatch();

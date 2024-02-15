@@ -1,7 +1,7 @@
 import CircleBackground from "../../layout/Background";
-import AuthContainer from "../../components/Auth";
+import AuthContainer from "../../components/Auth1";
 
-const Sign = () => {
+const Auth = () => {
     return (
         <CircleBackground>
             <AuthContainer />
@@ -9,4 +9,4 @@ const Sign = () => {
     );
 };
 
-export default Sign;
+export default Auth;
