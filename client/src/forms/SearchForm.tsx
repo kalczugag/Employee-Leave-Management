@@ -1,11 +1,12 @@
 import { Form, Field } from "react-final-form";
 import { OnChange } from "react-final-form-listeners";
 
-const ListSearchForm = () => {
-    const onSubmit = (values: any) => {
-        console.log(values);
-    };
+interface Props {
+    // config
+    onSubmit: (values: any) => void;
+}
 
+const ListSearchForm = ({ onSubmit }: Props) => {
     return (
         <Form onSubmit={onSubmit}>
             {(props) => (
