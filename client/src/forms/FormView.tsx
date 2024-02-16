@@ -1,4 +1,5 @@
 import { Form, Field } from "react-final-form";
+import { TextField } from "@mui/material";
 
 interface Props {
     // config
@@ -11,7 +12,17 @@ const FormView = ({ onSubmit }: Props) => {
             onSubmit={onSubmit}
             render={(props) => (
                 <form onSubmit={props.handleSubmit}>
-                    <Field component="input" name="x" />
+                    <Field name="myField">
+                        {(props) => (
+                            <div>
+                                <TextField
+                                    name={props.input.name}
+                                    value={props.input.value}
+                                    onChange={props.input.onChange}
+                                />
+                            </div>
+                        )}
+                    </Field>
                 </form>
             )}
         />

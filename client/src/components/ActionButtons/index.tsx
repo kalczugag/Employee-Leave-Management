@@ -1,7 +1,6 @@
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { SettingsOutlined, AddCircle } from "@mui/icons-material";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { GrDocumentCsv } from "react-icons/gr";
 
@@ -15,13 +14,13 @@ const ActionButtons = ({ label }: Props) => {
             <Button
                 variant="contained"
                 color="warning"
-                startIcon={<AddCircleIcon />}
+                startIcon={<AddCircle />}
             >
                 {label}
             </Button>
             <div className="flex flex-row mb-4 space-x-2 md:mb-0">
                 <IconButton aria-label="settings">
-                    <SettingsOutlinedIcon />
+                    <SettingsOutlined />
                 </IconButton>
                 <Button
                     size="small"

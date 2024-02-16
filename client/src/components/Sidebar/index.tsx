@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, toggleSidebar } from "../../store";
 import useMobileCheck from "../../hooks/useCheckMobileScreen";
-import Drawer from "@mui/material/Drawer";
+import { Drawer } from "@mui/material";
 import CategoryList from "./CategoryList";
 import Logo from "../Logo";
 

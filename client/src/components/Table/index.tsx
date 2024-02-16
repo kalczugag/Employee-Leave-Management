@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { useTheme, styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
+import {
+    Box,
+    Table,
+    TableBody,
+    TableCell,
+    tableCellClasses,
+    TableContainer,
+    TableHead,
+    TableFooter,
+    TablePagination,
+    TableRow,
+    Paper,
+    IconButton,
+} from "@mui/material";
+import {
+    FirstPage,
+    KeyboardArrowLeft,
+    KeyboardArrowRight,
+    LastPage,
+} from "@mui/icons-material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     wordBreak: "normal",
@@ -74,11 +79,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === "rtl" ? (
-                    <LastPageIcon />
-                ) : (
-                    <FirstPageIcon />
-                )}
+                {theme.direction === "rtl" ? <LastPage /> : <FirstPage />}
             </IconButton>
             <IconButton
                 onClick={handleBackButtonClick}
@@ -107,11 +108,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === "rtl" ? (
-                    <FirstPageIcon />
-                ) : (
-                    <LastPageIcon />
-                )}
+                {theme.direction === "rtl" ? <FirstPage /> : <LastPage />}
             </IconButton>
         </Box>
     );

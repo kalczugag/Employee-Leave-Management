@@ -1,5 +1,4 @@
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
+import { DashboardOutlined, CallMadeOutlined } from "@mui/icons-material";
 
 interface CategoriesConfigProps {
     label: string;
@@ -13,18 +12,18 @@ export const CategoriesConfig: CategoriesConfigProps[] = [
         label: "Dashboard",
         to: "/",
         expendable: false,
-        element: <DashboardOutlinedIcon />,
+        element: <DashboardOutlined />,
     },
     {
         label: "Department",
         to: "/department",
-        element: <CallMadeOutlinedIcon />,
+        element: <CallMadeOutlined />,
     },
     {
         label: "Leave Type",
         to: "/leavetype",
-        element: <CallMadeOutlinedIcon />,
+        element: <CallMadeOutlined />,
     },
-    { label: "Employee", to: "/employee", element: <CallMadeOutlinedIcon /> },
-    { label: "leave", to: "/leave", element: <CallMadeOutlinedIcon /> },
+    { label: "Employee", to: "/employee", element: <CallMadeOutlined /> },
+    { label: "leave", to: "/leave", element: <CallMadeOutlined /> },
 ];

@@ -1,12 +1,11 @@
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { toggleSidebar } from "../../store";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { TreeView } from "@mui/x-tree-view/TreeView";
-import { TreeItem } from "@mui/x-tree-view/TreeItem";
+import { ExpandMore, ChevronRight } from "@mui/icons-material";
+import { TreeView, TreeItem } from "@mui/x-tree-view";
+import { Box } from "@mui/material";
 import { CategoriesConfig } from "../../config/CategoriesConfig";
 import { removeSpacesAndCamelCase } from "../../utils/removeSpacesAndCamelCase";
-import { Link } from "react-router-dom";
 import LinksList from "./LinksList";
 
 export default function FirstComponent() {
@@ -26,7 +25,7 @@ export default function FirstComponent() {
             );
 
             return (
-                <>
+                <Box sx={{ width: "225px" }}>
                     {expendable ? (
                         <TreeItem
                             key={label + "_" + index.toString()}
@@ -53,7 +52,7 @@ export default function FirstComponent() {
                             }
                         />
                     )}
-                </>
+                </Box>
             );
         }
     );
@@ -61,9 +60,13 @@ export default function FirstComponent() {
     return (
         <TreeView
             aria-label="file system navigator"
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+            defaultCollapseIcon={<ExpandMore />}
+            defaultExpandIcon={<ChevronRight />}
+            sx={{
+                flexGrow: 1,
+                maxWidth: 400,
+                overflowY: "auto",
+            }}
         >
             {renderedOptions}
         </TreeView>

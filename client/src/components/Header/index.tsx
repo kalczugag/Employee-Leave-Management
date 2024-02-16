@@ -2,11 +2,10 @@ import { Form, Field } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store";
 import { FormControl, Input, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Search, Menu } from "@mui/icons-material";
 import CustomIconButtom from "../MenuIconButton";
-import Logo from "../Logo";
 import AccountMenu from "./AccountMenu";
+import Logo from "../Logo";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const Header = () => {
                     className="md:hidden"
                     handleOpen={() => dispatch(toggleSidebar(true))}
                 >
-                    <MenuIcon />
+                    <Menu />
                 </CustomIconButtom>
                 {/* change to reusable */}
                 <Form
@@ -46,7 +45,7 @@ const Header = () => {
                                             onChange={props.input.onChange}
                                             startAdornment={
                                                 <InputAdornment position="start">
-                                                    <SearchIcon />
+                                                    <Search />
                                                 </InputAdornment>
                                             }
                                         />

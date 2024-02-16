@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store";
-import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { LinksConfig } from "../../config/LinksConfig";
+import { TreeItem } from "@mui/x-tree-view";
 
 interface Props {
     target: string;
