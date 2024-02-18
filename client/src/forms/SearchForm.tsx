@@ -2,7 +2,6 @@ import { Form, Field } from "react-final-form";
 import { OnChange } from "react-final-form-listeners";
 
 interface Props {
-    // config
     onSubmit: (values: any) => void;
 }
 
