@@ -7,7 +7,7 @@ const NewEmployee = () => {
     };
 
     return (
-        <DefaultPage label="New Employee">
+        <DefaultPage label="New Employee" bg>
             <FormView onSubmit={handleSubmit} />
         </DefaultPage>
     );

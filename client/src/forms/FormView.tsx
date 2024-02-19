@@ -1,8 +1,12 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Form, Field } from "react-final-form";
-import { Editor, EditorState } from "react-draft-wysiwyg";
-import { TextField } from "@mui/material";
+import "../styles/editor-wysiwyg.css";
 import { useState } from "react";
+import { EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import { Form, Field } from "react-final-form";
+import { TextField } from "@mui/material";
+
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 interface FieldItemProps {
     name: string;
@@ -15,10 +19,15 @@ const FieldItem = ({ name }: FieldItemProps) => {
                 <div className="space-y-1">
                     <label htmlFor={input.name}>{name}</label>
                     <TextField
-                        variant="standard"
+                        variant="outlined"
                         name={input.name}
                         value={input.value}
                         onChange={input.onChange}
+                        inputProps={{
+                            style: {
+                                padding: 10,
+                            },
+                        }}
                         autoComplete="off"
                         fullWidth
                     />
@@ -37,8 +46,8 @@ const FormView = ({ onSubmit }: FormViewProps) => {
         EditorState.createEmpty()
     );
 
-    const onEditorStateChange = (arg: any) => {
-        setEditorState(arg);
+    const onEditorStateChange = (editorState: EditorState) => {
+        setEditorState(editorState);
     };
 
     return (
@@ -52,6 +61,20 @@ const FormView = ({ onSubmit }: FormViewProps) => {
                     <FieldItem name="Department Name" />
                     <FieldItem name="Department Short Name" />
                     <Editor
+                        toolbar={{
+                            options: [
+                                "inline",
+                                "blockType",
+                                "list",
+                                "textAlign",
+                                "history",
+                            ],
+                            inline: { inDropdown: false },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
+                        }}
                         editorState={editorState}
                         toolbarClassName="toolbarClassName"
                         wrapperClassName="wrapperClassName"
