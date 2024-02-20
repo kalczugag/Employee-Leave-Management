@@ -8,7 +8,7 @@ import { CategoriesConfig } from "../../config/CategoriesConfig";
 import { removeSpacesAndCamelCase } from "../../utils/removeSpacesAndCamelCase";
 import LinksList from "./LinksList";
 
-export default function FirstComponent() {
+const CategoryList = () => {
     const dispatch = useDispatch();
 
     const renderedOptions = CategoriesConfig.map(
@@ -32,7 +32,7 @@ export default function FirstComponent() {
                             nodeId={label + "_" + index.toString()}
                             label={treeItemLabel}
                         >
-                            <LinksList target={resultLabel} />
+                            <LinksList target={resultLabel} upHref={to} />
                         </TreeItem>
                     ) : (
                         <TreeItem
@@ -71,4 +71,6 @@ export default function FirstComponent() {
             {renderedOptions}
         </TreeView>
     );
-}
+};
+
+export default CategoryList;

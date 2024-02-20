@@ -6,9 +6,10 @@ import { TreeItem } from "@mui/x-tree-view";
 
 interface Props {
     target: string;
+    upHref: string;
 }
 
-const LinksList = ({ target }: Props) => {
+const LinksList = ({ target, upHref }: Props) => {
     const dispatch = useDispatch();
 
     let renderedLinks: null | any;
@@ -22,7 +23,7 @@ const LinksList = ({ target }: Props) => {
                         nodeId={label + "_" + index.toString()}
                         label={
                             <Link
-                                to={`${target}/${to}`}
+                                to={`${upHref}/${to}`}
                                 onClick={() => dispatch(toggleSidebar(false))}
                                 className={`flex flex-row items-center space-x-2 p-2 text-sm`}
                             >

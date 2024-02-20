@@ -1,23 +1,27 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/editor-wysiwyg.css";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import { Form, Field } from "react-final-form";
-import { TextField } from "@mui/material";
+import {
+    TextField,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+} from "@mui/material";
 
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
-interface FieldItemProps {
-    name: string;
+interface FormFieldProps {
+    label: string;
 }
 
-const FieldItem = ({ name }: FieldItemProps) => {
+const FormField = ({ label }: FormFieldProps) => {
     return (
-        <Field name={name}>
+        <Field name={label}>
             {({ input }) => (
                 <div className="space-y-1">
-                    <label htmlFor={input.name}>{name}</label>
+                    <label htmlFor={input.name}>{label}</label>
                     <TextField
                         variant="outlined"
                         name={input.name}
@@ -37,11 +41,12 @@ const FieldItem = ({ name }: FieldItemProps) => {
     );
 };
 
-interface FormViewProps {
-    onSubmit: (values: any) => void;
+interface FormEditorProps {
+    label: string;
 }
 
-const FormView = ({ onSubmit }: FormViewProps) => {
+const FormEditor = ({ label }: FormEditorProps) => {
+    const [isFocus, setIsFocus] = useState<boolean>(false);
     const [editorState, setEditorState] = useState<EditorState>(
         EditorState.createEmpty()
     );
@@ -51,6 +56,71 @@ const FormView = ({ onSubmit }: FormViewProps) => {
     };
 
     return (
+        <div className="space-y-1">
+            <span>{label}</span>
+            <Editor
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                toolbar={{
+                    options: [
+                        "inline",
+                        "blockType",
+                        "list",
+                        "textAlign",
+                        "history",
+                    ],
+                    inline: { inDropdown: false },
+                    list: { inDropdown: true },
+                    textAlign: { inDropdown: true },
+                    link: { inDropdown: true },
+                    history: { inDropdown: true },
+                }}
+                editorState={editorState}
+                toolbarClassName={`${
+                    isFocus ? "hasFocusToolbar" : "toolbarClassName"
+                }`}
+                wrapperClassName="wrapperClassName"
+                editorClassName={`${
+                    isFocus ? "hasFocusEditor" : "editorClassName"
+                }`}
+                onEditorStateChange={onEditorStateChange}
+            />
+        </div>
+    );
+};
+
+interface FormCheckboxProps {
+    label: string | string[];
+}
+
+const FormCheckbox = ({ label }: FormCheckboxProps) => {
+    if (Array.isArray(label)) {
+        return (
+            <FormGroup>
+                {label.map((itemLabel, index) => (
+                    <FormControlLabel
+                        key={itemLabel + "_" + index.toString()}
+                        control={<Checkbox />}
+                        label={itemLabel}
+                    />
+                ))}
+            </FormGroup>
+        );
+    }
+
+    return <FormControlLabel control={<Checkbox />} label={label} />;
+};
+
+interface FormViewProps {
+    children: ReactNode;
+    group?: boolean;
+    onSubmit: (values: any) => void;
+}
+
+const FormView = ({ children, group = false, onSubmit }: FormViewProps) => {
+    console.log(children);
+
+    return (
         <Form
             onSubmit={onSubmit}
             render={({ handleSubmit }) => (
@@ -58,33 +128,18 @@ const FormView = ({ onSubmit }: FormViewProps) => {
                     onSubmit={handleSubmit}
                     className="flex flex-col space-y-10"
                 >
-                    <FieldItem name="Department Name" />
-                    <FieldItem name="Department Short Name" />
-                    <Editor
-                        toolbar={{
-                            options: [
-                                "inline",
-                                "blockType",
-                                "list",
-                                "textAlign",
-                                "history",
-                            ],
-                            inline: { inDropdown: false },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                        }}
-                        editorState={editorState}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                        onEditorStateChange={onEditorStateChange}
-                    />
+                    {children}
+                    <Button
+                        className="md:w-32"
+                        type="submit"
+                        variant="contained"
+                    >
+                        Save
+                    </Button>
                 </form>
             )}
         />
     );
 };
 
-export default FormView;
+export { FormView, FormField, FormEditor, FormCheckbox };

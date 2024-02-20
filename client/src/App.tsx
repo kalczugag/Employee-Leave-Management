@@ -3,11 +3,12 @@ import Layout from "./layout/Layout";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import NewDepartment from "./pages/NewDepartment";
-import DepartmentList from "./pages/DepartmentList";
-import NewEmployee from "./pages/NewEmployee";
-import EmployeeList from "./pages/EmployeeList";
-import LeaveTypeList from "./pages/LeaveTypeList";
+import NewDepartment from "./pages/Department/new";
+import DepartmentList from "./pages/Department/list";
+import NewEmployee from "./pages/Employee/new";
+import EmployeeList from "./pages/Employee/list";
+import LeaveTypeList from "./pages/LeaveType/list";
+import LeaveTypeUpdate from "./pages/LeaveType/update";
 // import Test from "./pages/test";
 
 const App = () => {
@@ -22,7 +23,8 @@ const App = () => {
                         <Route path="new" element={<NewDepartment />} />
                         <Route path="list" element={<DepartmentList />} />
                     </Route>
-                    <Route path="/leavetype">
+                    <Route path="/leave-type">
+                        <Route path="update" element={<LeaveTypeUpdate />} />
                         <Route path="list" element={<LeaveTypeList />} />
                     </Route>
                     <Route path="/employee">

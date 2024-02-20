@@ -1,7 +1,7 @@
-import DefaultPage from "../../layout/DefaultPage";
-import ActionButtons from "../../components/ActionButtons";
-import ListSearchForm from "../../forms/SearchForm";
-import BasicTable from "../../components/Table";
+import DefaultPage from "../../../layout/DefaultPage";
+import ActionButtons from "../../../components/ActionButtons";
+import ListSearchForm from "../../../forms/SearchForm";
+import BasicTable from "../../../components/Table";
 import { config } from "./config";
 
 const LeaveTypeList = () => {

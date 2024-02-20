@@ -1,6 +1,6 @@
-import ListSearchForm from "../../forms/SearchForm";
-import DefaultPage from "../../layout/DefaultPage";
-import BasicTable from "../../components/Table";
+import ListSearchForm from "../../../forms/SearchForm";
+import DefaultPage from "../../../layout/DefaultPage";
+import BasicTable from "../../../components/Table";
 import { config } from "./config";
 
 const EmployeeList = () => {

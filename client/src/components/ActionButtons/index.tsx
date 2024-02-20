@@ -1,5 +1,5 @@
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { IconButton, Button } from "@mui/material";
 import { SettingsOutlined, AddCircle } from "@mui/icons-material";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { GrDocumentCsv } from "react-icons/gr";
@@ -9,9 +9,16 @@ interface Props {
 }
 
 const ActionButtons = ({ label }: Props) => {
+    const navigate = useNavigate();
+
+    const handleNavigate = () => {
+        navigate("../new");
+    };
+
     return (
         <div className="flex flex-col-reverse md:justify-between md:flex-row">
             <Button
+                onClick={handleNavigate}
                 variant="contained"
                 color="warning"
                 startIcon={<AddCircle />}

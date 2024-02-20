@@ -1,5 +1,5 @@
-import RowActionButtons from "../../components/Table/RowActionButtons";
-import Status from "../../components/Status";
+import RowActionButtons from "../../../components/Table/RowActionButtons";
+import Status from "../../../components/Status";
 
 const headerOptions = [
     {
