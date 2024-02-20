@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toggleSidebar } from "../../store";
 import { ExpandMore, ChevronRight } from "@mui/icons-material";
 import { TreeView, TreeItem } from "@mui/x-tree-view";
@@ -10,6 +10,7 @@ import LinksList from "./LinksList";
 
 const CategoryList = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const renderedOptions = CategoriesConfig.map(
         ({ label, to, element, expendable = true }, index) => {
@@ -23,6 +24,11 @@ const CategoryList = () => {
                     <div>{label}</div>
                 </div>
             );
+
+            const handleNavigate = () => {
+                navigate(to);
+                dispatch(toggleSidebar(false));
+            };
 
             return (
                 <Box sx={{ width: "225px" }}>
@@ -38,17 +44,12 @@ const CategoryList = () => {
                         <TreeItem
                             key={label + "_" + index.toString()}
                             nodeId={label + "_" + index.toString()}
+                            onClick={handleNavigate}
                             label={
-                                <Link
-                                    to={to}
-                                    onClick={() =>
-                                        dispatch(toggleSidebar(false))
-                                    }
-                                    className={`flex flex-row items-center px-4 my-3 space-x-2`}
-                                >
+                                <div className="flex flex-row items-center px-4 my-3 space-x-2">
                                     <div>{element}</div>
                                     <div>{label}</div>
-                                </Link>
+                                </div>
                             }
                         />
                     )}
