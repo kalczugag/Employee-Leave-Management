@@ -1,9 +1,11 @@
 import DefaultPage from "../../layout/DefaultPage";
 import Stats from "../../components/Stats";
+import SnackbarStatus from "../../components/SnackbarStatus";
 
 const Dashboard = () => {
     return (
         <DefaultPage label="Dashboard">
+            <SnackbarStatus />
             <Stats />
             <div className="flex flex-row justify-between space-x-6 text-gray-500">
                 <div className="flex-1 p-6 rounded bg-white shadow">

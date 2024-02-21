@@ -17,11 +17,9 @@ const CategoryList = () => {
             const resultLabel = removeSpacesAndCamelCase(label);
 
             const treeItemLabel = (
-                <div
-                    className={`flex flex-row items-center px-4 my-3 space-x-2`}
-                >
-                    <div>{element}</div>
-                    <div>{label}</div>
+                <div className="flex flex-row items-center px-4 my-3 space-x-2">
+                    <span>{element}</span>
+                    <span>{label}</span>
                 </div>
             );
 
@@ -31,10 +29,12 @@ const CategoryList = () => {
             };
 
             return (
-                <Box sx={{ width: "225px" }}>
+                <Box
+                    key={label + "_" + index.toString()}
+                    sx={{ width: "225px" }}
+                >
                     {expendable ? (
                         <TreeItem
-                            key={label + "_" + index.toString()}
                             nodeId={label + "_" + index.toString()}
                             label={treeItemLabel}
                         >
@@ -42,15 +42,9 @@ const CategoryList = () => {
                         </TreeItem>
                     ) : (
                         <TreeItem
-                            key={label + "_" + index.toString()}
                             nodeId={label + "_" + index.toString()}
                             onClick={handleNavigate}
-                            label={
-                                <div className="flex flex-row items-center px-4 my-3 space-x-2">
-                                    <div>{element}</div>
-                                    <div>{label}</div>
-                                </div>
-                            }
+                            label={treeItemLabel}
                         />
                     )}
                 </Box>

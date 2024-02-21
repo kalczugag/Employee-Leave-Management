@@ -113,16 +113,15 @@ const FormCheckbox = ({ label }: FormCheckboxProps) => {
 
 interface FormViewProps {
     children: ReactNode;
-    group?: boolean;
+    initialValues?: any;
     onSubmit: (values: any) => void;
 }
 
-const FormView = ({ children, group = false, onSubmit }: FormViewProps) => {
-    console.log(children);
-
+const FormView = ({ children, initialValues, onSubmit }: FormViewProps) => {
     return (
         <Form
             onSubmit={onSubmit}
+            initialValues={initialValues}
             render={({ handleSubmit }) => (
                 <form
                     onSubmit={handleSubmit}

@@ -1,5 +1,5 @@
 import RowActionButtons from "../../../components/Table/RowActionButtons";
-import Status from "../../../components/Status";
+import Status from "../../../components/TableStatus";
 
 const headerOptions = [
     { label: "Department Name", render: (row) => row.name },

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { createPortal } from "react-dom";
 import Layout from "./layout/Layout";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
@@ -9,7 +10,7 @@ import NewEmployee from "./pages/Employee/new";
 import EmployeeList from "./pages/Employee/list";
 import LeaveTypeList from "./pages/LeaveType/list";
 import LeaveTypeUpdate from "./pages/LeaveType/update";
-// import Test from "./pages/test";
+import SnackbarStatus from "./components/SnackbarStatus";
 
 const App = () => {
     return (
@@ -34,6 +35,7 @@ const App = () => {
                     <Route path="/leave"></Route>
                 </Route>
             </Routes>
+            {createPortal(<SnackbarStatus />, document.body)}
         </Layout>
     );
 };
