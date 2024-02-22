@@ -32,8 +32,8 @@ const CategoryList = () => {
 
             const handleNavigate = () => {
                 navigate(to);
-                dispatch(collapseAll());
                 dispatch(toggleSidebar(false));
+                dispatch(collapseAll());
             };
 
             return (

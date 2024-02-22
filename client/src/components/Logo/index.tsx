@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { collapseAll } from "../../store";
+import { collapseAll, toggleSidebar } from "../../store";
 
 interface Props {
     primary?: boolean;
@@ -13,10 +13,15 @@ const Logo = ({ primary }: Props) => {
     const firstBall = primary ? "bg-cyan-500" : "bg-blue-500";
     const secondBall = primary ? "bg-white" : "bg-gray-700";
 
+    const handleCollapse = () => {
+        dispatch(toggleSidebar(false));
+        dispatch(collapseAll());
+    };
+
     return (
         <Link
             to={"/"}
-            onClick={() => dispatch(collapseAll())}
+            onClick={handleCollapse}
             className={`flex items-center justify-center space-x-6 p-4 font-serif ${color}`}
         >
             <div className="relative flex items-center">
