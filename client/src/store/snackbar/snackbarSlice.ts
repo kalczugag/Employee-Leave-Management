@@ -4,31 +4,40 @@ import { SnackbarOrigin } from "@mui/material";
 interface SnackbarState extends SnackbarOrigin {
     isOpen: boolean;
     message: string;
+    severity: "success" | "error";
+}
+
+interface ToggleSnackbarPayload {
+    message: string;
+    severity?: "success" | "error";
 }
 
 const initialState: SnackbarState = {
-    isOpen: true,
+    isOpen: false,
+    message: "",
+    severity: "success",
     vertical: "top",
     horizontal: "center",
-    message: "",
 };
 
 const snackbarSlice = createSlice({
     name: "snackbar",
     initialState,
     reducers: {
-        toggleSnackbar(state, action: PayloadAction<string>) {
+        toggleSnackbar(state, action: PayloadAction<ToggleSnackbarPayload>) {
+            const { message, severity = "success" } = action.payload;
+
             return {
                 ...state,
                 isOpen: true,
-                message: action.payload,
+                message,
+                severity,
             };
         },
         closeSnackbar(state) {
             return {
                 ...state,
                 isOpen: false,
-                message: "",
             };
         },
     },

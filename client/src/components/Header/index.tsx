@@ -1,6 +1,7 @@
 import { Form, Field } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store";
+import useSnackbar from "../../hooks/useSnackbar";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import { Search, Menu } from "@mui/icons-material";
 import CustomIconButtom from "../MenuIconButton";
@@ -9,6 +10,7 @@ import Logo from "../Logo";
 
 const Header = () => {
     const dispatch = useDispatch();
+    const { handleClick } = useSnackbar();
 
     const onSubmit = (values: any) => {
         console.log(values);

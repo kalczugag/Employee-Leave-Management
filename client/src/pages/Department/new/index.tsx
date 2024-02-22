@@ -9,8 +9,8 @@ const NewDepartment = () => {
     return (
         <DefaultPage label="Create Department" bg>
             <FormView onSubmit={handleSubmit}>
-                <FormField label="Department Name" />
-                <FormField label="Department Short Name" />
+                <FormField required label="Department Name" />
+                <FormField required label="Department Short Name" />
                 <FormEditor label="Department Details" />
             </FormView>
         </DefaultPage>

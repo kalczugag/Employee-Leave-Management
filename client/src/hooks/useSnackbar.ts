@@ -1,17 +1,18 @@
 import { useDispatch } from "react-redux";
 import { toggleSnackbar, closeSnackbar } from "../store";
 
-const useSnackbar = () => {
+function useSnackbar() {
     const dispatch = useDispatch();
 
-    const showSnackbar = (msg: string) => {
-        dispatch(toggleSnackbar(msg));
-        setTimeout(() => {
-            dispatch(closeSnackbar());
-        }, 3000);
+    const handleClick = (msg: string) => {
+        dispatch(toggleSnackbar({ message: msg }));
     };
 
-    return showSnackbar;
-};
+    const handleClose = () => {
+        dispatch(closeSnackbar());
+    };
+
+    return { handleClick, handleClose };
+}
 
 export default useSnackbar;

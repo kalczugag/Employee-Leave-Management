@@ -10,7 +10,7 @@ import NewEmployee from "./pages/Employee/new";
 import EmployeeList from "./pages/Employee/list";
 import LeaveTypeList from "./pages/LeaveType/list";
 import LeaveTypeUpdate from "./pages/LeaveType/update";
-import SnackbarStatus from "./components/SnackbarStatus";
+import SnackbarMsg from "./components/SnackbarMsg";
 
 const App = () => {
     return (
@@ -35,7 +35,7 @@ const App = () => {
                     <Route path="/leave"></Route>
                 </Route>
             </Routes>
-            {createPortal(<SnackbarStatus />, document.body)}
+            {createPortal(<SnackbarMsg />, document.body)}
         </Layout>
     );
 };

@@ -1,14 +1,22 @@
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { collapseAll } from "../../store";
+
 interface Props {
     primary?: boolean;
 }
 
-const Logo = ({ primary = false }: Props) => {
+const Logo = ({ primary }: Props) => {
+    const dispatch = useDispatch();
+
     const color = primary ? "bg-blue-500 text-white" : "bg-white text-black";
     const firstBall = primary ? "bg-cyan-500" : "bg-blue-500";
     const secondBall = primary ? "bg-white" : "bg-gray-700";
 
     return (
-        <div
+        <Link
+            to={"/"}
+            onClick={() => dispatch(collapseAll())}
             className={`flex items-center justify-center space-x-6 p-4 font-serif ${color}`}
         >
             <div className="relative flex items-center">
@@ -20,7 +28,7 @@ const Logo = ({ primary = false }: Props) => {
                 />
             </div>
             <h1 className="text-2xl">INVENTORY</h1>
-        </div>
+        </Link>
     );
 };
 

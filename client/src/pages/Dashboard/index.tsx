@@ -1,6 +1,6 @@
 import DefaultPage from "../../layout/DefaultPage";
 import Stats from "../../components/Stats";
-import SnackbarStatus from "../../components/SnackbarStatus";
+import SnackbarStatus from "../../components/SnackbarMsg";
 
 const Dashboard = () => {
     return (

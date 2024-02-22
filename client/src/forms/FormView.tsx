@@ -14,12 +14,13 @@ import {
 
 interface FormFieldProps {
     label: string;
+    required?: boolean;
 }
 
-const FormField = ({ label }: FormFieldProps) => {
+const FormField = ({ label, required }: FormFieldProps) => {
     return (
         <Field name={label}>
-            {({ input }) => (
+            {({ input, meta }) => (
                 <div className="space-y-1">
                     <label htmlFor={input.name}>{label}</label>
                     <TextField
@@ -33,6 +34,7 @@ const FormField = ({ label }: FormFieldProps) => {
                             },
                         }}
                         autoComplete="off"
+                        required={required}
                         fullWidth
                     />
                 </div>
@@ -91,9 +93,10 @@ const FormEditor = ({ label }: FormEditorProps) => {
 
 interface FormCheckboxProps {
     label: string | string[];
+    required?: boolean;
 }
 
-const FormCheckbox = ({ label }: FormCheckboxProps) => {
+const FormCheckbox = ({ label, required }: FormCheckboxProps) => {
     if (Array.isArray(label)) {
         return (
             <FormGroup>
@@ -102,6 +105,7 @@ const FormCheckbox = ({ label }: FormCheckboxProps) => {
                         key={itemLabel + "_" + index.toString()}
                         control={<Checkbox />}
                         label={itemLabel}
+                        required={required}
                     />
                 ))}
             </FormGroup>

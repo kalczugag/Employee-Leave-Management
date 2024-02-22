@@ -1,6 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toggleSidebar } from "../../store";
+import {
+    RootState,
+    toggleSidebar,
+    setExpanded,
+    collapseAll,
+} from "../../store";
 import { ExpandMore, ChevronRight } from "@mui/icons-material";
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 import { Box } from "@mui/material";
@@ -11,6 +16,8 @@ import LinksList from "./LinksList";
 const CategoryList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { expanded } = useSelector((state: RootState) => state.sidebar);
 
     const renderedOptions = CategoriesConfig.map(
         ({ label, to, element, expendable = true }, index) => {
@@ -25,6 +32,7 @@ const CategoryList = () => {
 
             const handleNavigate = () => {
                 navigate(to);
+                dispatch(collapseAll());
                 dispatch(toggleSidebar(false));
             };
 
@@ -54,9 +62,11 @@ const CategoryList = () => {
 
     return (
         <TreeView
-            aria-label="file system navigator"
+            aria-label="pages system navigator"
             defaultCollapseIcon={<ExpandMore />}
             defaultExpandIcon={<ChevronRight />}
+            expanded={expanded}
+            onNodeToggle={(event, nodes) => dispatch(setExpanded(nodes))}
             sx={{
                 flexGrow: 1,
                 maxWidth: 400,
