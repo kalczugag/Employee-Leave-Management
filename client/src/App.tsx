@@ -9,7 +9,7 @@ import DepartmentList from "./pages/Department/list";
 import NewEmployee from "./pages/Employee/new";
 import EmployeeList from "./pages/Employee/list";
 import LeaveTypeList from "./pages/LeaveType/list";
-import LeaveTypeUpdate from "./pages/LeaveType/update";
+import LeaveTypeUpdate from "./pages/LeaveType/edit";
 import SnackbarMsg from "./components/SnackbarMsg";
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
                         <Route path="list" element={<DepartmentList />} />
                     </Route>
                     <Route path="/leave-type">
-                        <Route path="update" element={<LeaveTypeUpdate />} />
+                        <Route path="edit" element={<LeaveTypeUpdate />} />
                         <Route path="list" element={<LeaveTypeList />} />
                     </Route>
                     <Route path="/employee">

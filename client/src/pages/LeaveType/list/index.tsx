@@ -11,7 +11,7 @@ const LeaveTypeList = () => {
 
     return (
         <DefaultPage label="Leave Type List" bg>
-            <ActionButtons label="Add Department" />
+            <ActionButtons label="Add Leave Type" />
             <ListSearchForm onSubmit={handleSubmit} />
             <BasicTable
                 headerOptions={config.headerOptions}

@@ -6,13 +6,13 @@ import {
 } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
 
-const LeaveTypeUpdate = () => {
+const LeaveTypeEdit = () => {
     const handleSubmit = (values: any) => {
         console.log(values);
     };
 
     return (
-        <DefaultPage label="Update Leave Type" bg>
+        <DefaultPage label="Edit Leave Type" bg>
             <FormView onSubmit={handleSubmit}>
                 <FormField label="LeaveType Name" />
                 <FormEditor label="LeaveType Details" />
@@ -22,4 +22,4 @@ const LeaveTypeUpdate = () => {
     );
 };
 
-export default LeaveTypeUpdate;
+export default LeaveTypeEdit;
