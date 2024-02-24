@@ -1,4 +1,5 @@
 import express from "express";
+import keys from "../config/keys";
 
 import { getUserByEmail, createUser } from "../db/users";
 import { random, authentication } from "../helpers";
@@ -36,7 +37,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         await user.save();
 
-        res.cookie("ELM-AUTH", user.authentication.sessionToken, {
+        res.cookie(keys.cookieKey, user.authentication.sessionToken, {
             domain: "localhost",
             path: "/",
         });

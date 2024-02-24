@@ -1,5 +1,6 @@
 import express from "express";
 import { get, merge } from "lodash";
+import keys from "../config/keys";
 
 import { getUserBySessionToken } from "../db/users";
 
@@ -33,7 +34,7 @@ export const isAuthenticated = async (
     next: express.NextFunction
 ) => {
     try {
-        const sessionToken = req.cookies["ELM-AUTH"];
+        const sessionToken = req.cookies[keys.cookieKey];
 
         if (!sessionToken) {
             return res.sendStatus(403);

@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
+import keys from "./config/keys";
 
 import router from "./router";
 
@@ -36,11 +37,8 @@ server.listen(8080, () => {
     console.log("Server running on http://localhost:8080");
 });
 
-const MONGO_URI =
-    "mongodb+srv://kalczugag:yTN9GgEXrGTuV1Ld@cluster0.r8dpdtt.mongodb.net/?retryWrites=true&w=majority";
-
 mongoose.Promise = Promise;
-mongoose.connect(MONGO_URI);
+mongoose.connect(keys.mongoURI);
 mongoose.connection.on("error", (error: Error) => console.log(error));
 
 app.use("/", router());
