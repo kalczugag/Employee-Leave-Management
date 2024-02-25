@@ -4,7 +4,7 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "npm run start --prefix client",
+        "start": "npm run start --prefix client && npm run server",
         "server": "nodemon",
         "build": "npm config set legacy-peer-deps true && npm config set legacy-peer-deps true --prefix client && npm install && npm install --prefix client && npm run build --prefix client && tsc --build"
     },
