@@ -8,7 +8,7 @@ interface Props {
 
 const Footer = ({ children, buttons = false, center = false }: Props) => {
     return (
-        <div className="pt-3 mt-6 border-t">
+        <div className="mt-6 border-t">
             {buttons ? (
                 <div className="flex flex-col items-center justify-between text-sm text-gray-500 md:items-start md:flex-row">
                     <p>2024 &copy; Gabriel Kałczuga</p>
@@ -20,7 +20,7 @@ const Footer = ({ children, buttons = false, center = false }: Props) => {
                 </div>
             ) : (
                 <footer
-                    className={`flex flex-col space-y-6 mt-4 text-gray-500 ${
+                    className={`flex flex-col space-y-2 mt-3 text-gray-500 ${
                         center && "items-center"
                     }`}
                 >
