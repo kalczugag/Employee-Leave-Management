@@ -4,8 +4,9 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "npm run start --prefix client && npm run server",
+        "start": "concurrently  \"npm run server\" \"npm run client\"",
         "server": "nodemon",
+        "client": "npm run start --prefix client",
         "build": "npm config set legacy-peer-deps true && npm config set legacy-peer-deps true --prefix client && npm install && npm install --prefix client && npm run build --prefix client && tsc --build"
     },
     "keywords": [],
@@ -29,6 +30,7 @@
         "@types/express": "^4.17.21",
         "@types/lodash": "^4.14.202",
         "@types/mongoose": "^5.11.97",
+        "concurrently": "^8.2.2",
         "nodemon": "^3.1.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3"

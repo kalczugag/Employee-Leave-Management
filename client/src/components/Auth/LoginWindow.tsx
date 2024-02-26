@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
+import { useDispatch } from "react-redux";
+import { AppDispatch, login } from "../../store";
 import {
     TextField,
     Button,
@@ -16,6 +18,7 @@ import Footer from "../Footer";
 import Logo from "../Logo";
 
 const LoginWindow = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -26,8 +29,8 @@ const LoginWindow = () => {
         event.preventDefault();
     };
 
-    const onSubmit = (values: any) => {
-        console.log(values);
+    const onSubmit = (values: { email: string; password: string }) => {
+        dispatch(login(values));
     };
 
     return (
@@ -58,7 +61,7 @@ const LoginWindow = () => {
                                         name={props.input.name}
                                         value={props.input.value}
                                         onChange={props.input.onChange}
-                                        fullWidth
+                                        sx={{ width: "320px" }}
                                     />
                                 )}
                             </Field>
@@ -109,6 +112,7 @@ const LoginWindow = () => {
                                                     </InputAdornment>
                                                 }
                                                 label="Password"
+                                                sx={{ width: "320px" }}
                                             />
                                         </FormControl>
                                     </div>

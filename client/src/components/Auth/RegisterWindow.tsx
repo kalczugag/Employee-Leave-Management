@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
+import { useDispatch } from "react-redux";
+import { AppDispatch, register } from "../../store";
 import {
     TextField,
     Button,
@@ -16,6 +18,7 @@ import Footer from "../Footer";
 import Logo from "../Logo";
 
 const RegisterWindow = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -26,8 +29,8 @@ const RegisterWindow = () => {
         event.preventDefault();
     };
 
-    const onSubmit = (values: any) => {
-        console.log(values);
+    const onSubmit = (values: user) => {
+        dispatch(register(values));
     };
 
     return (
@@ -51,7 +54,7 @@ const RegisterWindow = () => {
                             onSubmit={handleSubmit}
                             className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
                         >
-                            <div className="flex flex-row space-x-2">
+                            <div className="flex flex-row space-x-2 w-[calc(320px)]">
                                 <Field name="firstName">
                                     {(props) => (
                                         <TextField
@@ -60,6 +63,7 @@ const RegisterWindow = () => {
                                             name={props.input.name}
                                             value={props.input.value}
                                             onChange={props.input.onChange}
+                                            fullWidth
                                         />
                                     )}
                                 </Field>
@@ -71,6 +75,7 @@ const RegisterWindow = () => {
                                             name={props.input.name}
                                             value={props.input.value}
                                             onChange={props.input.onChange}
+                                            fullWidth
                                         />
                                     )}
                                 </Field>
@@ -84,7 +89,7 @@ const RegisterWindow = () => {
                                         name={props.input.name}
                                         value={props.input.value}
                                         onChange={props.input.onChange}
-                                        fullWidth
+                                        sx={{ width: "320px" }}
                                     />
                                 )}
                             </Field>
@@ -96,18 +101,21 @@ const RegisterWindow = () => {
                                         name={props.input.name}
                                         value={props.input.value}
                                         onChange={props.input.onChange}
-                                        fullWidth
+                                        sx={{ width: "320px" }}
                                     />
                                 )}
                             </Field>
                             <Field name="password">
                                 {(props) => (
-                                    <FormControl variant="outlined" fullWidth>
+                                    <FormControl variant="outlined">
                                         <InputLabel htmlFor="outlined-adornment-password">
                                             Password
                                         </InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-password"
+                                            name={props.input.name}
+                                            value={props.input.value}
+                                            onChange={props.input.onChange}
                                             type={
                                                 showPassword
                                                     ? "text"
@@ -134,6 +142,7 @@ const RegisterWindow = () => {
                                                 </InputAdornment>
                                             }
                                             label="Password"
+                                            sx={{ width: "320px" }}
                                         />
                                     </FormControl>
                                 )}

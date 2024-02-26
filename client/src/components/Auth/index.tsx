@@ -7,7 +7,7 @@ const AuthContainer = () => {
     const { pathname } = useLocation();
 
     return (
-        <div className="">
+        <div>
             {pathname === SignType.Login ? <LoginWindow /> : <RegisterWindow />}
         </div>
     );

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface UserState {
@@ -19,22 +19,55 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-            .addCase(fetchUser.pending, (state) => {
+            .addCase(register.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(fetchUser.fulfilled, (state, action) => {
+            .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.data = action.payload;
             })
-            .addCase(fetchUser.rejected, (state, action) => {
+            .addCase(register.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
+            .addCase(login.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.data = action.payload;
+            })
+            .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
             });
     },
 });
 
-const fetchUser = createAsyncThunk("user/fetch", async () => {
-    const response = await axios.get("/auth/login");
-});
+export const register = createAsyncThunk(
+    "user/register",
+    async (data: user) => {
+        const response = await axios.post(
+            "http://localhost:8080/auth/register",
+            data
+        );
+
+        return response.data;
+    }
+);
+
+export const login = createAsyncThunk(
+    "user/login",
+    async (data: { email: string; password: string }) => {
+        const response = await axios.post(
+            "http://localhost:8080/auth/login",
+            data
+        );
+
+        return response.data;
+    }
+);
 
 export default userSlice.reducer;
