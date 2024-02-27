@@ -63,6 +63,7 @@ const RegisterWindow = () => {
                                             name={props.input.name}
                                             value={props.input.value}
                                             onChange={props.input.onChange}
+                                            required
                                             fullWidth
                                         />
                                     )}
@@ -75,6 +76,7 @@ const RegisterWindow = () => {
                                             name={props.input.name}
                                             value={props.input.value}
                                             onChange={props.input.onChange}
+                                            required
                                             fullWidth
                                         />
                                     )}
@@ -90,6 +92,7 @@ const RegisterWindow = () => {
                                         value={props.input.value}
                                         onChange={props.input.onChange}
                                         sx={{ width: "320px" }}
+                                        required
                                     />
                                 )}
                             </Field>
@@ -102,6 +105,7 @@ const RegisterWindow = () => {
                                         value={props.input.value}
                                         onChange={props.input.onChange}
                                         sx={{ width: "320px" }}
+                                        required
                                     />
                                 )}
                             </Field>
@@ -143,6 +147,7 @@ const RegisterWindow = () => {
                                             }
                                             label="Password"
                                             sx={{ width: "320px" }}
+                                            required
                                         />
                                     </FormControl>
                                 )}

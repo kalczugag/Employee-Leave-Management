@@ -49,10 +49,7 @@ const userSlice = createSlice({
 export const register = createAsyncThunk(
     "user/register",
     async (data: user) => {
-        const response = await axios.post(
-            "http://localhost:8080/auth/register",
-            data
-        );
+        const response = await axios.post("/api/auth/register", data);
 
         return response.data;
     }
@@ -61,10 +58,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
     "user/login",
     async (data: { email: string; password: string }) => {
-        const response = await axios.post(
-            "http://localhost:8080/auth/login",
-            data
-        );
+        const response = await axios.post("/api/auth/login", data);
 
         return response.data;
     }

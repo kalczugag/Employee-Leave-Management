@@ -62,6 +62,7 @@ const LoginWindow = () => {
                                         value={props.input.value}
                                         onChange={props.input.onChange}
                                         sx={{ width: "320px" }}
+                                        required
                                     />
                                 )}
                             </Field>
@@ -113,6 +114,7 @@ const LoginWindow = () => {
                                                 }
                                                 label="Password"
                                                 sx={{ width: "320px" }}
+                                                required
                                             />
                                         </FormControl>
                                     </div>
