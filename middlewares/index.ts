@@ -37,17 +37,18 @@ export const isAuthenticated = async (
         const sessionToken = req.cookies[keys.cookieKey];
 
         if (!sessionToken) {
-            return res.sendStatus(403);
+            return res.redirect("/login");
         }
 
         const existingUser = await getUserBySessionToken(sessionToken);
 
         if (!existingUser) {
-            return res.sendStatus(403);
+            return res.redirect("/login");
         }
 
         merge(req, { identity: existingUser });
 
+        res.status(200).send({ loggedIn: true });
         return next();
     } catch (error) {
         console.log(error);

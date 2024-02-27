@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import useNavigate from "../../hooks/useNavigate";
 
 interface UserState {
     data: any;
