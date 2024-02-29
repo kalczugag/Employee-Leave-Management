@@ -11,6 +11,7 @@ import EmployeeList from "./pages/Employee/list";
 import LeaveTypeList from "./pages/LeaveType/list";
 import LeaveTypeUpdate from "./pages/LeaveType/edit";
 import SnackbarMsg from "./components/SnackbarMsg";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
     return (

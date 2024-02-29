@@ -62,16 +62,17 @@ const LoginWindow = () => {
                                         value={props.input.value}
                                         onChange={props.input.onChange}
                                         sx={{ width: "320px" }}
+                                        fullWidth
                                         required
                                     />
                                 )}
                             </Field>
                             <Field name="password">
                                 {(props) => (
-                                    <div className="text-end space-y-1">
+                                    <div className="flex flex-col items-center space-y-1">
                                         <Link
                                             to="/reset"
-                                            className="text-xs text-gray-500 hover:text-gray-700"
+                                            className="w-full text-end text-xs text-gray-500 hover:text-gray-700"
                                         >
                                             Forget your password?
                                         </Link>

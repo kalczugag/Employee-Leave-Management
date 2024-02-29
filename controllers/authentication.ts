@@ -1,7 +1,7 @@
 import express from "express";
 import keys from "../config/keys";
 
-import { getUserByEmail, createUser } from "../db/users";
+import { getUserByEmail, createUser, getUserBySessionToken } from "../db/users";
 import { random, authentication } from "../helpers";
 
 export const login = async (req: express.Request, res: express.Response) => {
@@ -37,12 +37,17 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         await user.save();
 
+        const userObject = user.toObject();
+
         res.cookie(keys.cookieKey, user.authentication.sessionToken, {
             domain: "localhost",
             path: "/",
         });
 
-        return res.status(200).json(user).end();
+        return res
+            .status(200)
+            .json({ user: userObject, isAuthenticated: true })
+            .end();
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
@@ -75,7 +80,29 @@ export const register = async (req: express.Request, res: express.Response) => {
             },
         });
 
-        return res.status(200).json(user).end();
+        return res
+            .status(200)
+            .json({ ...user, isAuthenticated: true })
+            .end();
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+export const getUser = async (req: express.Request, res: express.Response) => {
+    try {
+        const sessionToken = req.cookies[keys.cookieKey];
+
+        if (!sessionToken) {
+            return res.sendStatus(403);
+        }
+
+        const user = await getUserBySessionToken(sessionToken);
+
+        if (!user) {
+            return res.sendStatus(403);
+        }
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

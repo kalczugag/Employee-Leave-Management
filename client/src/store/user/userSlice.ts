@@ -1,15 +1,22 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import useNavigate from "../../hooks/useNavigate";
 
 interface UserState {
     data: any;
+    isAuthenticated: boolean;
     isLoading: boolean;
     error: any;
 }
 
+interface authPayload {
+    user: user;
+    isAuthenticated: boolean;
+}
+
 const initialState: UserState = {
     data: null,
+    isAuthenticated: false,
     isLoading: false,
     error: null,
 };
@@ -23,10 +30,17 @@ const userSlice = createSlice({
             .addCase(register.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(register.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
-            })
+            .addCase(
+                register.fulfilled,
+                (state, action: PayloadAction<authPayload>) => {
+                    return {
+                        ...state,
+                        data: action.payload.user,
+                        isAuthenticated: action.payload.isAuthenticated,
+                        isLoading: false,
+                    };
+                }
+            )
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
@@ -36,10 +50,19 @@ const userSlice = createSlice({
             .addCase(login.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(login.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
-            })
+            .addCase(
+                login.fulfilled,
+                (state, action: PayloadAction<authPayload>) => {
+                    console.log(action.payload);
+
+                    return {
+                        ...state,
+                        data: action.payload.user,
+                        isAuthenticated: action.payload.isAuthenticated,
+                        isLoading: false,
+                    };
+                }
+            )
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
@@ -64,5 +87,11 @@ export const login = createAsyncThunk(
         return response.data;
     }
 );
+
+export const getUser = createAsyncThunk("user/get", async () => {
+    const response = await axios.get("/api/auth/current_user");
+
+    return response.data;
+});
 
 export default userSlice.reducer;
