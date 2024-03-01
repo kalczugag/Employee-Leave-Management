@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import useNavigate from "../../hooks/useNavigate";
 
 interface UserState {
     data: any;
@@ -53,8 +52,6 @@ const userSlice = createSlice({
             .addCase(
                 login.fulfilled,
                 (state, action: PayloadAction<authPayload>) => {
-                    console.log(action.payload);
-
                     return {
                         ...state,
                         data: action.payload.user,
@@ -64,6 +61,26 @@ const userSlice = createSlice({
                 }
             )
             .addCase(login.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
+            .addCase(getUser.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(
+                getUser.fulfilled,
+                (state, action: PayloadAction<authPayload>) => {
+                    return {
+                        ...state,
+                        data: action.payload.user,
+                        isAuthenticated: action.payload.isAuthenticated,
+                        isLoading: false,
+                    };
+                }
+            )
+            .addCase(getUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
             });

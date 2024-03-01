@@ -80,10 +80,7 @@ export const register = async (req: express.Request, res: express.Response) => {
             },
         });
 
-        return res
-            .status(200)
-            .json({ ...user, isAuthenticated: true })
-            .end();
+        return res.status(200).json({ user, isAuthenticated: true }).end();
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
@@ -103,6 +100,13 @@ export const getUser = async (req: express.Request, res: express.Response) => {
         if (!user) {
             return res.sendStatus(403);
         }
+
+        const userObject = user.toObject();
+
+        return res
+            .status(200)
+            .json({ user: userObject, isAuthenticated: true })
+            .end();
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
