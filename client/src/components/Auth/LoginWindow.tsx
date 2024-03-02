@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { AppDispatch, login } from "../../store";
+import useSnackbar from "../../hooks/useSnackbar";
 import {
     TextField,
     Button,
@@ -19,6 +20,7 @@ import Logo from "../Logo";
 
 const LoginWindow = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const { handleOpen } = useSnackbar();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -30,7 +32,10 @@ const LoginWindow = () => {
     };
 
     const onSubmit = (values: { email: string; password: string }) => {
-        dispatch(login(values));
+        dispatch(login(values))
+            .unwrap()
+            .catch((err: any) => console.log(err))
+            .finally(() => handleOpen("xd"));
     };
 
     return (

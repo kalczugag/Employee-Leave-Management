@@ -7,7 +7,7 @@ interface SnackbarState extends SnackbarOrigin {
     severity: "success" | "error";
 }
 
-interface ToggleSnackbarPayload {
+export interface ToggleSnackbarPayload {
     message: string;
     severity?: "success" | "error";
 }

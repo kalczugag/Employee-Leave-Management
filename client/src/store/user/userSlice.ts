@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import useSnackbar from "../../hooks/useSnackbar";
 
 interface UserState {
     data: any;
@@ -34,8 +35,8 @@ const userSlice = createSlice({
                 (state, action: PayloadAction<authPayload>) => {
                     return {
                         ...state,
-                        data: action.payload.user,
-                        isAuthenticated: action.payload.isAuthenticated,
+                        data: action.payload?.user,
+                        isAuthenticated: action.payload?.isAuthenticated,
                         isLoading: false,
                     };
                 }
@@ -54,8 +55,8 @@ const userSlice = createSlice({
                 (state, action: PayloadAction<authPayload>) => {
                     return {
                         ...state,
-                        data: action.payload.user,
-                        isAuthenticated: action.payload.isAuthenticated,
+                        data: action.payload?.user,
+                        isAuthenticated: action.payload?.isAuthenticated,
                         isLoading: false,
                     };
                 }
@@ -74,8 +75,8 @@ const userSlice = createSlice({
                 (state, action: PayloadAction<authPayload>) => {
                     return {
                         ...state,
-                        data: action.payload.user,
-                        isAuthenticated: action.payload.isAuthenticated,
+                        data: action.payload?.user,
+                        isAuthenticated: action.payload?.isAuthenticated,
                         isLoading: false,
                     };
                 }
@@ -90,25 +91,56 @@ const userSlice = createSlice({
 export const register = createAsyncThunk(
     "user/register",
     async (data: user) => {
-        const response = await axios.post("/api/auth/register", data);
+        try {
+            const response = await axios.post("/api/auth/register", data);
 
-        return response.data;
+            if (response.status === 200) {
+                window.location.href = "/login";
+            }
+
+            return response.data;
+        } catch (err) {
+            console.warn(err);
+        }
     }
 );
 
 export const login = createAsyncThunk(
     "user/login",
     async (data: { email: string; password: string }) => {
-        const response = await axios.post("/api/auth/login", data);
+        try {
+            const response = await axios.post("/api/auth/login", data);
 
-        return response.data;
+            if (response.status === 200) {
+                window.location.href = "/";
+            }
+
+            return response.data;
+        } catch (err) {
+            console.warn(err);
+        }
     }
 );
 
 export const getUser = createAsyncThunk("user/get", async () => {
-    const response = await axios.get("/api/auth/current_user");
+    try {
+        const response = await axios.get("/api/auth/current_user");
 
-    return response.data;
+        return response.data;
+    } catch (err: any | unknown) {
+        console.warn(err);
+
+        switch (err.response.status) {
+            case 403:
+                window.location.href = "/login";
+                break;
+            case 503:
+                window.location.href = "/login";
+                break;
+            default:
+                throw err;
+        }
+    }
 });
 
 export default userSlice.reducer;

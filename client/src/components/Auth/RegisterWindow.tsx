@@ -16,8 +16,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Footer from "../Footer";
 import Logo from "../Logo";
+import useSnackbar from "../../hooks/useSnackbar";
 
 const RegisterWindow = () => {
+    const { handleOpen } = useSnackbar();
     const dispatch = useDispatch<AppDispatch>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -30,7 +32,9 @@ const RegisterWindow = () => {
     };
 
     const onSubmit = (values: user) => {
-        dispatch(register(values));
+        dispatch(register(values))
+            .unwrap()
+            .catch((err) => handleOpen("xx"));
     };
 
     return (

@@ -4,15 +4,15 @@ import { toggleSnackbar, closeSnackbar } from "../store";
 function useSnackbar() {
     const dispatch = useDispatch();
 
-    const handleClick = (msg: string) => {
-        dispatch(toggleSnackbar({ message: msg }));
+    const handleOpen = (message: string, severity?: "success" | "error") => {
+        dispatch(toggleSnackbar({ message, severity }));
     };
 
     const handleClose = () => {
         dispatch(closeSnackbar());
     };
 
-    return { handleClick, handleClose };
+    return { handleOpen, handleClose };
 }
 
 export default useSnackbar;

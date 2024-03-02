@@ -4,11 +4,12 @@ interface Props {
     children?: ReactNode;
     buttons?: boolean;
     center?: boolean;
+    spacing?: boolean;
 }
 
-const Footer = ({ children, buttons = false, center = false }: Props) => {
+const Footer = ({ children, buttons, center, spacing }: Props) => {
     return (
-        <div className="mt-6 border-t">
+        <div className={`mt-6 border-t ${spacing && "mt-10 pt-2 px-4"}`}>
             {buttons ? (
                 <div className="flex flex-col items-center justify-between text-sm text-gray-500 md:items-start md:flex-row">
                     <p>2024 &copy; Gabriel Kałczuga</p>
