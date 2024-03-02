@@ -22,6 +22,17 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+const server = http.createServer(app);
+server.listen(8080, () => {
+    console.log("Server running on http://localhost:8080");
+});
+
+mongoose.Promise = Promise;
+mongoose.connect(keys.mongoURI);
+mongoose.connection.on("error", (error: Error) => console.log(error));
+
+app.use("/api", router());
+
 if (process.env.NODE_ENV === "production") {
     const clientBuildPath = path.join(__dirname, "../client/build");
 
@@ -33,14 +44,3 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.join(clientBuildPath, "index.html"));
     });
 }
-
-const server = http.createServer(app);
-server.listen(8080, () => {
-    console.log("Server running on http://localhost:8080");
-});
-
-mongoose.Promise = Promise;
-mongoose.connect(keys.mongoURI);
-mongoose.connection.on("error", (error: Error) => console.log(error));
-
-app.use("/api", router());
