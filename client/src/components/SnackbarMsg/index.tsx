@@ -10,20 +10,20 @@ const SnackbarMsg = () => {
         (state: RootState) => state.snackbar
     );
 
-    useEffect(() => {
-        const storedSnackbarState = JSON.parse(
-            localStorage.getItem("snackbarState")
-        );
-        if (storedSnackbarState) {
-            dispatch(
-                openSnackbar(
-                    storedSnackbarState.message,
-                    storedSnackbarState.severity
-                )
-            );
-            localStorage.removeItem("snackbarState");
-        }
-    }, [dispatch]);
+    // useEffect(() => {
+    //     const storedSnackbarState = JSON.parse(
+    //         localStorage.getItem("snackbarState")
+    //     );
+    //     if (storedSnackbarState) {
+    //         dispatch(
+    //             openSnackbar(
+    //                 storedSnackbarState.message,
+    //                 storedSnackbarState.severity
+    //             )
+    //         );
+    //         localStorage.removeItem("snackbarState");
+    //     }
+    // }, [dispatch]);
 
     return (
         <div>
