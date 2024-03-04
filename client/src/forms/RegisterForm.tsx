@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
-import { AppDispatch, register } from "../../store";
+import { AppDispatch, register } from "../store";
 import {
     TextField,
     Button,
@@ -14,9 +14,9 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Footer from "../Footer";
-import Logo from "../Logo";
-import useSnackbar from "../../hooks/useSnackbar";
+import Footer from "../components/Footer";
+import Logo from "../components/Logo";
+import useSnackbar from "../hooks/useSnackbar";
 
 const RegisterWindow = () => {
     const { handleOpen } = useSnackbar();

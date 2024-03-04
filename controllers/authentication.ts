@@ -39,7 +39,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         const userObject = user.toObject();
 
-        res.cookie(keys.cookieKey, user.authentication.sessionToken, {
+        res.cookie(keys.authCookieKey, user.authentication.sessionToken, {
             domain: "localhost",
             path: "/",
         });
@@ -89,7 +89,7 @@ export const register = async (req: express.Request, res: express.Response) => {
 
 export const getUser = async (req: express.Request, res: express.Response) => {
     try {
-        const sessionToken = req.cookies[keys.cookieKey];
+        const sessionToken = req.cookies[keys.authCookieKey];
 
         if (!sessionToken) {
             return res.sendStatus(403);
@@ -107,6 +107,23 @@ export const getUser = async (req: express.Request, res: express.Response) => {
             .status(200)
             .json({ user: userObject, isAuthenticated: true })
             .end();
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+export const logout = (req: express.Request, res: express.Response) => {
+    try {
+        const cookies = req.cookies;
+
+        if (!cookies[keys.authCookieKey]) {
+            return res.sendStatus(403);
+        }
+
+        res.clearCookie(keys.authCookieKey);
+
+        return res.redirect("/login");
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

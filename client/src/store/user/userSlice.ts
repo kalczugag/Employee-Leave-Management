@@ -85,6 +85,21 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.error;
             });
+
+        builder
+            .addCase(logout.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(logout.fulfilled, (state) => {
+                return {
+                    ...state,
+                    initialState,
+                };
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
     },
 });
 
@@ -100,7 +115,7 @@ export const register = createAsyncThunk(
 
             return response.data;
         } catch (err) {
-            console.warn(err);
+            console.error(err);
         }
     }
 );
@@ -117,7 +132,7 @@ export const login = createAsyncThunk(
 
             return response.data;
         } catch (err) {
-            console.warn(err);
+            console.error(err);
         }
     }
 );
@@ -128,7 +143,7 @@ export const getUser = createAsyncThunk("user/get", async () => {
 
         return response.data;
     } catch (err: any | unknown) {
-        console.warn(err);
+        console.error(err);
 
         switch (err.response.status) {
             case 403:
@@ -140,6 +155,16 @@ export const getUser = createAsyncThunk("user/get", async () => {
             default:
                 throw err;
         }
+    }
+});
+
+export const logout = createAsyncThunk("user/logout", async () => {
+    try {
+        const response = await axios.get("/api/auth/logout");
+
+        return response.data;
+    } catch (err) {
+        console.error(err);
     }
 });
 

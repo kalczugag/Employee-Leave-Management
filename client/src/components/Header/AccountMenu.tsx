@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch, logout } from "../../store";
+import useSnackbar from "../../hooks/useSnackbar";
 import {
     Box,
     Avatar,
@@ -13,6 +16,8 @@ import { PersonAdd, Settings, Logout } from "@mui/icons-material";
 import ToolsMenu from "./ToolsMenu";
 
 const AccountMenu = () => {
+    const { handleOpen } = useSnackbar();
+    const dispatch = useDispatch<AppDispatch>();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -21,6 +26,15 @@ const AccountMenu = () => {
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        dispatch(logout())
+            .unwrap()
+            .finally(() => {
+                handleOpen("xd", "error");
+                window.location.reload();
+            });
     };
 
     return (
@@ -106,7 +120,12 @@ const AccountMenu = () => {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        handleLogout();
+                    }}
+                >
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

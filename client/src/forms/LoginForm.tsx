@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
-import { AppDispatch, login } from "../../store";
-import useSnackbar from "../../hooks/useSnackbar";
+import { AppDispatch, login } from "../store";
+import useSnackbar from "../hooks/useSnackbar";
 import {
     TextField,
     Button,
@@ -15,8 +15,8 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Footer from "../Footer";
-import Logo from "../Logo";
+import Footer from "../components/Footer";
+import Logo from "../components/Logo";
 
 const LoginWindow = () => {
     const dispatch = useDispatch<AppDispatch>();

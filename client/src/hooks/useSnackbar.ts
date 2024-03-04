@@ -6,6 +6,10 @@ function useSnackbar() {
 
     const handleOpen = (message: string, severity?: "success" | "error") => {
         dispatch(toggleSnackbar({ message, severity }));
+        localStorage.setItem(
+            "snackbarState",
+            JSON.stringify({ message, severity })
+        );
     };
 
     const handleClose = () => {

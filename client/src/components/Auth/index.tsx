@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
-import LoginWindow from "./LoginWindow";
-import RegisterWindow from "./RegisterWindow";
+import LoginForm from "../../forms/LoginForm";
+import RegisterForm from "../../forms/RegisterForm";
 import { SignType } from "../../enums/signType.enum";
 
 const AuthContainer = () => {
@@ -8,7 +8,7 @@ const AuthContainer = () => {
 
     return (
         <div>
-            {pathname === SignType.Login ? <LoginWindow /> : <RegisterWindow />}
+            {pathname === SignType.Login ? <LoginForm /> : <RegisterForm />}
         </div>
     );
 };
