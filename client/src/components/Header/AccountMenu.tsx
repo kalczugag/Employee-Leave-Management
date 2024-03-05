@@ -29,10 +29,15 @@ const AccountMenu = () => {
     };
 
     const handleLogout = () => {
-        dispatch(logout()).then(() => {
-            handleOpen("Logged out", "error");
-            window.location.reload();
-        });
+        dispatch(logout())
+            .unwrap()
+            .catch((err) => console.error(err))
+            .finally(() => {
+                handleOpen("Logged out", "error");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            });
     };
 
     return (
