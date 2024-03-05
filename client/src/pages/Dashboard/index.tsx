@@ -12,7 +12,7 @@ const Dashboard = () => {
                     <h3>Department Head</h3>
                 </div>
                 <div className="flex-1 p-6 rounded bg-white shadow">
-                    <h3>Department Head</h3>
+                    <h3>Staff List</h3>
                 </div>
             </div>
         </DefaultPage>

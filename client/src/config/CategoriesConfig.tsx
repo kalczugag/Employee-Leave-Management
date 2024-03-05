@@ -25,5 +25,5 @@ export const CategoriesConfig: CategoriesConfigProps[] = [
         element: <CallMadeOutlined />,
     },
     { label: "Employee", to: "/employee", element: <CallMadeOutlined /> },
-    { label: "leave", to: "/leave", element: <CallMadeOutlined /> },
+    { label: "Leave", to: "/leave", element: <CallMadeOutlined /> },
 ];

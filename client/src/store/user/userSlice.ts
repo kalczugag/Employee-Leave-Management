@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import useSnackbar from "../../hooks/useSnackbar";
 
 interface UserState {
     data: any;
