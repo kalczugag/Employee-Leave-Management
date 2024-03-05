@@ -1,6 +1,6 @@
 export default {
     mongoURI: process.env.MONGO_URI,
     secretKey: process.env.SECRET_KEY,
-    cookieKey: process.env.COOKIE_KEY,
+    authCookieKey: process.env.AUTH_COOKIE_KEY,
     defaultDomain: process.env.DEFAULT_DOMAIN,
 };
