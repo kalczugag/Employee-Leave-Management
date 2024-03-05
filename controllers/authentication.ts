@@ -123,7 +123,7 @@ export const logout = (req: express.Request, res: express.Response) => {
 
         res.clearCookie(keys.authCookieKey).end();
 
-        return res.sendStatus(200);
+        return res.redirect("/login");
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
