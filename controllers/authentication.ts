@@ -121,9 +121,9 @@ export const logout = (req: express.Request, res: express.Response) => {
             return res.sendStatus(403);
         }
 
-        res.clearCookie(keys.authCookieKey);
+        res.clearCookie(keys.authCookieKey).end();
 
-        return res.redirect("/login");
+        return res.sendStatus(200);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

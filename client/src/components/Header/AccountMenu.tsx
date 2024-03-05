@@ -34,9 +34,7 @@ const AccountMenu = () => {
             .catch((err) => console.error(err))
             .finally(() => {
                 handleOpen("Logged out", "error");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500);
+                window.location.reload();
             });
     };
 
