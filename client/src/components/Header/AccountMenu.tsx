@@ -29,12 +29,10 @@ const AccountMenu = () => {
     };
 
     const handleLogout = () => {
-        dispatch(logout())
-            .unwrap()
-            .finally(() => {
-                handleOpen("Logged out", "error");
-                window.location.reload();
-            });
+        dispatch(logout()).then(() => {
+            handleOpen("Logged out", "error");
+            window.location.reload();
+        });
     };
 
     return (
