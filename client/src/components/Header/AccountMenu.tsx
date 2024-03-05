@@ -32,7 +32,7 @@ const AccountMenu = () => {
         dispatch(logout())
             .unwrap()
             .finally(() => {
-                handleOpen("xd", "error");
+                handleOpen("Logged out", "error");
                 window.location.reload();
             });
     };

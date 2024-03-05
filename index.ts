@@ -6,8 +6,8 @@ import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
-import keys from "./config/keys";
 
+import keys from "./config/keys";
 import router from "./router";
 
 const app = express();

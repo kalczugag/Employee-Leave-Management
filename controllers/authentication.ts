@@ -40,7 +40,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         const userObject = user.toObject();
 
         res.cookie(keys.authCookieKey, user.authentication.sessionToken, {
-            domain: "localhost",
+            domain: keys.defaultDomain,
             path: "/",
         });
 
