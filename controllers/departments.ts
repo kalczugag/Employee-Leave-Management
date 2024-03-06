@@ -26,14 +26,15 @@ export const addDepartment = async (
     res: express.Response
 ) => {
     try {
-        const { name, details, active } = req.body;
+        const { name, shortName, details, active } = req.body;
 
-        if (!name) {
+        if (!name || !shortName || !details || !active) {
             return res.sendStatus(400);
         }
 
         const department = await createDepartment({
             name,
+            shortName,
             details,
             active,
         });
@@ -67,15 +68,16 @@ export const updateDepartment = async (
 ) => {
     try {
         const { id } = req.params;
-        const { name, details, active } = req.body;
+        const { name, shortName, details, active } = req.body;
 
-        if (!name || !details || !active) {
+        if (!name || !shortName || !details || !active) {
             return res.sendStatus(400);
         }
 
         const department = await getDepartmentById(id);
 
         department!.set("name", name);
+        department!.set("shortName", shortName);
         department!.set("details", details);
         department!.set("active", active);
         await department!.save();

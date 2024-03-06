@@ -1,20 +1,20 @@
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
 
-const EmployeeNew = () => {
+const LeaveTypeNew = () => {
     const handleSubmit = (values: any) => {
         console.log(values);
     };
 
     return (
-        <DefaultPage label="New Employee" bg>
+        <DefaultPage label="Create Leave Type" bg>
             <FormView onSubmit={handleSubmit}>
-                <FormField label="Employee Name" />
-                <FormField label="Employee Short Name" />
-                <FormEditor label="Employee Details" />
+                <FormField required label="Leave Type Name" />
+                <FormField required label="Leave Type Short Name" />
+                <FormEditor label="Leave Type Details" />
             </FormView>
         </DefaultPage>
     );
 };
 
-export default EmployeeNew;
+export default LeaveTypeNew;

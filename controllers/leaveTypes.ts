@@ -26,14 +26,15 @@ export const addLeaveType = async (
     res: express.Response
 ) => {
     try {
-        const { name, details, active } = req.body;
+        const { name, shortName, details, active } = req.body;
 
-        if (!name) {
+        if (!name || !shortName || !details || !active) {
             return res.sendStatus(400);
         }
 
         const leaveType = await createLeaveType({
             name,
+            shortName,
             details,
             active,
         });
@@ -67,15 +68,16 @@ export const updateLeaveType = async (
 ) => {
     try {
         const { id } = req.params;
-        const { name, details, active } = req.body;
+        const { name, shortName, details, active } = req.body;
 
-        if (!name || !details || !active) {
+        if (!name || !shortName || !details || !active) {
             return res.sendStatus(400);
         }
 
         const department = await getLeaveTypeById(id);
 
         department!.set("name", name);
+        department!.set("shortName", shortName);
         department!.set("details", details);
         department!.set("active", active);
         await department!.save();

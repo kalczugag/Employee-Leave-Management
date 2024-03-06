@@ -1,7 +1,7 @@
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
 
-const NewDepartment = () => {
+const DepartmentNew = () => {
     const handleSubmit = (values: any) => {
         console.log(values);
     };
@@ -17,4 +17,4 @@ const NewDepartment = () => {
     );
 };
 
-export default NewDepartment;
+export default DepartmentNew;
