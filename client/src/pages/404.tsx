@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 
 const NotFound = () => {
     const { pathname } = useLocation();
-    console.log(pathname);
 
     return (
         <>

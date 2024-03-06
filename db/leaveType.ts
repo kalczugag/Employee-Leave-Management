@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const LeaveTypeSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
-        details: { type: String, required: false },
+        details: { type: String, required: false, default: "N/A" },
         active: { type: Boolean, required: false, default: true },
     },
     {

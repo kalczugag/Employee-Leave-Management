@@ -4,7 +4,7 @@ import Status from "../../../components/TableStatus";
 const headerOptions = [
     { label: "Department Name", render: (row) => row.name },
     { label: "Department Details", render: (row) => row.details },
-    { label: "Created On", render: (row) => row.createdOn },
+    { label: "Created At", render: (row) => row.createdAt },
     {
         label: "Department Status",
         render: (row) => <Status status={row.status} />,
@@ -16,49 +16,49 @@ const rows = [
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: false,
     },
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
     {
         name: "Library dep",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
     {
         name: "Library dep8",
         details: "Library dep",
-        createdOn: "8 Nov 2022",
+        createdAt: "8 Nov 2022",
         status: true,
     },
 ];
