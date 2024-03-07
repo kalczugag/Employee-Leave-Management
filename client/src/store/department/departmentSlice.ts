@@ -1,10 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { EditorProps } from "react-draft-wysiwyg";
 
 interface DepartmentsState {
     data: any[];
     isLoading: boolean;
     error: any;
+}
+
+interface DepartmentProps {
+    name: string;
+    shortName?: string;
+    details?: EditorProps;
+    active?: boolean;
 }
 
 const initialState: DepartmentsState = {
@@ -57,8 +65,8 @@ export const getDepartments = createAsyncThunk(
 
 export const addDepartment = createAsyncThunk(
     "departments/add",
-    async (values: { name: string; details: string; active: boolean }) => {
-        const response = await axios.post("/departments", values);
+    async (values: DepartmentProps) => {
+        const response = await axios.post("/api/departments", values);
 
         return response.data;
     }

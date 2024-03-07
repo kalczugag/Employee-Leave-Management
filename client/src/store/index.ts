@@ -4,6 +4,7 @@ import sidebarReducer from "./sidebar/sidebarSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
 import departmentReducer from "./department/departmentSlice";
 import leaveTypeReducer from "./leaveType/leaveTypeSlice";
+import editorReducer from "./editor/editorSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,12 @@ export const store = configureStore({
         snackbar: snackbarReducer,
         department: departmentReducer,
         leaveType: leaveTypeReducer,
+        editor: editorReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -23,3 +29,4 @@ export * from "./sidebar/sidebarSlice";
 export * from "./snackbar/snackbarSlice";
 export * from "./department/departmentSlice";
 export * from "./leaveType/leaveTypeSlice";
+export * from "./editor/editorSlice";

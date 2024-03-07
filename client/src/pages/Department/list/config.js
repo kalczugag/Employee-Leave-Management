@@ -3,7 +3,7 @@ import Status from "../../../components/TableStatus";
 
 export const fields = [
     { label: "Department Name", render: (row) => row.name },
-    { label: "Department Details", render: (row) => row.details },
+    { label: "Department Details", render: (row) => "..." },
     { label: "Created At", render: (row) => row.createdAt },
     {
         label: "Department Status",

@@ -28,7 +28,7 @@ export const addLeaveType = async (
     try {
         const { name, shortName, details, active } = req.body;
 
-        if (!name || !shortName || !details || !active) {
+        if (!name) {
             return res.sendStatus(400);
         }
 

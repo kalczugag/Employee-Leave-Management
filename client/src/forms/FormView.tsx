@@ -1,7 +1,9 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/editor-wysiwyg.css";
 import { ReactNode, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EditorState } from "draft-js";
+import { RootState, setEditorState, clearEditorState } from "../store";
 import { Editor } from "react-draft-wysiwyg";
 import { Form, Field } from "react-final-form";
 import {
@@ -13,16 +15,19 @@ import {
 } from "@mui/material";
 
 interface FormFieldProps {
-    label: string;
+    options: {
+        label: string;
+        name: string;
+    };
     required?: boolean;
 }
 
-const FormField = ({ label, required }: FormFieldProps) => {
+const FormField = ({ options, required }: FormFieldProps) => {
     return (
-        <Field name={label}>
+        <Field name={options.name}>
             {({ input, meta }) => (
                 <div className="space-y-1">
-                    <label htmlFor={input.name}>{label}</label>
+                    <label htmlFor={input.name}>{options.label}</label>
                     <TextField
                         variant="outlined"
                         name={input.name}
@@ -44,67 +49,84 @@ const FormField = ({ label, required }: FormFieldProps) => {
 };
 
 interface FormEditorProps {
-    label: string;
+    options: {
+        label: string;
+        name: string;
+    };
 }
 
-const FormEditor = ({ label }: FormEditorProps) => {
+const FormEditor = ({ options }: FormEditorProps) => {
+    const dispatch = useDispatch();
+    const { editor } = useSelector((state: RootState) => state.editor);
+
     const [isFocus, setIsFocus] = useState<boolean>(false);
-    const [editorState, setEditorState] = useState<EditorState>(
-        EditorState.createEmpty()
-    );
 
     const onEditorStateChange = (editorState: EditorState) => {
-        setEditorState(editorState);
+        dispatch(setEditorState(editorState));
     };
 
     return (
-        <div className="space-y-1">
-            <span>{label}</span>
-            <Editor
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
-                toolbar={{
-                    options: [
-                        "inline",
-                        "blockType",
-                        "list",
-                        "textAlign",
-                        "history",
-                    ],
-                    inline: { inDropdown: false },
-                    list: { inDropdown: true },
-                    textAlign: { inDropdown: true },
-                    link: { inDropdown: true },
-                    history: { inDropdown: true },
-                }}
-                editorState={editorState}
-                toolbarClassName={`${
-                    isFocus ? "hasFocusToolbar" : "toolbarClassName"
-                }`}
-                wrapperClassName="wrapperClassName"
-                editorClassName={`${
-                    isFocus ? "hasFocusEditor" : "editorClassName"
-                }`}
-                onEditorStateChange={onEditorStateChange}
-            />
-        </div>
+        <Field name={options.name}>
+            {({ input, meta }) => (
+                <div className="space-y-1">
+                    <span>{options.label}</span>
+                    <Editor
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={input.onChange}
+                        toolbar={{
+                            options: [
+                                "inline",
+                                "blockType",
+                                "list",
+                                "textAlign",
+                                "history",
+                            ],
+                            inline: { inDropdown: false },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
+                        }}
+                        editorState={editor}
+                        toolbarClassName={`${
+                            isFocus ? "hasFocusToolbar" : "toolbarClassName"
+                        }`}
+                        wrapperClassName="wrapperClassName"
+                        editorClassName={`${
+                            isFocus ? "hasFocusEditor" : "editorClassName"
+                        }`}
+                        onEditorStateChange={onEditorStateChange}
+                    />
+                </div>
+            )}
+        </Field>
     );
 };
 
 interface FormCheckboxProps {
-    label: string | string[];
+    options:
+        | {
+              label: string;
+              name: string;
+          }
+        | {
+              label: string;
+              name: string;
+          }[];
     required?: boolean;
 }
 
-const FormCheckbox = ({ label, required }: FormCheckboxProps) => {
-    if (Array.isArray(label)) {
+const FormCheckbox = ({ options, required }: FormCheckboxProps) => {
+    if (Array.isArray(options)) {
         return (
             <FormGroup>
-                {label.map((itemLabel, index) => (
+                {options.map((itemOptions, index) => (
                     <FormControlLabel
-                        key={itemLabel + "_" + index.toString()}
+                        key={itemOptions.name + "_" + index.toString()}
                         control={<Checkbox />}
-                        label={itemLabel}
+                        name={itemOptions.name}
+                        label={itemOptions.label}
                         required={required}
                     />
                 ))}
@@ -112,7 +134,13 @@ const FormCheckbox = ({ label, required }: FormCheckboxProps) => {
         );
     }
 
-    return <FormControlLabel control={<Checkbox />} label={label} />;
+    return (
+        <FormControlLabel
+            control={<Checkbox />}
+            name={options.name}
+            label={options.label}
+        />
+    );
 };
 
 interface FormViewProps {
@@ -122,13 +150,19 @@ interface FormViewProps {
 }
 
 const FormView = ({ children, initialValues, onSubmit }: FormViewProps) => {
+    const dispatch = useDispatch();
+
     return (
         <Form
             onSubmit={onSubmit}
             initialValues={initialValues}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, form }) => (
                 <form
-                    onSubmit={handleSubmit}
+                    onSubmit={(event) => {
+                        handleSubmit(event);
+                        dispatch(clearEditorState());
+                        form.reset();
+                    }}
                     className="flex flex-col space-y-10"
                 >
                     {children}

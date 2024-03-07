@@ -4,7 +4,11 @@ const DepartmentSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
         shortName: { type: String, required: false },
-        details: { type: String, required: false, default: "N/A" },
+        details: {
+            type: mongoose.Schema.Types.Mixed,
+            required: false,
+            default: "N/A",
+        },
         active: { type: Boolean, required: false, default: true },
     },
     {

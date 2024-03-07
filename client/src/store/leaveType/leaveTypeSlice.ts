@@ -1,10 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { EditorProps } from "react-draft-wysiwyg";
 
 interface LeaveTypeState {
     data: any[];
     isLoading: boolean;
     error: any;
+}
+
+interface LeaveTypeProps {
+    name: string;
+    shortName?: string;
+    details?: EditorProps;
+    active?: boolean;
 }
 
 const initialState: LeaveTypeState = {
@@ -57,8 +65,8 @@ export const getLeaveTypes = createAsyncThunk(
 
 export const addLeaveType = createAsyncThunk(
     "leave-types/add",
-    async (values: { name: string; details: string; active: boolean }) => {
-        const response = await axios.post("/leave-types", values);
+    async (values: LeaveTypeProps) => {
+        const response = await axios.post("/api/leave-types", values);
 
         return response.data;
     }

@@ -14,9 +14,18 @@ const LeaveTypeEdit = () => {
     return (
         <DefaultPage label="Edit Leave Type" bg>
             <FormView onSubmit={handleSubmit}>
-                <FormField label="Leave Type Name" />
-                <FormEditor label="Leave Type Details" />
-                <FormCheckbox label="Leave Type Status" />
+                <FormField
+                    options={{ label: "Leave Type Name", name: "name" }}
+                />
+                <FormEditor
+                    options={{
+                        label: "Leave Type Short Name",
+                        name: "shortName",
+                    }}
+                />
+                <FormCheckbox
+                    options={{ label: "Leave Type Details", name: "details" }}
+                />
             </FormView>
         </DefaultPage>
     );
