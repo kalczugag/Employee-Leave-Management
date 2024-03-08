@@ -5,6 +5,7 @@ import useSnackbar from "./hooks/useSnackbar";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import DepartmentNew from "./pages/Department/new";
+import DepartmentEdit from "./pages/Department/edit";
 import DepartmentList from "./pages/Department/list";
 import EmployeeNew from "./pages/Employee/new";
 import EmployeeList from "./pages/Employee/list";
@@ -30,11 +31,12 @@ const App = () => {
                 <Route index element={<Dashboard />} />
                 <Route path="/department">
                     <Route path="new" element={<DepartmentNew />} />
+                    <Route path="edit/:id" element={<DepartmentEdit />} />
                     <Route path="list" element={<DepartmentList />} />
                 </Route>
                 <Route path="/leave-type">
                     <Route path="new" element={<LeaveTypeNew />} />
-                    <Route path="edit" element={<LeaveTypeUpdate />} />
+                    <Route path="edit/:id" element={<LeaveTypeUpdate />} />
                     <Route path="list" element={<LeaveTypeList />} />
                 </Route>
                 <Route path="/employee">

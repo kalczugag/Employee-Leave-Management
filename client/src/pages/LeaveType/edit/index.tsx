@@ -1,3 +1,8 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { RootState, getLeaveType } from "../../../store";
+import useThunk from "../../../hooks/useThunk";
 import {
     FormView,
     FormField,
@@ -7,24 +12,39 @@ import {
 import DefaultPage from "../../../layout/DefaultPage";
 
 const LeaveTypeEdit = () => {
+    const { id } = useParams();
+    const [doFetchLeaveType] = useThunk(getLeaveType);
+    const data = useSelector((state: RootState) =>
+        state.leaveType.data.find((value) => value._id === id)
+    );
+
+    useEffect(() => {
+        if (!data) {
+            doFetchLeaveType(id);
+        }
+    }, [data, doFetchLeaveType, id]);
+
     const handleSubmit = (values: any) => {
         console.log(values);
     };
 
     return (
         <DefaultPage label="Edit Leave Type" bg>
-            <FormView onSubmit={handleSubmit}>
+            <FormView onSubmit={handleSubmit} initialValues={data}>
                 <FormField
                     options={{ label: "Leave Type Name", name: "name" }}
                 />
-                <FormEditor
+                <FormField
                     options={{
                         label: "Leave Type Short Name",
                         name: "shortName",
                     }}
                 />
-                <FormCheckbox
+                <FormEditor
                     options={{ label: "Leave Type Details", name: "details" }}
+                />
+                <FormCheckbox
+                    options={{ label: "Leave Type Status", name: "active" }}
                 />
             </FormView>
         </DefaultPage>

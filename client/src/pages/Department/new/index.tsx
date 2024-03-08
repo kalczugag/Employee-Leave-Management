@@ -1,13 +1,13 @@
-import { useDispatch } from "react-redux";
-import { AppDispatch, addDepartment } from "../../../store";
+import { addDepartment } from "../../../store";
+import useThunk from "../../../hooks/useThunk";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
 
 const DepartmentNew = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const [doAddDepartment] = useThunk(addDepartment);
 
     const handleSubmit = (values: any) => {
-        dispatch(addDepartment(values));
+        doAddDepartment(values);
         console.log(values);
     };
 

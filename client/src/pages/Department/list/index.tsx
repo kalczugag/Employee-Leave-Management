@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getDepartments, AppDispatch, RootState } from "../../../store";
+import { useSelector } from "react-redux";
+import { getDepartments, RootState } from "../../../store";
+import useThunk from "../../../hooks/useThunk";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
 import ListSearchForm from "../../../forms/SearchForm";
@@ -8,16 +9,16 @@ import BasicTable from "../../../components/Table";
 import { fields } from "./config";
 
 const DepartmentList = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const [doFetchDepartments] = useThunk(getDepartments);
     const { data, isLoading } = useSelector(
         (state: RootState) => state.department
     );
 
     useEffect(() => {
-        if (data.length === 0 && !isLoading) {
-            dispatch(getDepartments());
+        if (data.length === 0 || (data.length === 1 && !isLoading)) {
+            doFetchDepartments();
         }
-    }, [dispatch]);
+    }, [doFetchDepartments]);
 
     if (!data && isLoading) {
         return null;

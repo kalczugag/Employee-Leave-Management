@@ -21,6 +21,22 @@ export const getAllLeaveTypes = async (
     }
 };
 
+export const getLeaveType = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { id } = req.params;
+
+        const leaveType = await getLeaveTypeById(id);
+
+        return res.status(200).json(leaveType);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
 export const addLeaveType = async (
     req: express.Request,
     res: express.Response
@@ -70,7 +86,7 @@ export const updateLeaveType = async (
         const { id } = req.params;
         const { name, shortName, details, active } = req.body;
 
-        if (!name || !shortName || !details || !active) {
+        if (!name) {
             return res.sendStatus(400);
         }
 

@@ -21,6 +21,22 @@ export const getAllDepartments = async (
     }
 };
 
+export const getDepartment = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { id } = req.params;
+
+        const department = await getDepartmentById(id);
+
+        return res.status(200).json(department);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
 export const addDepartment = async (
     req: express.Request,
     res: express.Response
@@ -70,7 +86,7 @@ export const updateDepartment = async (
         const { id } = req.params;
         const { name, shortName, details, active } = req.body;
 
-        if (!name || !shortName || !details || !active) {
+        if (!name) {
             return res.sendStatus(400);
         }
 

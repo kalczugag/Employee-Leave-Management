@@ -1,19 +1,19 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { AppDispatch, getUser } from "../../store";
+import useThunk from "../../hooks/useThunk";
+import { getUser } from "../../store";
 import useAuth from "../../hooks/useAuth";
 import Layout from "../../layout/Layout";
 
 const PrivateOutlet = () => {
     const auth = useAuth();
-    const dispatch = useDispatch<AppDispatch>();
+    const [doFetchUser] = useThunk(getUser);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = () => {
             try {
                 if (!auth.isAuthenticated && !auth.data) {
-                    await dispatch(getUser());
+                    doFetchUser();
                 }
             } catch (error) {
                 console.error("Error fetching user data:", error);
@@ -21,7 +21,7 @@ const PrivateOutlet = () => {
         };
 
         fetchData();
-    }, [auth.isAuthenticated, auth.data, dispatch]);
+    }, [auth.isAuthenticated, auth.data, doFetchUser]);
 
     if (!auth.isAuthenticated && !auth.data) {
         return <div>Loading...</div>;

@@ -40,6 +40,19 @@ const leaveTypeSlice = createSlice({
             });
 
         builder
+            .addCase(getLeaveType.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getLeaveType.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.data.push(action.payload);
+            })
+            .addCase(getLeaveType.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
             .addCase(addLeaveType.pending, (state) => {
                 state.isLoading = true;
             })
@@ -58,6 +71,15 @@ export const getLeaveTypes = createAsyncThunk(
     "leave-types/getAll",
     async () => {
         const response = await axios.get("/api/leave-types");
+
+        return response.data;
+    }
+);
+
+export const getLeaveType = createAsyncThunk(
+    "leave-types/get",
+    async (id: string) => {
+        const response = await axios.get(`/api/leave-types/${id}`);
 
         return response.data;
     }

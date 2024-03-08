@@ -9,5 +9,5 @@ export const fields = [
         label: "Department Status",
         render: (row) => <Status status={row.active} />,
     },
-    { label: "Action", render: () => <RowActionButtons /> },
+    { label: "Action", render: (row) => <RowActionButtons id={row._id} /> },
 ];

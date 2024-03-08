@@ -16,7 +16,7 @@ const RowActionButtons = ({ id }: Props) => {
     return (
         <div className="flex flex-row items-center justify-end space-x-2">
             <IconButton
-                onClick={() => handleNavigate(`../edit?id=${id}`)} //{`../edit?id=...`}
+                onClick={() => handleNavigate(`../edit/${id}`)} //{`../edit?id=...`}
                 aria-label="edit"
                 sx={{ padding: 0 }}
             >

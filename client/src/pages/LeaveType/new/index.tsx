@@ -1,15 +1,13 @@
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store";
+import { addLeaveType } from "../../../store";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
-import { EditorProps } from "react-draft-wysiwyg";
+import useThunk from "../../../hooks/useThunk";
 
 const LeaveTypeNew = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const [doAddLeaveType] = useThunk(addLeaveType);
 
     const handleSubmit = (values: any) => {
-        // dispatch(addLeaveType(values));
-        console.log(values);
+        doAddLeaveType(values);
     };
 
     return (

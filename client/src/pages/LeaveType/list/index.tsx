@@ -14,7 +14,7 @@ const LeaveTypeList = () => {
     );
 
     useEffect(() => {
-        if (data.length === 0 && !isLoading) {
+        if (data.length === 0 || (data.length === 1 && !isLoading)) {
             dispatch(getLeaveTypes());
         }
     }, [dispatch]);

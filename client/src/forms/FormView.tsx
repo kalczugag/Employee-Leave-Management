@@ -53,9 +53,10 @@ interface FormEditorProps {
         label: string;
         name: string;
     };
+    initialValues?: EditorState;
 }
 
-const FormEditor = ({ options }: FormEditorProps) => {
+const FormEditor = ({ options, initialValues }: FormEditorProps) => {
     const dispatch = useDispatch();
     const { editor } = useSelector((state: RootState) => state.editor);
 
@@ -122,24 +123,43 @@ const FormCheckbox = ({ options, required }: FormCheckboxProps) => {
         return (
             <FormGroup>
                 {options.map((itemOptions, index) => (
-                    <FormControlLabel
-                        key={itemOptions.name + "_" + index.toString()}
-                        control={<Checkbox />}
-                        name={itemOptions.name}
-                        label={itemOptions.label}
-                        required={required}
-                    />
+                    <Field name={itemOptions.name} type="checkbox">
+                        {({ input, meta }) => (
+                            <FormControlLabel
+                                key={itemOptions.name + "_" + index.toString()}
+                                control={
+                                    <Checkbox
+                                        checked={input.checked}
+                                        onChange={input.onChange}
+                                        name={input.name}
+                                        required={required}
+                                    />
+                                }
+                                label={itemOptions.label}
+                            />
+                        )}
+                    </Field>
                 ))}
             </FormGroup>
         );
     }
 
     return (
-        <FormControlLabel
-            control={<Checkbox />}
-            name={options.name}
-            label={options.label}
-        />
+        <Field name={options.name} type="checkbox">
+            {({ input, meta }) => (
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={input.checked}
+                            onChange={input.onChange}
+                            name={input.name}
+                            required={required}
+                        />
+                    }
+                    label={options.label}
+                />
+            )}
+        </Field>
     );
 };
 
