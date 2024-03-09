@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { EditorProps } from "react-draft-wysiwyg";
 
@@ -9,6 +9,7 @@ interface LeaveTypeState {
 }
 
 interface LeaveTypeProps {
+    _id?: string;
     name: string;
     shortName?: string;
     details?: EditorProps;
@@ -64,6 +65,52 @@ const leaveTypeSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.error;
             });
+
+        builder
+            .addCase(editLeaveType.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(
+                editLeaveType.fulfilled,
+                (state, action: PayloadAction<LeaveTypeProps>) => {
+                    state.isLoading = false;
+                    const editedLeaveType = action.payload;
+
+                    const index = state.data.findIndex(
+                        (lt: LeaveTypeProps) => lt._id === editedLeaveType._id
+                    );
+
+                    if (index !== -1) {
+                        state.data[index] = {
+                            ...state.data[index],
+                            name: editedLeaveType?.name,
+                            shortName: editedLeaveType?.shortName,
+                            details: editedLeaveType?.details,
+                            active: editedLeaveType?.active,
+                        };
+                    }
+                }
+            )
+            .addCase(editLeaveType.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
+            .addCase(deleteLeaveType.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteLeaveType.fulfilled, (state, action) => {
+                state.isLoading = false;
+
+                state.data = state.data.filter((lt: LeaveTypeProps) => {
+                    return lt._id !== action.payload;
+                });
+            })
+            .addCase(deleteLeaveType.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
     },
 });
 
@@ -91,6 +138,27 @@ export const addLeaveType = createAsyncThunk(
         const response = await axios.post("/api/leave-types", values);
 
         return response.data;
+    }
+);
+
+export const editLeaveType = createAsyncThunk(
+    "leave-types/edit",
+    async (values: LeaveTypeProps) => {
+        const response = await axios.patch(
+            `/api/leave-types/${values._id}`,
+            values
+        );
+
+        return response.data;
+    }
+);
+
+export const deleteLeaveType = createAsyncThunk(
+    "leave-types/delete",
+    async (id: string) => {
+        await axios.delete(`/api/leave-types/${id}`);
+
+        return id;
     }
 );
 

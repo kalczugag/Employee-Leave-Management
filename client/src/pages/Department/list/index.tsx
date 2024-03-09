@@ -9,16 +9,14 @@ import BasicTable from "../../../components/Table";
 import { fields } from "./config";
 
 const DepartmentList = () => {
-    const [doFetchDepartments] = useThunk(getDepartments);
-    const { data, isLoading } = useSelector(
-        (state: RootState) => state.department
-    );
+    const [doFetchDepartments, isLoading] = useThunk(getDepartments);
+    const { data } = useSelector((state: RootState) => state.department);
 
     useEffect(() => {
-        if (data.length === 0 || (data.length === 1 && !isLoading)) {
+        if (data.length <= 1 && !isLoading) {
             doFetchDepartments();
         }
-    }, [doFetchDepartments]);
+    }, [doFetchDepartments, data.length, isLoading]);
 
     if (!data && isLoading) {
         return null;

@@ -1,27 +1,46 @@
-import { useDispatch, useSelector } from "react-redux";
-import { getLeaveTypes, AppDispatch, RootState } from "../../../store";
+import { useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { getLeaveTypes, deleteLeaveType, RootState } from "../../../store";
+import useThunk from "../../../hooks/useThunk";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
 import ListSearchForm from "../../../forms/SearchForm";
 import BasicTable from "../../../components/Table";
 import { fields } from "./config";
-import { useEffect } from "react";
 
 const LeaveTypeList = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const { data, isLoading } = useSelector(
-        (state: RootState) => state.leaveType
+    const [doFetchLeaveTypes, isFetching] = useThunk(getLeaveTypes);
+    const [doDeleteLeave] = useThunk(deleteLeaveType);
+
+    const leaveTypeData = useSelector(
+        (state: RootState) => state.leaveType.data
+    );
+
+    console.log(leaveTypeData);
+
+    const data = useMemo(
+        () =>
+            leaveTypeData.map((row) => ({
+                ...row,
+                handleDelete: () => handleDelete(row._id),
+            })),
+        [leaveTypeData]
     );
 
     useEffect(() => {
-        if (data.length === 0 || (data.length === 1 && !isLoading)) {
-            dispatch(getLeaveTypes());
+        if (data.length <= 1 && !isFetching) {
+            doFetchLeaveTypes();
         }
-    }, [dispatch]);
+    }, []);
 
-    if (!data && isLoading) {
+    if (!data && isFetching) {
         return null;
     }
+
+    const handleDelete = (id: string) => {
+        console.log(id);
+        doDeleteLeave(id);
+    };
 
     const handleSubmit = (values: any) => {
         console.log(values);

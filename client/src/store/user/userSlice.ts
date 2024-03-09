@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface UserState {
-    data: any;
+    data: user | null;
     isAuthenticated: boolean;
     isLoading: boolean;
     error: any;

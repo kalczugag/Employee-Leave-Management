@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { RootState, getLeaveType } from "../../../store";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { RootState, editLeaveType, getLeaveType } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import {
     FormView,
@@ -13,7 +13,10 @@ import DefaultPage from "../../../layout/DefaultPage";
 
 const LeaveTypeEdit = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [doFetchLeaveType] = useThunk(getLeaveType);
+    const [doPatchLeaveType] = useThunk(editLeaveType);
+
     const data = useSelector((state: RootState) =>
         state.leaveType.data.find((value) => value._id === id)
     );
@@ -25,7 +28,8 @@ const LeaveTypeEdit = () => {
     }, [data, doFetchLeaveType, id]);
 
     const handleSubmit = (values: any) => {
-        console.log(values);
+        doPatchLeaveType(values);
+        navigate("../list");
     };
 
     return (

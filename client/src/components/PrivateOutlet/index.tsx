@@ -12,7 +12,7 @@ const PrivateOutlet = () => {
     useEffect(() => {
         const fetchData = () => {
             try {
-                if (!auth.isAuthenticated && !auth.data) {
+                if (!auth.isAuthenticated && !auth.user) {
                     doFetchUser();
                 }
             } catch (error) {
@@ -21,9 +21,9 @@ const PrivateOutlet = () => {
         };
 
         fetchData();
-    }, [auth.isAuthenticated, auth.data, doFetchUser]);
+    }, [auth.isAuthenticated, auth.user, doFetchUser]);
 
-    if (!auth.isAuthenticated && !auth.data) {
+    if (!auth.isAuthenticated && !auth.user) {
         return <div>Loading...</div>;
     }
 

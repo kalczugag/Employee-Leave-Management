@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, editDepartment, getDepartment } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
@@ -13,7 +13,8 @@ import {
 
 const DepartmentEdit = () => {
     const { id } = useParams();
-    const [doFetchDepartment] = useThunk(getDepartment);
+    const navigate = useNavigate();
+    const [doFetchDepartment, isFetching] = useThunk(getDepartment);
     const [doPatchDepartment] = useThunk(editDepartment);
 
     const data = useSelector((state: RootState) =>
@@ -21,14 +22,14 @@ const DepartmentEdit = () => {
     );
 
     useEffect(() => {
-        if (!data) {
+        if (data.length <= 1 && !isFetching) {
             doFetchDepartment(id);
         }
-    }, [data, doFetchDepartment, id]);
+    }, []);
 
     const handleSubmit = (values: any) => {
         doPatchDepartment(values);
-        console.log(values);
+        navigate("../list");
     };
 
     return (

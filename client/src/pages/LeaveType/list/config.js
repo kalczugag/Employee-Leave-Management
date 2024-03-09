@@ -14,6 +14,8 @@ export const fields = [
     },
     {
         label: "Action",
-        render: (row) => <RowActionButtons id={row._id} />,
+        render: (row) => (
+            <RowActionButtons handleDelete={row.handleDelete} id={row._id} />
+        ),
     },
 ];

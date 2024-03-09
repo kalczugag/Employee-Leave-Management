@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import { AppDispatch, logout } from "../../store";
 import useSnackbar from "../../hooks/useSnackbar";
 import {
@@ -18,6 +20,9 @@ import ToolsMenu from "./ToolsMenu";
 const AccountMenu = () => {
     const { handleOpen } = useSnackbar();
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const { user } = useAuth();
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -102,7 +107,12 @@ const AccountMenu = () => {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        navigate(`/profile/${user?._id}`);
+                    }}
+                >
                     <Avatar /> Profile
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
@@ -115,7 +125,12 @@ const AccountMenu = () => {
                     </ListItemIcon>
                     Add another account
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        navigate("/settings");
+                    }}
+                >
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>

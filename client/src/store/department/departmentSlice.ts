@@ -77,7 +77,8 @@ const departmentsSlice = createSlice({
                     const editedDepartment = action.payload;
 
                     const index = state.data.findIndex(
-                        (dep) => dep._id === editedDepartment._id
+                        (dep: DepartmentProps) =>
+                            dep._id === editedDepartment._id
                     );
 
                     if (index !== -1) {
@@ -92,6 +93,22 @@ const departmentsSlice = createSlice({
                 }
             )
             .addCase(editDepartment.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
+            .addCase(deleteDepartment.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteDepartment.fulfilled, (state, action) => {
+                state.isLoading = false;
+
+                state.data = state.data.filter((dep: DepartmentProps) => {
+                    return dep._id !== action.payload;
+                });
+            })
+            .addCase(deleteDepartment.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
             });
@@ -134,6 +151,15 @@ export const editDepartment = createAsyncThunk(
         );
 
         return response.data;
+    }
+);
+
+export const deleteDepartment = createAsyncThunk(
+    "departments/delete",
+    async (id: string) => {
+        await axios.delete(`/api/departments/${id}`);
+
+        return id;
     }
 );
 
