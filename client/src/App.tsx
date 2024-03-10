@@ -15,6 +15,7 @@ import LeaveTypeNew from "./pages/LeaveType/new";
 import NotFound from "./pages/404";
 import PrivateOutlet from "./components/PrivateOutlet";
 import SnackbarMsg from "./components/SnackbarMsg";
+import Test from "./pages/test";
 
 const App = () => {
     const { handleOpen } = useSnackbar();
@@ -44,6 +45,7 @@ const App = () => {
                     <Route path="list" element={<EmployeeList />} />
                 </Route>
                 <Route path="/leave"></Route>
+                <Route path="/test" element={<Test />} />
             </Route>
             <Route path="*" element={<NotFound />} />
             {createPortal(<SnackbarMsg />, document.body)}

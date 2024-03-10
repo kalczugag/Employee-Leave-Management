@@ -14,7 +14,7 @@ import DefaultPage from "../../../layout/DefaultPage";
 const LeaveTypeEdit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [doFetchLeaveType] = useThunk(getLeaveType);
+    const [doFetchLeaveType, isFetching] = useThunk(getLeaveType);
     const [doPatchLeaveType] = useThunk(editLeaveType);
 
     const data = useSelector((state: RootState) =>
@@ -22,10 +22,10 @@ const LeaveTypeEdit = () => {
     );
 
     useEffect(() => {
-        if (!data) {
+        if (!data && !isFetching) {
             doFetchLeaveType(id);
         }
-    }, [data, doFetchLeaveType, id]);
+    }, []);
 
     const handleSubmit = (values: any) => {
         doPatchLeaveType(values);

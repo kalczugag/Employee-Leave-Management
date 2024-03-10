@@ -16,8 +16,6 @@ const LeaveTypeList = () => {
         (state: RootState) => state.leaveType.data
     );
 
-    console.log(leaveTypeData);
-
     const data = useMemo(
         () =>
             leaveTypeData.map((row) => ({

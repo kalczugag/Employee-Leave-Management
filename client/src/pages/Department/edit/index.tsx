@@ -22,7 +22,7 @@ const DepartmentEdit = () => {
     );
 
     useEffect(() => {
-        if (data.length <= 1 && !isFetching) {
+        if (!data && !isFetching) {
             doFetchDepartment(id);
         }
     }, []);

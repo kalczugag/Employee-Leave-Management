@@ -53,10 +53,9 @@ interface FormEditorProps {
         label: string;
         name: string;
     };
-    initialValues?: EditorState;
 }
 
-const FormEditor = ({ options, initialValues }: FormEditorProps) => {
+const FormEditor = ({ options }: FormEditorProps) => {
     const dispatch = useDispatch();
     const { editor } = useSelector((state: RootState) => state.editor);
 
@@ -64,6 +63,7 @@ const FormEditor = ({ options, initialValues }: FormEditorProps) => {
 
     const onEditorStateChange = (editorState: EditorState) => {
         dispatch(setEditorState(editorState));
+        console.log(editorState);
     };
 
     return (
@@ -79,15 +79,12 @@ const FormEditor = ({ options, initialValues }: FormEditorProps) => {
                             options: [
                                 "inline",
                                 "blockType",
-                                "list",
                                 "textAlign",
                                 "history",
                             ],
                             inline: { inDropdown: false },
-                            list: { inDropdown: true },
                             textAlign: { inDropdown: true },
                             link: { inDropdown: true },
-                            history: { inDropdown: true },
                         }}
                         editorState={editor}
                         toolbarClassName={`${
@@ -165,12 +162,22 @@ const FormCheckbox = ({ options, required }: FormCheckboxProps) => {
 
 interface FormViewProps {
     children: ReactNode;
-    initialValues?: any;
+    initialValues?: {
+        name: string;
+        shortName?: string;
+        details?: EditorState;
+        active?: boolean;
+    };
     onSubmit: (values: any) => void;
 }
 
 const FormView = ({ children, initialValues, onSubmit }: FormViewProps) => {
     const dispatch = useDispatch();
+
+    if (initialValues && initialValues.details) {
+        // dispatch(setEditorState(initialValues.details));
+        console.log(initialValues.details);
+    }
 
     return (
         <Form
