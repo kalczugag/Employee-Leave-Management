@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { createPortal } from "react-dom";
 import useSnackbar from "./hooks/useSnackbar";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import DepartmentNew from "./pages/Department/new";
 import DepartmentEdit from "./pages/Department/edit";
@@ -28,6 +29,7 @@ const App = () => {
         <Routes>
             <Route path="/login" element={<Auth />} />
             <Route path="/register" element={<Auth />} />
+            <Route path="/password/reset" element={<ResetPassword />} />
             <Route element={<PrivateOutlet />}>
                 <Route index element={<Dashboard />} />
                 <Route path="/department">

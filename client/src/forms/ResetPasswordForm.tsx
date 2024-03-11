@@ -18,9 +18,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 
-const LoginWindow = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const { handleOpen } = useSnackbar();
+const ResetPasswordForm = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,12 +29,12 @@ const LoginWindow = () => {
         event.preventDefault();
     };
 
-    const onSubmit = (values: { email: string; password: string }) => {
-        dispatch(login(values))
-            .unwrap()
-            .catch((err: any) => console.log(err))
-            .finally(() => handleOpen("xd"));
+    const onSubmit = (values: { email: string }) => {
+        if (values.email === "") {
+            return Promise.reject(new Error("Email or username is required"));
+        }
     };
+    const required = (value: any) => (value ? undefined : "Required");
 
     return (
         <>
@@ -44,11 +42,10 @@ const LoginWindow = () => {
                 <Logo primary />
                 <div className="flex flex-col text-center px-8 py-4">
                     <h3 className="text-lg text-gray-700 font-semibold">
-                        Sign In
+                        Reset Password
                     </h3>
                     <p className="text-sm text-gray-500">
-                        Enter your email address and password to access admin
-                        panel
+                        Enter your email address to reset your password.
                     </p>
                 </div>
                 <Form
@@ -58,7 +55,7 @@ const LoginWindow = () => {
                             onSubmit={handleSubmit}
                             className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
                         >
-                            <Field name="email">
+                            <Field name="email" validate={required}>
                                 {({ input, meta }) => (
                                     <>
                                         <TextField
@@ -67,21 +64,29 @@ const LoginWindow = () => {
                                             name={input.name}
                                             value={input.value}
                                             onChange={input.onChange}
+                                            error={
+                                                meta.touched &&
+                                                meta.submitError &&
+                                                input.value === ""
+                                            }
+                                            helperText={
+                                                meta.touched &&
+                                                meta.submitError &&
+                                                input.value === ""
+                                                    ? meta.error
+                                                    : ""
+                                            }
                                             sx={{ width: "320px" }}
                                             fullWidth
-                                            required
                                         />
-                                        {meta.error && meta.touched && (
-                                            <span>{meta.error}</span>
-                                        )}
                                     </>
                                 )}
                             </Field>
-                            <Field name="password">
+                            {/* <Field name="password">
                                 {({ input, meta }) => (
                                     <div className="flex flex-col items-center space-y-1">
                                         <Link
-                                            to="/password/reset"
+                                            to="/reset"
                                             className="w-full text-end text-xs text-gray-500 hover:text-gray-700"
                                         >
                                             Forget your password?
@@ -130,7 +135,7 @@ const LoginWindow = () => {
                                         </FormControl>
                                     </div>
                                 )}
-                            </Field>
+                            </Field> */}
                             <Button
                                 type="submit"
                                 sx={{ bgcolor: "#3B82F6" }}
@@ -142,16 +147,8 @@ const LoginWindow = () => {
                     )}
                 />
             </div>
-            <Footer center>
-                <p>
-                    Don't have an account?{" "}
-                    <Link to="/register" className="hover:text-gray-700">
-                        Sign Up
-                    </Link>
-                </p>
-            </Footer>
         </>
     );
 };
 
-export default LoginWindow;
+export default ResetPasswordForm;

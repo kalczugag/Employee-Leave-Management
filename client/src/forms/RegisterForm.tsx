@@ -60,26 +60,26 @@ const RegisterWindow = () => {
                         >
                             <div className="flex flex-row space-x-2 w-[calc(320px)]">
                                 <Field name="firstName">
-                                    {(props) => (
+                                    {({ input, meta }) => (
                                         <TextField
                                             variant="outlined"
                                             label="First Name"
-                                            name={props.input.name}
-                                            value={props.input.value}
-                                            onChange={props.input.onChange}
+                                            name={input.name}
+                                            value={input.value}
+                                            onChange={input.onChange}
                                             required
                                             fullWidth
                                         />
                                     )}
                                 </Field>
                                 <Field name="lastName">
-                                    {(props) => (
+                                    {({ input, meta }) => (
                                         <TextField
                                             variant="outlined"
                                             label="Last Name"
-                                            name={props.input.name}
-                                            value={props.input.value}
-                                            onChange={props.input.onChange}
+                                            name={input.name}
+                                            value={input.value}
+                                            onChange={input.onChange}
                                             required
                                             fullWidth
                                         />
@@ -87,43 +87,43 @@ const RegisterWindow = () => {
                                 </Field>
                             </div>
                             <Field name="birthDate">
-                                {(props) => (
+                                {({ input, meta }) => (
                                     <TextField
                                         type="date"
                                         label="Birth Date"
                                         variant="outlined"
-                                        name={props.input.name}
-                                        value={props.input.value}
-                                        onChange={props.input.onChange}
+                                        name={input.name}
+                                        value={input.value}
+                                        onChange={input.onChange}
                                         sx={{ width: "320px" }}
                                         required
                                     />
                                 )}
                             </Field>
                             <Field name="email">
-                                {(props) => (
+                                {({ input, meta }) => (
                                     <TextField
                                         variant="outlined"
                                         label="Email"
-                                        name={props.input.name}
-                                        value={props.input.value}
-                                        onChange={props.input.onChange}
+                                        name={input.name}
+                                        value={input.value}
+                                        onChange={input.onChange}
                                         sx={{ width: "320px" }}
                                         required
                                     />
                                 )}
                             </Field>
                             <Field name="password">
-                                {(props) => (
+                                {({ input, meta }) => (
                                     <FormControl variant="outlined">
                                         <InputLabel htmlFor="outlined-adornment-password">
                                             Password
                                         </InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-password"
-                                            name={props.input.name}
-                                            value={props.input.value}
-                                            onChange={props.input.onChange}
+                                            name={input.name}
+                                            value={input.value}
+                                            onChange={input.onChange}
                                             type={
                                                 showPassword
                                                     ? "text"

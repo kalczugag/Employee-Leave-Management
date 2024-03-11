@@ -129,3 +129,27 @@ export const logout = (req: express.Request, res: express.Response) => {
         return res.sendStatus(400);
     }
 };
+
+export const resetPassword = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.sendStatus(400);
+        }
+
+        const existingUser = await getUserByEmail(email);
+
+        if (!existingUser) {
+            return res.sendStatus(400);
+        }
+
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
