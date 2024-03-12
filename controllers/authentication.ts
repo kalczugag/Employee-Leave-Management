@@ -1,7 +1,12 @@
 import express from "express";
 import keys from "../config/keys";
 
-import { getUserByEmail, createUser, getUserBySessionToken } from "../db/users";
+import {
+    getUserByEmail,
+    createUser,
+    getUserBySessionToken,
+    updateUserById,
+} from "../db/users";
 import { random, authentication } from "../helpers";
 
 export const login = async (req: express.Request, res: express.Response) => {
@@ -130,7 +135,7 @@ export const logout = (req: express.Request, res: express.Response) => {
     }
 };
 
-export const resetPassword = async (
+export const verifyEmail = async (
     req: express.Request,
     res: express.Response
 ) => {
@@ -147,7 +152,41 @@ export const resetPassword = async (
             return res.sendStatus(400);
         }
 
-        return res.sendStatus(200);
+        return res.status(200).json(email);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+export const resetPassword = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.sendStatus(400);
+        }
+
+        const user = await getUserByEmail(email);
+
+        if (!user) {
+            return res.sendStatus(400);
+        }
+
+        const salt = random();
+        const hashedPassword = authentication(salt, password);
+
+        const updatedUser = await updateUserById(user._id.toString(), {
+            authentication: {
+                salt,
+                password: hashedPassword,
+            },
+        });
+
+        return res.status(200).json(updatedUser);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

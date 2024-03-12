@@ -39,118 +39,91 @@ const LoginWindow = () => {
     };
 
     return (
-        <>
-            <div className="flex flex-col bg-white shadow rounded w-screen md:min-w-96 md:w-full">
-                <Logo primary />
-                <div className="flex flex-col text-center px-8 py-4">
-                    <h3 className="text-lg text-gray-700 font-semibold">
-                        Sign In
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                        Enter your email address and password to access admin
-                        panel
-                    </p>
-                </div>
-                <Form
-                    onSubmit={onSubmit}
-                    render={({ handleSubmit }) => (
-                        <form
-                            onSubmit={handleSubmit}
-                            className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
-                        >
-                            <Field name="email">
-                                {({ input, meta }) => (
-                                    <>
-                                        <TextField
-                                            variant="outlined"
-                                            label="Email"
-                                            name={input.name}
-                                            value={input.value}
-                                            onChange={input.onChange}
-                                            sx={{ width: "320px" }}
-                                            fullWidth
-                                            required
-                                        />
-                                        {meta.error && meta.touched && (
-                                            <span>{meta.error}</span>
-                                        )}
-                                    </>
+        <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit }) => (
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
+                >
+                    <Field name="email">
+                        {({ input, meta }) => (
+                            <>
+                                <TextField
+                                    variant="outlined"
+                                    label="Email"
+                                    name={input.name}
+                                    value={input.value}
+                                    onChange={input.onChange}
+                                    sx={{ width: "320px" }}
+                                    fullWidth
+                                    required
+                                />
+                                {meta.error && meta.touched && (
+                                    <span>{meta.error}</span>
                                 )}
-                            </Field>
-                            <Field name="password">
-                                {({ input, meta }) => (
-                                    <div className="flex flex-col items-center space-y-1">
-                                        <Link
-                                            to="/password/reset"
-                                            className="w-full text-end text-xs text-gray-500 hover:text-gray-700"
-                                        >
-                                            Forget your password?
-                                        </Link>
-                                        <FormControl
-                                            variant="outlined"
-                                            fullWidth
-                                        >
-                                            <InputLabel htmlFor="outlined-adornment-password">
-                                                Password
-                                            </InputLabel>
-                                            <OutlinedInput
-                                                id="outlined-adornment-password"
-                                                type={
-                                                    showPassword
-                                                        ? "text"
-                                                        : "password"
-                                                }
-                                                name={input.name}
-                                                value={input.value}
-                                                onChange={input.onChange}
-                                                endAdornment={
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={
-                                                                handleClickShowPassword
-                                                            }
-                                                            onMouseDown={
-                                                                handleMouseDownPassword
-                                                            }
-                                                            edge="end"
-                                                        >
-                                                            {showPassword ? (
-                                                                <VisibilityOff />
-                                                            ) : (
-                                                                <Visibility />
-                                                            )}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                }
-                                                label="Password"
-                                                sx={{ width: "320px" }}
-                                                required
-                                            />
-                                        </FormControl>
-                                    </div>
-                                )}
-                            </Field>
-                            <Button
-                                type="submit"
-                                sx={{ bgcolor: "#3B82F6" }}
-                                variant="contained"
-                            >
-                                Log In
-                            </Button>
-                        </form>
-                    )}
-                />
-            </div>
-            <Footer center>
-                <p>
-                    Don't have an account?{" "}
-                    <Link to="/register" className="hover:text-gray-700">
-                        Sign Up
-                    </Link>
-                </p>
-            </Footer>
-        </>
+                            </>
+                        )}
+                    </Field>
+                    <Field name="password">
+                        {({ input, meta }) => (
+                            <div className="flex flex-col items-center space-y-1">
+                                <Link
+                                    to="/password/reset"
+                                    className="w-full text-end text-xs text-gray-500 hover:text-gray-700"
+                                >
+                                    Forget your password?
+                                </Link>
+                                <FormControl variant="outlined" fullWidth>
+                                    <InputLabel htmlFor="outlined-adornment-password">
+                                        Password
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        name={input.name}
+                                        value={input.value}
+                                        onChange={input.onChange}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={
+                                                        handleClickShowPassword
+                                                    }
+                                                    onMouseDown={
+                                                        handleMouseDownPassword
+                                                    }
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? (
+                                                        <VisibilityOff />
+                                                    ) : (
+                                                        <Visibility />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        label="Password"
+                                        sx={{ width: "320px" }}
+                                        required
+                                    />
+                                </FormControl>
+                            </div>
+                        )}
+                    </Field>
+                    <Button
+                        type="submit"
+                        sx={{ bgcolor: "#3B82F6" }}
+                        variant="contained"
+                    >
+                        Log In
+                    </Button>
+                </form>
+            )}
+        />
     );
 };
 

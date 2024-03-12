@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
-import { AppDispatch, register } from "../store";
+import { AppDispatch, login } from "../../store";
+import useSnackbar from "../../hooks/useSnackbar";
 import {
     TextField,
     Button,
@@ -13,11 +15,14 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import useSnackbar from "../hooks/useSnackbar";
+import Footer from "../../components/Footer";
+import Logo from "../../components/Logo";
 
-const RegisterWindow = () => {
-    const { handleOpen } = useSnackbar();
-    const dispatch = useDispatch<AppDispatch>();
+interface Props {
+    handleBack: () => void;
+}
+
+const ResetPasswordForm = ({ handleBack }: Props) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -28,88 +33,49 @@ const RegisterWindow = () => {
         event.preventDefault();
     };
 
-    const onSubmit = (values: user) => {
-        dispatch(register(values))
-            .unwrap()
-            .catch((err) => handleOpen("xx"));
+    const onSubmit = (values: { email: string }) => {
+        if (values.email === "") {
+            return Promise.reject(new Error("Email or username is required"));
+        }
     };
+    const required = (value: any) => (value ? undefined : "Required");
 
     return (
         <Form
             onSubmit={onSubmit}
-            initialValues={{ birthDate: "2000-01-01" }}
             render={({ handleSubmit }) => (
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
                 >
-                    <div className="flex flex-row space-x-2 w-[calc(320px)]">
-                        <Field name="firstName">
-                            {({ input, meta }) => (
+                    <Field name="email" validate={required}>
+                        {({ input, meta }) => (
+                            <>
                                 <TextField
                                     variant="outlined"
-                                    label="First Name"
+                                    label="Email"
                                     name={input.name}
                                     value={input.value}
                                     onChange={input.onChange}
-                                    required
+                                    sx={{ width: "320px" }}
                                     fullWidth
-                                />
-                            )}
-                        </Field>
-                        <Field name="lastName">
-                            {({ input, meta }) => (
-                                <TextField
-                                    variant="outlined"
-                                    label="Last Name"
-                                    name={input.name}
-                                    value={input.value}
-                                    onChange={input.onChange}
                                     required
-                                    fullWidth
                                 />
-                            )}
-                        </Field>
-                    </div>
-                    <Field name="birthDate">
-                        {({ input, meta }) => (
-                            <TextField
-                                type="date"
-                                label="Birth Date"
-                                variant="outlined"
-                                name={input.name}
-                                value={input.value}
-                                onChange={input.onChange}
-                                sx={{ width: "320px" }}
-                                required
-                            />
-                        )}
-                    </Field>
-                    <Field name="email">
-                        {({ input, meta }) => (
-                            <TextField
-                                variant="outlined"
-                                label="Email"
-                                name={input.name}
-                                value={input.value}
-                                onChange={input.onChange}
-                                sx={{ width: "320px" }}
-                                required
-                            />
+                            </>
                         )}
                     </Field>
                     <Field name="password">
                         {({ input, meta }) => (
-                            <FormControl variant="outlined">
+                            <FormControl variant="outlined" fullWidth>
                                 <InputLabel htmlFor="outlined-adornment-password">
                                     Password
                                 </InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
+                                    type={showPassword ? "text" : "password"}
                                     name={input.name}
                                     value={input.value}
                                     onChange={input.onChange}
-                                    type={showPassword ? "text" : "password"}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
@@ -137,17 +103,27 @@ const RegisterWindow = () => {
                             </FormControl>
                         )}
                     </Field>
-                    <Button
-                        type="submit"
-                        sx={{ bgcolor: "#3B82F6" }}
-                        variant="contained"
-                    >
-                        Register
-                    </Button>
+                    <div className="flex flex-row justify-between w-full">
+                        <Button
+                            type="button"
+                            onClick={handleBack}
+                            variant="contained"
+                            color="inherit"
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            type="submit"
+                            sx={{ bgcolor: "#3B82F6" }}
+                            variant="contained"
+                        >
+                            Reset Password
+                        </Button>
+                    </div>
                 </form>
             )}
         />
     );
 };
 
-export default RegisterWindow;
+export default ResetPasswordForm;
