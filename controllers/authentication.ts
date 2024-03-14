@@ -45,8 +45,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         const userObject = user.toObject();
 
         res.cookie(keys.authCookieKey, user.authentication.sessionToken, {
-            domain: keys.defaultDomain,
-            path: "/",
+            maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
         return res
