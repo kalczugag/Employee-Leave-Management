@@ -54,3 +54,22 @@ export const isAuthenticated = async (
         return res.sendStatus(400);
     }
 };
+
+export const isEmailVerified = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+) => {
+    try {
+        const isEmailVerified = req.cookies[keys.verifyEmailCookieKey];
+
+        if (!isEmailVerified) {
+            return res.sendStatus(403);
+        }
+
+        next();
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};

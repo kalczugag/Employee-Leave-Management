@@ -1,59 +1,63 @@
 import { useState } from "react";
-import { Field, Form } from "react-final-form";
+import { verifyEmail } from "../../store";
+import useThunk from "../../hooks/useThunk";
+import { Field } from "react-final-form";
 import { TextField, Button } from "@mui/material";
 
 interface Props {
-    onSubmit: (values: any) => void;
-    handleClick: () => void;
+    emailValue: string;
 }
 
-const SearchAccountForm = ({ onSubmit, handleClick }: Props) => {
-    const [error, setError] = useState(false);
+const SearchAccountForm = ({ emailValue }: Props) => {
+    const [doVerifyEmail, verifyLoading, verifyError] = useThunk(verifyEmail);
 
     const required = (value: any) => (value ? undefined : "Required");
 
+    const handleVerify = () => {
+        if (emailValue) {
+            doVerifyEmail(emailValue);
+        }
+    };
+
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Enter") {
+            handleVerify();
+        }
+    };
+
     return (
-        <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, form }) => (
-                <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
-                >
-                    <Field name="email" validate={required}>
-                        {({ input, meta }) => (
-                            <>
-                                <TextField
-                                    variant="outlined"
-                                    label="Email"
-                                    name={input.name}
-                                    value={input.value}
-                                    onChange={input.onChange}
-                                    sx={{ width: "320px" }}
-                                    error={error}
-                                    helperText={error ? meta.error : ""}
-                                    fullWidth
-                                />
-                            </>
-                        )}
-                    </Field>
-                    <Button
-                        type="button"
-                        sx={{ bgcolor: "#3B82F6" }}
-                        variant="contained"
-                        onClick={() => {
-                            if (form.getState().values.email) {
-                                handleClick();
-                            } else {
-                                setError(true);
+        <>
+            <Field name="email" validate={required}>
+                {({ input, meta }) => (
+                    <>
+                        <TextField
+                            variant="outlined"
+                            label="Email"
+                            name={input.name}
+                            value={input.value}
+                            onChange={input.onChange}
+                            onKeyDown={handleKeyPress}
+                            disabled={verifyLoading}
+                            sx={{ width: "320px" }}
+                            error={meta.error && verifyError}
+                            helperText={
+                                verifyError ? meta.error || verifyError : ""
                             }
-                        }}
-                    >
-                        Search
-                    </Button>
-                </form>
-            )}
-        />
+                            fullWidth
+                        />
+                    </>
+                )}
+            </Field>
+            <Button
+                type="button"
+                sx={{ bgcolor: "#3B82F6" }}
+                variant="contained"
+                disabled={verifyLoading}
+                onClick={handleVerify}
+            >
+                Search
+            </Button>
+        </>
     );
 };
 

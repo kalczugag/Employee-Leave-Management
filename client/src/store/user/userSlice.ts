@@ -6,6 +6,7 @@ interface UserState {
     isAuthenticated: boolean;
     isLoading: boolean;
     error: any;
+    resetPage: number;
 }
 
 interface authPayload {
@@ -18,12 +19,17 @@ const initialState: UserState = {
     isAuthenticated: false,
     isLoading: false,
     error: null,
+    resetPage: 0,
 };
 
 const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        setPage(state, action: PayloadAction<number>) {
+            state.resetPage = action.payload || 0;
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(register.pending, (state) => {
@@ -99,6 +105,48 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.error;
             });
+
+        builder
+            .addCase(verifyEmail.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(
+                verifyEmail.fulfilled,
+                (state, action: PayloadAction<string>) => {
+                    if (action.payload) {
+                        return {
+                            ...state,
+                            isLoading: false,
+                            resetPage: 1,
+                        };
+                    }
+
+                    return {
+                        ...state,
+                        isLoading: false,
+                        error: "Email not found",
+                    };
+                }
+            )
+            .addCase(verifyEmail.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
+            .addCase(resetPassword.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(resetPassword.fulfilled, (state) => {
+                return {
+                    ...state,
+                    initialState,
+                };
+            })
+            .addCase(resetPassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
     },
 });
 
@@ -166,5 +214,37 @@ export const logout = createAsyncThunk("user/logout", async () => {
         console.error(err);
     }
 });
+
+export const verifyEmail = createAsyncThunk(
+    "user/verify",
+    async (email: string) => {
+        try {
+            const response = await axios.post("/api/auth/verify", { email });
+
+            return response.data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+);
+
+export const resetPassword = createAsyncThunk(
+    "user/reset",
+    async (data: { email: string; password: string }) => {
+        try {
+            const response = await axios.patch("/api/auth/reset", data);
+
+            if (response.status === 200) {
+                window.location.href = "/login";
+            }
+
+            return response.data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+);
+
+export const { setPage } = userSlice.actions;
 
 export default userSlice.reducer;

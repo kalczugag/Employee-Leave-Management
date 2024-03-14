@@ -15,8 +15,6 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Footer from "../components/Footer";
-import Logo from "../components/Logo";
 
 const LoginWindow = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -59,9 +57,6 @@ const LoginWindow = () => {
                                     fullWidth
                                     required
                                 />
-                                {meta.error && meta.touched && (
-                                    <span>{meta.error}</span>
-                                )}
                             </>
                         )}
                     </Field>
@@ -108,6 +103,7 @@ const LoginWindow = () => {
                                         }
                                         label="Password"
                                         sx={{ width: "320px" }}
+                                        fullWidth
                                         required
                                     />
                                 </FormControl>

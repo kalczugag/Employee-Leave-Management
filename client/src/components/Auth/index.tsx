@@ -73,7 +73,7 @@ const AuthContainer = () => {
                     <p>
                         Remember your password?{" "}
                         <Link
-                            to={SignType.Reset}
+                            to={SignType.Login}
                             className="hover:text-gray-700"
                         >
                             Sign In

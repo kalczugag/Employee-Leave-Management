@@ -31,7 +31,7 @@ const RegisterWindow = () => {
     const onSubmit = (values: user) => {
         dispatch(register(values))
             .unwrap()
-            .catch((err) => handleOpen("xx"));
+            .catch((err) => handleOpen("Error"));
     };
 
     return (

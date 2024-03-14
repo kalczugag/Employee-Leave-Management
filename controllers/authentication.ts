@@ -148,6 +148,13 @@ export const verifyEmail = async (
 
         const existingUser = await getUserByEmail(email);
 
+        const salt = random();
+        const hashedEmail = authentication(salt, email);
+
+        res.cookie(keys.verifyEmailCookieKey, hashedEmail, {
+            maxAge: 900000,
+        });
+
         if (!existingUser) {
             return res.sendStatus(400);
         }
@@ -176,17 +183,25 @@ export const resetPassword = async (
             return res.sendStatus(400);
         }
 
+        const cookies = req.cookies;
+
+        if (!cookies[keys.verifyEmailCookieKey]) {
+            return res.sendStatus(403);
+        }
+
         const salt = random();
         const hashedPassword = authentication(salt, password);
 
-        const updatedUser = await updateUserById(user._id.toString(), {
+        await updateUserById(user._id.toString(), {
             authentication: {
                 salt,
                 password: hashedPassword,
             },
         });
 
-        return res.status(200).json(updatedUser);
+        res.clearCookie(keys.verifyEmailCookieKey);
+
+        return res.sendStatus(200);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

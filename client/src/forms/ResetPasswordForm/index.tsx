@@ -1,34 +1,38 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Form } from "react-final-form";
+import { RootState, resetPassword } from "../../store";
 import SearchAccountForm from "./SearchAccountForm";
 import ResetPasswordFinalForm from "./ResetPasswordFinalForm";
+import useThunk from "../../hooks/useThunk";
 
 const ResetPasswordForm = () => {
-    const [page, setPage] = useState<number>(0);
+    const [doResetPassword, resetLoading] = useThunk(resetPassword);
+
+    const page = useSelector((state: RootState) => state.user.resetPage);
 
     const onSubmit = (values: any) => {
-        console.log(values, page);
-        // setPage(page + 1);
-    };
-
-    const handleClick = () => {
-        setPage(page + 1);
-    };
-
-    const handleBack = () => {
-        setPage(page - 1);
+        console.log(values);
+        doResetPassword(values);
     };
 
     return (
-        <div>
-            {page === 0 ? (
-                <SearchAccountForm
-                    onSubmit={onSubmit}
-                    handleClick={handleClick}
-                />
-            ) : (
-                <ResetPasswordFinalForm handleBack={handleBack} />
+        <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit, form }) => (
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
+                >
+                    {page === 0 ? (
+                        <SearchAccountForm
+                            emailValue={form.getState().values.email}
+                        />
+                    ) : (
+                        <ResetPasswordFinalForm />
+                    )}
+                </form>
             )}
-        </div>
+        />
     );
 };
 

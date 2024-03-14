@@ -7,5 +7,9 @@ interface user {
     mobile: number;
     address: string;
     roles: string[];
-    authentication?: object;
+    authentication?: {
+        password: string;
+        salt: string;
+        sessionToken: string;
+    };
 }
