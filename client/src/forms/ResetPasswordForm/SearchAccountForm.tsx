@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { verifyEmail } from "../../store";
 import useThunk from "../../hooks/useThunk";
 import { Field } from "react-final-form";
@@ -10,6 +9,7 @@ interface Props {
 
 const SearchAccountForm = ({ emailValue }: Props) => {
     const [doVerifyEmail, verifyLoading, verifyError] = useThunk(verifyEmail);
+    const errss = verifyError ? true : false;
 
     const required = (value: any) => (value ? undefined : "Required");
 
@@ -39,9 +39,15 @@ const SearchAccountForm = ({ emailValue }: Props) => {
                             onKeyDown={handleKeyPress}
                             disabled={verifyLoading}
                             sx={{ width: "320px" }}
-                            error={meta.error && verifyError}
+                            error={
+                                (meta.error || meta.submitError || errss) &&
+                                meta.touched
+                            }
                             helperText={
-                                verifyError ? meta.error || verifyError : ""
+                                (meta.error || meta.submitError || errss) &&
+                                meta.touched
+                                    ? meta.error || verifyError
+                                    : ""
                             }
                             fullWidth
                         />
