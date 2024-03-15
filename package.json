@@ -7,7 +7,7 @@
         "start": "concurrently  \"npm run server\" \"npm run client\"",
         "server": "nodemon",
         "client": "npm run start --prefix client",
-        "build": "npm install --prefix client && npm run build --prefix client && tsc --build"
+        "build": "npm install --prefix client && npm install && npm run build --prefix client && tsc --build"
     },
     "keywords": [],
     "author": "",
