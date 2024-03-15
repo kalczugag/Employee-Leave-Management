@@ -9,5 +9,14 @@ export const fields = [
         label: "Department Status",
         render: (row) => <Status status={row.active} />,
     },
-    { label: "Action", render: (row) => <RowActionButtons id={row._id} /> },
+    {
+        label: "Action",
+        render: (row) => (
+            <RowActionButtons
+                id={row._id}
+                disabled={row.isLoading}
+                handleDelete={row.handleDelete}
+            />
+        ),
+    },
 ];

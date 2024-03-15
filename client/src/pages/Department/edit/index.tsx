@@ -1,8 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState, editDepartment, getDepartment } from "../../../store";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    AppDispatch,
+    RootState,
+    editDepartment,
+    getDepartment,
+} from "../../../store";
 import useThunk from "../../../hooks/useThunk";
+import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import {
     FormView,
@@ -13,10 +19,13 @@ import {
 
 const DepartmentEdit = () => {
     const { id } = useParams();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const [doFetchDepartment, isFetching] = useThunk(getDepartment);
-    const [doPatchDepartment] = useThunk(editDepartment);
+    const { handleOpen } = useSnackbar();
 
+    const [doFetchDepartment, isFetching] = useThunk(getDepartment);
+
+    const { isLoading } = useSelector((state: RootState) => state.department);
     const data = useSelector((state: RootState) =>
         state.department.data.find((value) => value._id === id)
     );
@@ -28,8 +37,13 @@ const DepartmentEdit = () => {
     }, []);
 
     const handleSubmit = (values: any) => {
-        doPatchDepartment(values);
-        navigate("../list");
+        dispatch(editDepartment(values))
+            .unwrap()
+            .catch((err) => handleOpen(err))
+            .finally(() => {
+                navigate("../list");
+                handleOpen("Department Update Successful");
+            });
     };
 
     return (
@@ -38,18 +52,22 @@ const DepartmentEdit = () => {
                 <FormField
                     required
                     options={{ label: "Department Name", name: "name" }}
+                    disabled={isLoading}
                 />
                 <FormField
                     options={{
                         label: "Department Short Name",
                         name: "shortName",
                     }}
+                    disabled={isLoading}
                 />
                 <FormEditor
                     options={{ label: "Department Details", name: "details" }}
+                    disabled={isLoading}
                 />
                 <FormCheckbox
                     options={{ label: "Department Status", name: "active" }}
+                    disabled={isLoading}
                 />
             </FormView>
         </DefaultPage>

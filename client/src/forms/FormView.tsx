@@ -20,9 +20,10 @@ interface FormFieldProps {
         name: string;
     };
     required?: boolean;
+    disabled?: boolean;
 }
 
-const FormField = ({ options, required }: FormFieldProps) => {
+const FormField = ({ options, required, disabled }: FormFieldProps) => {
     return (
         <Field name={options.name}>
             {({ input, meta }) => (
@@ -39,6 +40,7 @@ const FormField = ({ options, required }: FormFieldProps) => {
                             },
                         }}
                         autoComplete="off"
+                        disabled={disabled}
                         required={required}
                         fullWidth
                     />
@@ -53,6 +55,7 @@ interface FormEditorProps {
         label: string;
         name: string;
     };
+    disabled?: boolean;
 }
 
 const FormEditor = ({ options }: FormEditorProps) => {
@@ -63,7 +66,6 @@ const FormEditor = ({ options }: FormEditorProps) => {
 
     const onEditorStateChange = (editorState: EditorState) => {
         dispatch(setEditorState(editorState));
-        console.log(editorState);
     };
 
     return (
@@ -113,9 +115,10 @@ interface FormCheckboxProps {
               name: string;
           }[];
     required?: boolean;
+    disabled?: boolean;
 }
 
-const FormCheckbox = ({ options, required }: FormCheckboxProps) => {
+const FormCheckbox = ({ options, required, disabled }: FormCheckboxProps) => {
     if (Array.isArray(options)) {
         return (
             <FormGroup>
@@ -129,6 +132,7 @@ const FormCheckbox = ({ options, required }: FormCheckboxProps) => {
                                         checked={input.checked}
                                         onChange={input.onChange}
                                         name={input.name}
+                                        disabled={disabled}
                                         required={required}
                                     />
                                 }
@@ -150,6 +154,7 @@ const FormCheckbox = ({ options, required }: FormCheckboxProps) => {
                             checked={input.checked}
                             onChange={input.onChange}
                             name={input.name}
+                            disabled={disabled}
                             required={required}
                         />
                     }
@@ -176,7 +181,6 @@ const FormView = ({ children, initialValues, onSubmit }: FormViewProps) => {
 
     if (initialValues && initialValues.details) {
         // dispatch(setEditorState(initialValues.details));
-        console.log(initialValues.details);
     }
 
     return (

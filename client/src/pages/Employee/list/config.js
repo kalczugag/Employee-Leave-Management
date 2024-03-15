@@ -1,4 +1,4 @@
-const headerOptions = [
+export const fields = [
     {
         label: "Employee",
         render: (row) => (
@@ -23,41 +23,3 @@ const headerOptions = [
     },
     { label: "Created On", render: (row) => row.createdOn },
 ];
-
-const rows = [
-    {
-        details: {
-            name: "jurek",
-            email: "jaiodfg@gmail.com",
-            img: "/images/avatar.jpg",
-        },
-        mobile: "123456789",
-        address: "New York, USA",
-        roles: ["ADMIN"],
-        createdOn: "7 Nov 2022",
-    },
-    {
-        details: {
-            name: "jurek",
-            email: "jaiodfg@gmail.com",
-            img: "/images/avatar.jpg",
-        },
-        mobile: "123456789",
-        address: "New York, USA",
-        roles: ["ADMIN", "STAFF"],
-        createdOn: "7 Nov 2022",
-    },
-    {
-        details: {
-            name: "jurek",
-            email: "jaiodfg@gmail.com",
-            img: "/images/avatar.jpg",
-        },
-        mobile: "123456789",
-        address: "New York, USA",
-        roles: ["STAFF"],
-        createdOn: "7 Nov 2022",
-    },
-];
-
-export const config = { headerOptions, rows };

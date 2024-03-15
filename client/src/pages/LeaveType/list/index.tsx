@@ -1,7 +1,13 @@
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { getLeaveTypes, deleteLeaveType, RootState } from "../../../store";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    AppDispatch,
+    getLeaveTypes,
+    deleteLeaveType,
+    RootState,
+} from "../../../store";
 import useThunk from "../../../hooks/useThunk";
+import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
 import ListSearchForm from "../../../forms/SearchForm";
@@ -9,35 +15,42 @@ import BasicTable from "../../../components/Table";
 import { fields } from "./config";
 
 const LeaveTypeList = () => {
-    const [doFetchLeaveTypes, isFetching] = useThunk(getLeaveTypes);
-    const [doDeleteLeave] = useThunk(deleteLeaveType);
+    const dispatch = useDispatch<AppDispatch>();
+    const { handleOpen } = useSnackbar();
 
-    const leaveTypeData = useSelector(
-        (state: RootState) => state.leaveType.data
+    const [doFetchLeaveTypes, isFetching] = useThunk(getLeaveTypes);
+
+    const { data, isLoading } = useSelector(
+        (state: RootState) => state.leaveType
     );
 
-    const data = useMemo(
+    const leaveTypeData = useMemo(
         () =>
-            leaveTypeData.map((row) => ({
+            data.map((row) => ({
                 ...row,
+                isLoading,
                 handleDelete: () => handleDelete(row._id),
             })),
-        [leaveTypeData]
+        [data]
     );
 
     useEffect(() => {
-        if (data.length <= 1 && !isFetching) {
+        if (leaveTypeData.length <= 1 && !isFetching) {
             doFetchLeaveTypes();
         }
     }, []);
 
-    if (!data && isFetching) {
+    if (!leaveTypeData && isFetching) {
         return null;
     }
 
     const handleDelete = (id: string) => {
-        console.log(id);
-        doDeleteLeave(id);
+        dispatch(deleteLeaveType(id))
+            .unwrap()
+            .catch((err) => handleOpen(err))
+            .finally(() => {
+                handleOpen("Leave Type Remove Successful");
+            });
     };
 
     const handleSubmit = (values: any) => {
@@ -48,7 +61,7 @@ const LeaveTypeList = () => {
         <DefaultPage label="Leave Type List" bg>
             <ActionButtons label="Add Leave Type" />
             <ListSearchForm onSubmit={handleSubmit} />
-            <BasicTable headerOptions={fields} rowData={data} />
+            <BasicTable headerOptions={fields} rowData={leaveTypeData} />
         </DefaultPage>
     );
 };

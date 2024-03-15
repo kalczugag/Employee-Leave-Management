@@ -16,41 +16,47 @@ import NotFound from "./pages/404";
 import PrivateOutlet from "./components/PrivateOutlet";
 import SnackbarMsg from "./components/SnackbarMsg";
 import Test from "./pages/test";
+import useAuth from "./hooks/useAuth";
 
 const App = () => {
     const { handleOpen } = useSnackbar();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-        handleOpen("Successful logged in", "success");
-    }, [handleOpen]);
+        if (isAuthenticated) {
+            handleOpen("Successful logged in", "success");
+        }
+    }, [handleOpen, isAuthenticated]);
 
     return (
-        <Routes>
-            <Route path="/login" element={<Auth />} />
-            <Route path="/register" element={<Auth />} />
-            <Route path="/password/reset" element={<Auth />} />
-            <Route element={<PrivateOutlet />}>
-                <Route index element={<Dashboard />} />
-                <Route path="/department">
-                    <Route path="new" element={<DepartmentNew />} />
-                    <Route path="edit/:id" element={<DepartmentEdit />} />
-                    <Route path="list" element={<DepartmentList />} />
+        <>
+            <Routes>
+                <Route path="/login" element={<Auth />} />
+                <Route path="/register" element={<Auth />} />
+                <Route path="/password/reset" element={<Auth />} />
+                <Route element={<PrivateOutlet />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="/department">
+                        <Route path="new" element={<DepartmentNew />} />
+                        <Route path="edit/:id" element={<DepartmentEdit />} />
+                        <Route path="list" element={<DepartmentList />} />
+                    </Route>
+                    <Route path="/leave-type">
+                        <Route path="new" element={<LeaveTypeNew />} />
+                        <Route path="edit/:id" element={<LeaveTypeUpdate />} />
+                        <Route path="list" element={<LeaveTypeList />} />
+                    </Route>
+                    <Route path="/employee">
+                        <Route path="new" element={<EmployeeNew />} />
+                        <Route path="list" element={<EmployeeList />} />
+                    </Route>
+                    <Route path="/leave"></Route>
+                    <Route path="/test" element={<Test />} />
                 </Route>
-                <Route path="/leave-type">
-                    <Route path="new" element={<LeaveTypeNew />} />
-                    <Route path="edit/:id" element={<LeaveTypeUpdate />} />
-                    <Route path="list" element={<LeaveTypeList />} />
-                </Route>
-                <Route path="/employee">
-                    <Route path="new" element={<EmployeeNew />} />
-                    <Route path="list" element={<EmployeeList />} />
-                </Route>
-                <Route path="/leave"></Route>
-                <Route path="/test" element={<Test />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
             {createPortal(<SnackbarMsg />, document.body)}
-        </Routes>
+        </>
     );
 };
 

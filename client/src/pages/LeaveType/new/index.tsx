@@ -1,13 +1,25 @@
-import { addLeaveType } from "../../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch, RootState, addLeaveType } from "../../../store";
+import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
-import useThunk from "../../../hooks/useThunk";
 
 const LeaveTypeNew = () => {
-    const [doAddLeaveType] = useThunk(addLeaveType);
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const { handleOpen } = useSnackbar();
+
+    const { isLoading } = useSelector((state: RootState) => state.leaveType);
 
     const handleSubmit = (values: any) => {
-        doAddLeaveType(values);
+        dispatch(addLeaveType(values))
+            .unwrap()
+            .catch((err) => handleOpen(err))
+            .finally(() => {
+                navigate("../list");
+                handleOpen("Department Create Successful");
+            });
     };
 
     return (
@@ -16,15 +28,18 @@ const LeaveTypeNew = () => {
                 <FormField
                     required
                     options={{ label: "Leave Type Name", name: "name" }}
+                    disabled={isLoading}
                 />
                 <FormField
                     options={{
                         label: "Leave Type Short Name",
                         name: "shortName",
                     }}
+                    disabled={isLoading}
                 />
                 <FormEditor
                     options={{ label: "Leave Type Details", name: "details" }}
+                    disabled={isLoading}
                 />
             </FormView>
         </DefaultPage>

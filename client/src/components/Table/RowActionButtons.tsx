@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
     id: number | string;
+    disabled?: boolean;
     handleDelete?: () => void;
 }
 
-const RowActionButtons = ({ id, handleDelete }: Props) => {
+const RowActionButtons = ({ id, disabled, handleDelete }: Props) => {
     const navigate = useNavigate();
 
     const handleNavigate = (to: string) => {
@@ -26,6 +27,7 @@ const RowActionButtons = ({ id, handleDelete }: Props) => {
                 onClick={() => handleNavigate(`../edit/${id}`)}
                 aria-label="edit"
                 sx={{ padding: 0 }}
+                disabled={disabled}
             >
                 <Edit />
             </IconButton>
@@ -33,6 +35,7 @@ const RowActionButtons = ({ id, handleDelete }: Props) => {
                 onClick={onDeleteClick}
                 aria-label="edit"
                 sx={{ padding: 0 }}
+                disabled={disabled}
             >
                 <Delete />
             </IconButton>
