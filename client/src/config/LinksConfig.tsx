@@ -39,4 +39,31 @@ export const LinksConfig: LinksConfigProps = {
             element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
         },
     ],
+    leave: [
+        {
+            label: "New Leave",
+            to: "new",
+            element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+        },
+        {
+            label: "Leave List",
+            to: "list",
+            element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+        },
+        {
+            label: "Leave List Pending",
+            to: "pending",
+            element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+        },
+        {
+            label: "Leave List",
+            to: "approved",
+            element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+        },
+        {
+            label: "Leave List",
+            to: "rejected",
+            element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+        },
+    ],
 };
