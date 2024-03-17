@@ -6,6 +6,7 @@ import {
     setExpanded,
     collapseAll,
 } from "../../store";
+import useAuth from "../../hooks/useAuth";
 import { ExpandMore, ChevronRight } from "@mui/icons-material";
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 import { Box } from "@mui/material";
@@ -16,6 +17,7 @@ import LinksList from "./LinksList";
 const CategoryList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const { expanded } = useSelector((state: RootState) => state.sidebar);
 
@@ -73,6 +75,9 @@ const CategoryList = () => {
                 overflowY: "auto",
             }}
         >
+            <h5 className="font-semibold text-gray-500 mb-2">
+                {user?.roles[0]} roles
+            </h5>
             {renderedOptions}
         </TreeView>
     );
