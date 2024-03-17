@@ -66,7 +66,7 @@ const AccountMenu = () => {
                             <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
                             <div className="hidden flex-col items-start text-sm text-gray-500 font-semibold md:flex">
                                 <p>Gabriel Kałczuga</p>
-                                <p>ADMIN</p>
+                                <p>{user?.roles[0].toUpperCase()}</p>
                             </div>
                         </div>
                     </IconButton>

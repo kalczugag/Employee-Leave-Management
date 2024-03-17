@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema(
     {
         email: { type: String, required: true },
+        departmentId: { type: String, required: false },
+        img: { type: String, required: false, default: "/images/avatar.jpg" },
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         birthDate: { type: String, required: true },
         mobile: { type: Number, required: false },
         address: { type: String, required: false },
-        roles: { type: [String], required: false },
+        roles: { type: [String], required: true, default: "staff" },
         authentication: {
             password: { type: String, required: true, select: false },
             salt: { type: String, select: false },

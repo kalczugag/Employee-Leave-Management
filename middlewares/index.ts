@@ -4,6 +4,27 @@ import keys from "../config/keys";
 
 import { getUserBySessionToken } from "../db/users";
 
+export const isAdmin = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+) => {
+    try {
+        const currentUserRoles = get(req, "identity.roles") as
+            | string[]
+            | undefined;
+
+        if (!currentUserRoles?.includes("admin")) {
+            return res.sendStatus(403);
+        }
+
+        next();
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
 export const isOwner = async (
     req: express.Request,
     res: express.Response,

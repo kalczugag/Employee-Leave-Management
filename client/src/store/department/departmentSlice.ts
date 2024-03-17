@@ -2,7 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { EditorProps } from "react-draft-wysiwyg";
 
-interface DepartmentsState {
+interface DepartmentState {
     data: any[];
     isLoading: boolean;
     error: any;
@@ -16,13 +16,13 @@ interface DepartmentProps {
     active?: boolean;
 }
 
-const initialState: DepartmentsState = {
+const initialState: DepartmentState = {
     data: [],
     isLoading: false,
     error: null,
 };
 
-const departmentsSlice = createSlice({
+const departmentSlice = createSlice({
     name: "department",
     initialState,
     reducers: {},
@@ -163,4 +163,4 @@ export const deleteDepartment = createAsyncThunk(
     }
 );
 
-export default departmentsSlice.reducer;
+export default departmentSlice.reducer;
