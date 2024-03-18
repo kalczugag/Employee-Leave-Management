@@ -8,9 +8,10 @@ import DepartmentNew from "./pages/Department/new";
 import DepartmentEdit from "./pages/Department/edit";
 import DepartmentList from "./pages/Department/list";
 import EmployeeNew from "./pages/Employee/new";
+import EmployeeEdit from "./pages/Employee/edit";
 import EmployeeList from "./pages/Employee/list";
 import LeaveTypeList from "./pages/LeaveType/list";
-import LeaveTypeUpdate from "./pages/LeaveType/edit";
+import LeaveTypeEdit from "./pages/LeaveType/edit";
 import LeaveTypeNew from "./pages/LeaveType/new";
 import NotFound from "./pages/404";
 import PrivateOutlet from "./components/PrivateOutlet";
@@ -43,11 +44,12 @@ const App = () => {
                     </Route>
                     <Route path="/leave-type">
                         <Route path="new" element={<LeaveTypeNew />} />
-                        <Route path="edit/:id" element={<LeaveTypeUpdate />} />
+                        <Route path="edit/:id" element={<LeaveTypeEdit />} />
                         <Route path="list" element={<LeaveTypeList />} />
                     </Route>
                     <Route path="/employee">
                         <Route path="new" element={<EmployeeNew />} />
+                        <Route path="edit/:id" element={<EmployeeEdit />} />
                         <Route path="list" element={<EmployeeList />} />
                     </Route>
                     <Route path="/leave"></Route>

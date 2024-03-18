@@ -1,3 +1,5 @@
+import RowActionButtons from "../../../components/Table/RowActionButtons";
+
 export const fields = [
     {
         label: "Employee",
@@ -22,4 +24,10 @@ export const fields = [
         render: (row) => row.roles && <div>{row.roles.join(", ")}</div>,
     },
     { label: "Created On", render: (row) => row.createdAt },
+    {
+        label: "Action",
+        render: (row) => (
+            <RowActionButtons handleDelete={row.handleDelete} id={row._id} />
+        ),
+    },
 ];
