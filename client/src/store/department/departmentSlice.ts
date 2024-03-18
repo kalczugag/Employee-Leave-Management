@@ -116,7 +116,7 @@ const departmentSlice = createSlice({
 });
 
 export const getDepartments = createAsyncThunk(
-    "departments/getAll",
+    "department/getAll",
     async () => {
         const response = await axios.get("/api/departments");
 
@@ -125,7 +125,7 @@ export const getDepartments = createAsyncThunk(
 );
 
 export const getDepartment = createAsyncThunk(
-    "departments/get",
+    "department/get",
     async (id: string) => {
         const response = await axios.get(`/api/departments/${id}`);
 
@@ -134,7 +134,7 @@ export const getDepartment = createAsyncThunk(
 );
 
 export const addDepartment = createAsyncThunk(
-    "departments/add",
+    "department/add",
     async (values: DepartmentProps) => {
         const response = await axios.post("/api/departments", values);
 
@@ -143,7 +143,7 @@ export const addDepartment = createAsyncThunk(
 );
 
 export const editDepartment = createAsyncThunk(
-    "departments/edit",
+    "department/edit",
     async (values: DepartmentProps) => {
         const response = await axios.patch(
             `/api/departments/${values._id}`,
@@ -155,7 +155,7 @@ export const editDepartment = createAsyncThunk(
 );
 
 export const deleteDepartment = createAsyncThunk(
-    "departments/delete",
+    "department/delete",
     async (id: string) => {
         await axios.delete(`/api/departments/${id}`);
 

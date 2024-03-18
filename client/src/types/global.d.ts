@@ -6,7 +6,8 @@ interface user {
     firstName: string;
     lastName: string;
     birthDate: string;
-    mobile?: number;
+    gender?: "Male" | "Female";
+    mobile?: string;
     address?: string;
     roles: ["staff" | "hod" | "admin"];
     authentication?: {

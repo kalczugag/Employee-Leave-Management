@@ -7,12 +7,14 @@ import { clearEditorState } from "../../store";
 
 interface FormViewProps {
     children: ReactNode;
-    initialValues?: {
-        name: string;
-        shortName?: string;
-        details?: EditorState;
-        active?: boolean;
-    };
+    initialValues?:
+        | {
+              name: string;
+              shortName?: string;
+              details?: EditorState;
+              active?: boolean;
+          }
+        | user;
     onSubmit: (values: any) => void;
 }
 
@@ -23,7 +25,7 @@ export const FormView = ({
 }: FormViewProps) => {
     const dispatch = useDispatch();
 
-    if (initialValues && initialValues.details) {
+    if (initialValues) {
         // dispatch(setEditorState(initialValues.details));
     }
 

@@ -8,7 +8,7 @@ interface Props {
     footer?: boolean;
 }
 
-const DefaultPage = ({ children, label, bg = false, footer = true }: Props) => {
+const DefaultPage = ({ children, label, bg, footer = true }: Props) => {
     return (
         <div className="flex flex-col">
             <div className="flex-1 flex flex-col space-y-4">

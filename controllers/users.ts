@@ -1,6 +1,12 @@
 import express from "express";
 
-import { deleteUserById, getUserById, getUsers, createUser } from "../db/users";
+import {
+    deleteUserById,
+    getUserById,
+    getUsers,
+    createUser,
+    updateUserById,
+} from "../db/users";
 import { random, authentication } from "../helpers";
 
 export const getAllUsers = async (
@@ -11,6 +17,22 @@ export const getAllUsers = async (
         const users = await getUsers();
 
         return res.status(200).json(users);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+export const getUser = async (req: express.Request, res: express.Response) => {
+    try {
+        const { id } = req.params;
+        const user = await getUserById(id);
+
+        if (!user) {
+            res.sendStatus(400);
+        }
+
+        return res.status(200).json(user);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
@@ -67,21 +89,12 @@ export const updateUser = async (
     res: express.Response
 ) => {
     try {
-        //add more data to update
         const { id } = req.params;
-        const { firstName, lastName } = req.body;
+        const values = req.body;
 
-        if (!firstName || lastName) {
-            return res.sendStatus(400);
-        }
+        const updatedUser = await updateUserById(id, values);
 
-        const user = await getUserById(id);
-
-        user!.set("firstName", firstName);
-        user!.set("lastName", lastName);
-        await user!.save();
-
-        return res.status(200).json(user).end();
+        return res.status(200).json(updatedUser).end();
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

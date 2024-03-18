@@ -114,17 +114,14 @@ const leaveTypeSlice = createSlice({
     },
 });
 
-export const getLeaveTypes = createAsyncThunk(
-    "leave-types/getAll",
-    async () => {
-        const response = await axios.get("/api/leave-types");
+export const getLeaveTypes = createAsyncThunk("leave-type/getAll", async () => {
+    const response = await axios.get("/api/leave-types");
 
-        return response.data;
-    }
-);
+    return response.data;
+});
 
 export const getLeaveType = createAsyncThunk(
-    "leave-types/get",
+    "leave-type/get",
     async (id: string) => {
         const response = await axios.get(`/api/leave-types/${id}`);
 
@@ -133,7 +130,7 @@ export const getLeaveType = createAsyncThunk(
 );
 
 export const addLeaveType = createAsyncThunk(
-    "leave-types/add",
+    "leave-type/add",
     async (values: LeaveTypeProps) => {
         const response = await axios.post("/api/leave-types", values);
 
@@ -142,7 +139,7 @@ export const addLeaveType = createAsyncThunk(
 );
 
 export const editLeaveType = createAsyncThunk(
-    "leave-types/edit",
+    "leave-type/edit",
     async (values: LeaveTypeProps) => {
         const response = await axios.patch(
             `/api/leave-types/${values._id}`,
@@ -154,7 +151,7 @@ export const editLeaveType = createAsyncThunk(
 );
 
 export const deleteLeaveType = createAsyncThunk(
-    "leave-types/delete",
+    "leave-type/delete",
     async (id: string) => {
         await axios.delete(`/api/leave-types/${id}`);
 
