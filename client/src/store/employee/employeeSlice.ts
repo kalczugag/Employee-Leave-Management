@@ -71,6 +71,8 @@ const employeeSlice = createSlice({
                         (emp: user) => emp._id === editedEmployee._id
                     );
 
+                    console.log(editedEmployee);
+
                     if (index !== -1) {
                         state.data[index] = {
                             ...state.data[index],

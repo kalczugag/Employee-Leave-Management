@@ -1,6 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState, getEmployees } from "../../../store";
+import {
+    AppDispatch,
+    RootState,
+    getEmployees,
+    deleteEmployee,
+} from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import ListSearchForm from "../../../forms/SearchForm";
@@ -13,7 +18,7 @@ const EmployeeList = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
 
-    const [doFetchLeaveTypes, isFetching] = useThunk(getEmployees);
+    const [doFetchEmployee, isFetching] = useThunk(getEmployees);
 
     const { data, isLoading } = useSelector(
         (state: RootState) => state.employee
@@ -31,7 +36,7 @@ const EmployeeList = () => {
 
     useEffect(() => {
         if (employeeData.length <= 1 && !isFetching) {
-            doFetchLeaveTypes();
+            doFetchEmployee();
         }
     }, []);
 
@@ -41,12 +46,12 @@ const EmployeeList = () => {
 
     const handleDelete = (id: string) => {
         console.log(id);
-        // dispatch(deleteEmployee(id))
-        //     .unwrap()
-        //     .catch((err) => handleOpen(err))
-        //     .finally(() => {
-        //         handleOpen("Employee Remove Successful");
-        //     });
+        dispatch(deleteEmployee(id))
+            .unwrap()
+            .catch((err) => handleOpen(err))
+            .finally(() => {
+                handleOpen("Employee Remove Successful");
+            });
     };
 
     const handleSubmit = (values: any) => {

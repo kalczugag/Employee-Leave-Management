@@ -23,7 +23,6 @@ export const FormFile = ({ options, required, disabled }: FormFileProps) => {
                 <input
                     {...input}
                     type="file"
-                    className="col-span-2"
                     onChange={({ target }) =>
                         handleImageChange(target.files, onChange)
                     }

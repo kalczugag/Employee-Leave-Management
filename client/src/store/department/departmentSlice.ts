@@ -3,16 +3,16 @@ import axios from "axios";
 import { EditorProps } from "react-draft-wysiwyg";
 
 interface DepartmentState {
-    data: any[];
+    data: DepartmentProps[];
     isLoading: boolean;
     error: any;
 }
 
-interface DepartmentProps {
+export interface DepartmentProps {
     _id?: string;
     name: string;
     shortName?: string;
-    details?: EditorProps;
+    details?: EditorProps | any;
     active?: boolean;
 }
 
@@ -77,8 +77,7 @@ const departmentSlice = createSlice({
                     const editedDepartment = action.payload;
 
                     const index = state.data.findIndex(
-                        (dep: DepartmentProps) =>
-                            dep._id === editedDepartment._id
+                        (dep) => dep._id === editedDepartment._id
                     );
 
                     if (index !== -1) {
@@ -104,7 +103,7 @@ const departmentSlice = createSlice({
             .addCase(deleteDepartment.fulfilled, (state, action) => {
                 state.isLoading = false;
 
-                state.data = state.data.filter((dep: DepartmentProps) => {
+                state.data = state.data.filter((dep) => {
                     return dep._id !== action.payload;
                 });
             })

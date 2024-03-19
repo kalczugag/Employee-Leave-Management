@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -6,6 +6,7 @@ import {
     RootState,
     editEmployee,
     getEmployee,
+    getDepartments,
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
@@ -19,33 +20,84 @@ const EmployeeEdit = () => {
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
 
-    const [doFetchEmployee, isFetching] = useThunk(getEmployee);
+    const [doFetchEmployee, isFetchingEmployee] = useThunk(getEmployee);
+    const [doFetchDepartments, isFetchingDepartments] =
+        useThunk(getDepartments);
 
-    const data = useSelector((state: RootState) =>
+    const employeeData = useSelector((state: RootState) =>
         state.employee.data.find((value) => value._id === id)
+    );
+    const departmentsData = useSelector(
+        (state: RootState) => state.department.data
+        // state.department.data.map((dep: DepartmentProps) => dep.name)
+    );
+
+    const memorizedDepartmentData = useMemo(
+        () => departmentsData.map(({ name }) => name),
+        [departmentsData]
     );
 
     useEffect(() => {
-        if (!data && !isFetching) {
+        if (
+            !employeeData &&
+            memorizedDepartmentData.length === 0 &&
+            !isFetchingDepartments &&
+            !isFetchingEmployee
+        ) {
             doFetchEmployee(id);
+            doFetchDepartments();
+        } else if (!employeeData && !isFetchingEmployee) {
+            doFetchEmployee(id);
+        } else if (
+            memorizedDepartmentData.length === 0 &&
+            !isFetchingDepartments
+        ) {
+            doFetchDepartments();
         }
     }, []);
 
+    if (!employeeData && memorizedDepartmentData.length === 0) {
+        return null;
+    }
+
     const handleSubmit = (values: user) => {
-        dispatch(editEmployee(values))
-            .unwrap()
-            .catch((err) => {
-                handleOpen(err.message, "error");
-            })
-            .finally(() => {
-                navigate("../list");
-                handleOpen("Employee Update Successful");
-            });
+        if (!employeeData || !values) {
+            return;
+        }
+
+        let hasChanged = false;
+
+        for (const key in values) {
+            if (values[key as keyof user] !== employeeData[key as keyof user]) {
+                hasChanged = true;
+                break;
+            }
+        }
+
+        if (hasChanged) {
+            dispatch(editEmployee(values))
+                .unwrap()
+                .catch((err) => {
+                    handleOpen(err.message, "error");
+                })
+                .finally(() => {
+                    navigate("../list");
+                    handleOpen("Employee Update Successful");
+                });
+        } else {
+            handleOpen("No changes detected", "error");
+        }
     };
 
     return (
         <DefaultPage label="Edit Employee" bg>
-            <FormView initialValues={data} onSubmit={handleSubmit}>
+            <FormView
+                initialValues={{
+                    ...employeeData,
+                    departments: memorizedDepartmentData,
+                }}
+                onSubmit={handleSubmit}
+            >
                 <UserForm />
             </FormView>
         </DefaultPage>

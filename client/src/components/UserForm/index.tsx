@@ -2,27 +2,47 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { FormField, FormFile, FormSelect } from "../../forms/FormView";
 import { FormPassword } from "../../forms/FormView/FormPassword";
+import { InputLabel } from "@mui/material";
+import { useFormState } from "react-final-form";
 
 const UserForm = () => {
     const { isLoading } = useSelector((state: RootState) => state.employee);
 
+    const form = useFormState();
+    console.log(form.initialValues);
+
     return (
         <div className="grid grid-cols-2 gap-6">
-            <FormFile
-                options={{ label: "Employee Avatar", name: "img" }}
-                disabled={isLoading}
-            />
+            <div className="flex flex-col space-y-2 col-span-2">
+                <img
+                    className="w-[160px] h-[80px] object-contain object-left"
+                    src={form.initialValues.img}
+                    alt="avatar"
+                />
+                <InputLabel sx={{ fontWeight: 700 }}>
+                    Employee Avatar
+                </InputLabel>
+                <InputLabel>
+                    Recommended thumbnail size 800x400 (px).
+                </InputLabel>
+                <FormFile
+                    options={{ label: "Employee Avatar", name: "img" }}
+                    disabled={isLoading}
+                />
+            </div>
             <FormSelect
                 options={{ label: "Department id", name: "departmentId" }}
-                values={["dep1", "dep2", "dep3"]}
+                values={form.initialValues.departments || []}
                 disabled={isLoading}
             />
             <FormField
                 options={{ label: "First Name", name: "firstName" }}
+                placeholder="Enter First Name"
                 disabled={isLoading}
             />
             <FormField
                 options={{ label: "Last Name", name: "lastName" }}
+                placeholder="Enter First Last"
                 disabled={isLoading}
             />
             <FormSelect
@@ -32,15 +52,18 @@ const UserForm = () => {
             />
             <FormField
                 options={{ label: "Phone", name: "mobile" }}
+                placeholder="Enter Phone Number"
                 disabled={isLoading}
             />
             <FormField
                 options={{ label: "Email", name: "email" }}
+                placeholder="Enter Email"
                 disabled={isLoading}
             />
             <FormPassword disabled={isLoading} />
             <FormField
                 options={{ label: "Address", name: "address" }}
+                placeholder="Enter Address"
                 disabled={isLoading}
             />
         </div>

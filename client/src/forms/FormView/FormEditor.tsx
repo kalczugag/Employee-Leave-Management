@@ -2,10 +2,11 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../styles/editor-wysiwyg.css";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { RootState, setEditorState } from "../../store";
 import { Field } from "react-final-form";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
-import { RootState, setEditorState } from "../../store";
+import { InputLabel } from "@mui/material";
 
 interface FormEditorProps {
     options: {
@@ -29,7 +30,7 @@ export const FormEditor = ({ options }: FormEditorProps) => {
         <Field name={options.name}>
             {({ input, meta }) => (
                 <div className="space-y-1">
-                    <span>{options.label}</span>
+                    <InputLabel>{options.label}</InputLabel>
                     <Editor
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}

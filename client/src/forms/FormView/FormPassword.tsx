@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Field } from "react-final-form";
-import { OutlinedInput, InputAdornment, IconButton } from "@mui/material";
+import {
+    OutlinedInput,
+    InputAdornment,
+    IconButton,
+    InputLabel,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface FormPasswordProps {
@@ -24,9 +28,7 @@ export const FormPassword = ({ required, disabled }: FormPasswordProps) => {
         <Field name="password">
             {({ input, meta }) => (
                 <div className="space-y-1">
-                    <label htmlFor="outlined-adornment-password">
-                        Password
-                    </label>
+                    <InputLabel>Password</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
                         type={showPassword ? "text" : "password"}
@@ -51,6 +53,7 @@ export const FormPassword = ({ required, disabled }: FormPasswordProps) => {
                         }
                         sx={{ height: "43px" }}
                         autoComplete="off"
+                        placeholder="Enter Password"
                         disabled={disabled}
                         required={required}
                         fullWidth

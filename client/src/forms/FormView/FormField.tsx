@@ -1,21 +1,27 @@
 import { Field } from "react-final-form";
-import { TextField } from "@mui/material";
+import { TextField, InputLabel } from "@mui/material";
 
 interface FormFieldProps {
     options: {
         label: string;
         name: string;
     };
+    placeholder?: string;
     required?: boolean;
     disabled?: boolean;
 }
 
-export const FormField = ({ options, required, disabled }: FormFieldProps) => {
+export const FormField = ({
+    options,
+    placeholder,
+    required,
+    disabled,
+}: FormFieldProps) => {
     return (
         <Field name={options.name}>
             {({ input, meta }) => (
                 <div className="space-y-1">
-                    <label htmlFor={input.name}>{options.label}</label>
+                    <InputLabel>{options.label}</InputLabel>
                     <TextField
                         variant="outlined"
                         name={input.name}
@@ -27,6 +33,7 @@ export const FormField = ({ options, required, disabled }: FormFieldProps) => {
                             },
                         }}
                         autoComplete="off"
+                        placeholder={placeholder}
                         disabled={disabled}
                         required={required}
                         fullWidth

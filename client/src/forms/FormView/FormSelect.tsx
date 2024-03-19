@@ -1,4 +1,4 @@
-import { MenuItem, Select } from "@mui/material";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 import { Field } from "react-final-form";
 
 interface FormSelectProps {
@@ -21,7 +21,7 @@ export const FormSelect = ({
         <Field name={options.name}>
             {({ input, meta }) => (
                 <div className="space-y-1">
-                    <label htmlFor={input.name}>{options.label}</label>
+                    <InputLabel>{options.label}</InputLabel>
                     <Select
                         sx={{ height: "43px" }}
                         value={input.value}
