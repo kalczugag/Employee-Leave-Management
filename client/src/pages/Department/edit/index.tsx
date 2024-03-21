@@ -39,7 +39,7 @@ const DepartmentEdit = () => {
     const handleSubmit = (values: any) => {
         dispatch(editDepartment(values))
             .unwrap()
-            .catch((err) => handleOpen(err))
+            .catch((err) => handleOpen(err.message, "error"))
             .finally(() => {
                 navigate("../list");
                 handleOpen("Department Update Successful");

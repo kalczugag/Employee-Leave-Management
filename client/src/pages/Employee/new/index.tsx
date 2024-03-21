@@ -1,32 +1,30 @@
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch, addEmployee } from "../../../store";
+import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
-import { FormView, FormField, FormEditor } from "../../../forms/FormView";
+import { FormView } from "../../../forms/FormView";
+import UserForm from "../../../components/UserForm";
 
 const EmployeeNew = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const { handleOpen } = useSnackbar();
 
-    const handleSubmit = (values: any) => {
-        // dispatch(addEmployee(values));
-        console.log(values);
+    const handleSubmit = (values: user) => {
+        dispatch(addEmployee(values))
+            .unwrap()
+            .catch((err) => handleOpen(err.message, "error"))
+            .finally(() => {
+                navigate("../list");
+                handleOpen("Department Create Successful");
+            });
     };
 
     return (
         <DefaultPage label="New Employee" bg>
             <FormView onSubmit={handleSubmit}>
-                <FormField
-                    required
-                    options={{ label: "Employee Name", name: "name" }}
-                />
-                <FormField
-                    options={{
-                        label: "Employee Short Name",
-                        name: "shortName",
-                    }}
-                />
-                <FormEditor
-                    options={{ label: "Employee Details", name: "details" }}
-                />
+                <UserForm />
             </FormView>
         </DefaultPage>
     );

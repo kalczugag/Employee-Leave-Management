@@ -47,7 +47,7 @@ const DepartmentList = () => {
     const handleDelete = (id: string) => {
         dispatch(deleteDepartment(id))
             .unwrap()
-            .catch((err) => handleOpen(err))
+            .catch((err) => handleOpen(err.message, "error"))
             .finally(() => {
                 handleOpen("Department Remove Successful");
             });

@@ -39,7 +39,7 @@ const LeaveTypeEdit = () => {
     const handleSubmit = (values: any) => {
         dispatch(editLeaveType(values))
             .unwrap()
-            .catch((err) => handleOpen(err))
+            .catch((err) => handleOpen(err.message, "error"))
             .finally(() => {
                 navigate("../list");
                 handleOpen("Leave Type Update Successful");

@@ -9,14 +9,13 @@ const UserForm = () => {
     const { isLoading } = useSelector((state: RootState) => state.employee);
 
     const form = useFormState();
-    console.log(form.initialValues);
 
     return (
         <div className="grid grid-cols-2 gap-6">
             <div className="flex flex-col space-y-2 col-span-2">
                 <img
                     className="w-[160px] h-[80px] object-contain object-left"
-                    src={form.initialValues.img}
+                    src={form.initialValues.img || ""}
                     alt="avatar"
                 />
                 <InputLabel sx={{ fontWeight: 700 }}>
