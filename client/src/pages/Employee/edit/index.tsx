@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -29,34 +29,31 @@ const EmployeeEdit = () => {
     );
     const departmentsData = useSelector(
         (state: RootState) => state.department.data
-        // state.department.data.map((dep: DepartmentProps) => dep.name)
     );
 
-    const memorizedDepartmentData = useMemo(
-        () => departmentsData.map(({ name }) => name),
-        [departmentsData]
+    const departmentNames: string[] = departmentsData.map(
+        (department) => department.name
     );
 
     useEffect(() => {
         if (
             !employeeData &&
-            memorizedDepartmentData.length === 0 &&
+            departmentsData.length === 0 &&
             !isFetchingDepartments &&
             !isFetchingEmployee
         ) {
             doFetchEmployee(id);
-            doFetchDepartments();
+            doFetchDepartments(
+                "shortName,details,active,createdAt,updatedAt,__v"
+            );
         } else if (!employeeData && !isFetchingEmployee) {
             doFetchEmployee(id);
-        } else if (
-            memorizedDepartmentData.length === 0 &&
-            !isFetchingDepartments
-        ) {
-            doFetchDepartments();
+        } else if (departmentsData.length === 0 && !isFetchingDepartments) {
+            doFetchDepartments("shortName,details,active,createdAt,updatedAt");
         }
     }, []);
 
-    if (!employeeData && memorizedDepartmentData.length === 0) {
+    if (!employeeData && departmentsData.length === 0) {
         return null;
     }
 
@@ -94,7 +91,7 @@ const EmployeeEdit = () => {
             <FormView
                 initialValues={{
                     ...employeeData,
-                    departments: memorizedDepartmentData,
+                    departments: departmentNames,
                 }}
                 onSubmit={handleSubmit}
             >

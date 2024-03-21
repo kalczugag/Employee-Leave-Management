@@ -5,8 +5,12 @@ export const fields = [
         label: "Employee",
         render: (row) => (
             <div className="flex flex-row items-center space-x-4">
-                <div className="w-12 h-12">
-                    <img src={row.img} alt="img" />
+                <div className="w-[120px] h-[60px]">
+                    <img
+                        src={row.img}
+                        alt="img"
+                        className="w-full h-full object-contain"
+                    />
                 </div>
                 <div className="flex flex-col">
                     <span className="font-semibold text-gray-600">

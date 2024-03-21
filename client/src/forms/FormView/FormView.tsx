@@ -14,7 +14,10 @@ interface FormViewProps {
               details?: EditorState;
               active?: boolean;
           }
-        | user;
+        | user
+        | {
+              departments: string[];
+          };
     onSubmit: (values: any) => void;
 }
 

@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { EditorProps } from "react-draft-wysiwyg";
 
 interface DepartmentState {
@@ -116,8 +116,17 @@ const departmentSlice = createSlice({
 
 export const getDepartments = createAsyncThunk(
     "department/getAll",
-    async () => {
-        const response = await axios.get("/api/departments");
+    async (selectQuery: string) => {
+        let response: AxiosResponse<any, any>;
+
+        if (selectQuery) {
+            response = await axios.get("/api/departments", {
+                params: { fields: selectQuery },
+            });
+            // "shortName,details,active,createdAt,updatedAt"
+        } else {
+            response = await axios.get("/api/departments");
+        }
 
         return response.data;
     }

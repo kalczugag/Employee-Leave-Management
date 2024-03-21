@@ -12,7 +12,18 @@ export const getAllDepartments = async (
     res: express.Response
 ) => {
     try {
-        const departments = await getDepartments();
+        let selectQuery = "";
+
+        if (req.query.fields) {
+            const requestedFields = req.query.fields.toString();
+
+            selectQuery = requestedFields
+                .split(",")
+                .map((field) => `-${field.trim()}`)
+                .join(" ");
+        }
+
+        const departments = await getDepartments().select(selectQuery);
 
         return res.status(200).json(departments);
     } catch (error) {

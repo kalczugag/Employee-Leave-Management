@@ -7,6 +7,7 @@ interface FormFieldProps {
         name: string;
     };
     placeholder?: string;
+    type?: React.HTMLInputTypeAttribute;
     required?: boolean;
     disabled?: boolean;
 }
@@ -14,15 +15,17 @@ interface FormFieldProps {
 export const FormField = ({
     options,
     placeholder,
+    type = "text",
     required,
     disabled,
 }: FormFieldProps) => {
     return (
-        <Field name={options.name}>
+        <Field name={options.name} type={type}>
             {({ input, meta }) => (
                 <div className="space-y-1">
                     <InputLabel>{options.label}</InputLabel>
                     <TextField
+                        type={type}
                         variant="outlined"
                         name={input.name}
                         value={input.value}
