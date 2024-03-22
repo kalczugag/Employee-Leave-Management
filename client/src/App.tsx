@@ -13,6 +13,11 @@ import EmployeeList from "./pages/Employee/list";
 import LeaveTypeList from "./pages/LeaveType/list";
 import LeaveTypeEdit from "./pages/LeaveType/edit";
 import LeaveTypeNew from "./pages/LeaveType/new";
+import LeaveNew from "./pages/Leave/new";
+import LeaveList from "./pages/Leave/list";
+import LeaveListPending from "./pages/Leave/listPending";
+import LeaveListApproved from "./pages/Leave/listApproved";
+import LeaveListRejected from "./pages/Leave/listRejected";
 import NotFound from "./pages/404";
 import PrivateOutlet from "./components/PrivateOutlet";
 import SnackbarMsg from "./components/SnackbarMsg";
@@ -52,7 +57,22 @@ const App = () => {
                         <Route path="edit/:id" element={<EmployeeEdit />} />
                         <Route path="list" element={<EmployeeList />} />
                     </Route>
-                    <Route path="/leave"></Route>
+                    <Route path="/leave">
+                        <Route path="new" element={<LeaveNew />} />
+                        <Route path="list" element={<LeaveList />} />
+                        <Route
+                            path="list-pending"
+                            element={<LeaveListPending />}
+                        />
+                        <Route
+                            path="list-approved"
+                            element={<LeaveListApproved />}
+                        />
+                        <Route
+                            path="list-rejected"
+                            element={<LeaveListRejected />}
+                        />
+                    </Route>
                     <Route path="/test" element={<Test />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />

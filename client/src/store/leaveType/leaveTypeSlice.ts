@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { EditorProps } from "react-draft-wysiwyg";
 
 interface LeaveTypeState {
@@ -114,11 +114,22 @@ const leaveTypeSlice = createSlice({
     },
 });
 
-export const getLeaveTypes = createAsyncThunk("leave-type/getAll", async () => {
-    const response = await axios.get("/api/leave-types");
+export const getLeaveTypes = createAsyncThunk(
+    "leave-type/getAll",
+    async (selectQuery: string) => {
+        let response: AxiosResponse<any, any>;
 
-    return response.data;
-});
+        if (selectQuery) {
+            response = await axios.get("/api/leave-types", {
+                params: { fields: selectQuery },
+            });
+        } else {
+            response = await axios.get("/api/leave-types");
+        }
+
+        return response.data;
+    }
+);
 
 export const getLeaveType = createAsyncThunk(
     "leave-type/get",

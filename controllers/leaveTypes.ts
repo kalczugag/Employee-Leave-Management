@@ -12,7 +12,18 @@ export const getAllLeaveTypes = async (
     res: express.Response
 ) => {
     try {
-        const leaveTypes = await getLeaveTypes();
+        let selectQuery = "";
+
+        if (req.query.fields) {
+            const requestedFields = req.query.fields.toString();
+
+            selectQuery = requestedFields
+                .split(",")
+                .map((field) => `-${field.trim()}`)
+                .join(" ");
+        }
+
+        const leaveTypes = await getLeaveTypes().select(selectQuery);
 
         return res.status(200).json(leaveTypes);
     } catch (error) {

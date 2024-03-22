@@ -41,7 +41,7 @@ const CategoryList = () => {
             return (
                 <Box
                     key={label + "_" + index.toString()}
-                    sx={{ width: "225px" }}
+                    sx={{ width: "230px" }}
                 >
                     {expendable ? (
                         <TreeItem

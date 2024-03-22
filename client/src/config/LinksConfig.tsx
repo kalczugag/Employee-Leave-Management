@@ -52,17 +52,17 @@ export const LinksConfig: LinksConfigProps = {
         },
         {
             label: "Leave List Pending",
-            to: "pending",
+            to: "list-pending",
             element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
         },
         {
-            label: "Leave List",
-            to: "approved",
+            label: "Leave List Approved",
+            to: "list-approved",
             element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
         },
         {
-            label: "Leave List",
-            to: "rejected",
+            label: "Leave List Rejected",
+            to: "list-rejected",
             element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
         },
     ],
