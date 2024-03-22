@@ -36,6 +36,8 @@ const EmployeeEdit = () => {
     );
 
     useEffect(() => {
+        const selectQuery = "shortName,details,status,createdAt,updatedAt,__v";
+
         if (
             !employeeData &&
             departmentsData.length === 0 &&
@@ -43,13 +45,11 @@ const EmployeeEdit = () => {
             !isFetchingEmployee
         ) {
             doFetchEmployee(id);
-            doFetchDepartments(
-                "shortName,details,active,createdAt,updatedAt,__v"
-            );
+            doFetchDepartments(selectQuery);
         } else if (!employeeData && !isFetchingEmployee) {
             doFetchEmployee(id);
         } else if (departmentsData.length === 0 && !isFetchingDepartments) {
-            doFetchDepartments("shortName,details,active,createdAt,updatedAt");
+            doFetchDepartments(selectQuery);
         }
     }, []);
 
