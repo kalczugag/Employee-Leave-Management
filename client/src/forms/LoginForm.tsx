@@ -36,7 +36,6 @@ const LoginWindow = () => {
         dispatch(login(values))
             .unwrap()
             .catch((err) => {
-                console.log(err.message);
                 handleOpen("Invalid Credentials", "error");
             });
     };
