@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
-import { login } from "../store";
+import { AppDispatch, login } from "../store";
+import useAuth from "../hooks/useAuth";
+import useSnackbar from "../hooks/useSnackbar";
 import {
     TextField,
     Button,
@@ -13,10 +16,12 @@ import {
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import useThunk from "../hooks/useThunk";
 
 const LoginWindow = () => {
-    const [doLogin, isLogging] = useThunk(login);
+    const dispatch = useDispatch<AppDispatch>();
+    const { isLoading } = useAuth();
+    const { handleOpen } = useSnackbar();
+
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -28,7 +33,12 @@ const LoginWindow = () => {
     };
 
     const onSubmit = (values: { email: string; password: string }) => {
-        doLogin(values);
+        dispatch(login(values))
+            .unwrap()
+            .catch((err) => {
+                console.log(err.message);
+                handleOpen("Invalid Credentials", "error");
+            });
     };
 
     return (
@@ -49,7 +59,7 @@ const LoginWindow = () => {
                                     value={input.value}
                                     onChange={input.onChange}
                                     sx={{ width: "320px" }}
-                                    disabled={isLogging}
+                                    disabled={isLoading}
                                     fullWidth
                                     required
                                 />
@@ -99,7 +109,7 @@ const LoginWindow = () => {
                                         }
                                         label="Password"
                                         sx={{ width: "320px" }}
-                                        disabled={isLogging}
+                                        disabled={isLoading}
                                         fullWidth
                                         required
                                     />
@@ -111,7 +121,7 @@ const LoginWindow = () => {
                         type="submit"
                         sx={{ bgcolor: "#3B82F6" }}
                         variant="contained"
-                        disabled={isLogging}
+                        disabled={isLoading}
                     >
                         Log In
                     </Button>

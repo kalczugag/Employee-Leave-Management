@@ -1,18 +1,22 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-final-form";
-import { RootState, resetPassword } from "../../store";
+import { AppDispatch, RootState, resetPassword } from "../../store";
+import useSnackbar from "../../hooks/useSnackbar";
 import SearchAccountForm from "./SearchAccountForm";
 import ResetPasswordFinalForm from "./ResetPasswordFinalForm";
-import useThunk from "../../hooks/useThunk";
 
 const ResetPasswordForm = () => {
-    const [doResetPassword, resetLoading] = useThunk(resetPassword);
+    const dispatch = useDispatch<AppDispatch>();
+    const { handleOpen } = useSnackbar();
 
     const page = useSelector((state: RootState) => state.user.resetPage);
 
     const onSubmit = (values: any) => {
-        console.log(values);
-        doResetPassword(values);
+        dispatch(resetPassword(values))
+            .unwrap()
+            .catch((err) =>
+                handleOpen("Error processing the password reset", "error")
+            );
     };
 
     return (

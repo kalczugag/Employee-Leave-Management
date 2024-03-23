@@ -1,6 +1,8 @@
-import { verifyEmail } from "../../store";
-import useThunk from "../../hooks/useThunk";
+import { useDispatch } from "react-redux";
 import { Field } from "react-final-form";
+import useAuth from "../../hooks/useAuth";
+import useSnackbar from "../../hooks/useSnackbar";
+import { AppDispatch, verifyEmail } from "../../store";
 import { TextField, Button } from "@mui/material";
 
 interface Props {
@@ -8,14 +10,17 @@ interface Props {
 }
 
 const SearchAccountForm = ({ emailValue }: Props) => {
-    const [doVerifyEmail, verifyLoading, verifyError] = useThunk(verifyEmail);
-    const errss = verifyError ? true : false;
+    const dispatch = useDispatch<AppDispatch>();
+    const { handleOpen } = useSnackbar();
+    const { isLoading } = useAuth();
 
     const required = (value: any) => (value ? undefined : "Required");
 
     const handleVerify = () => {
         if (emailValue) {
-            doVerifyEmail(emailValue);
+            dispatch(verifyEmail(emailValue))
+                .unwrap()
+                .catch((err) => handleOpen("Address not Found", "error"));
         }
     };
 
@@ -37,18 +42,8 @@ const SearchAccountForm = ({ emailValue }: Props) => {
                             value={input.value}
                             onChange={input.onChange}
                             onKeyDown={handleKeyPress}
-                            disabled={verifyLoading}
+                            disabled={isLoading}
                             sx={{ width: "320px" }}
-                            error={
-                                (meta.error || meta.submitError || errss) &&
-                                meta.touched
-                            }
-                            helperText={
-                                (meta.error || meta.submitError || errss) &&
-                                meta.touched
-                                    ? meta.error || verifyError
-                                    : ""
-                            }
                             fullWidth
                         />
                     </>
@@ -58,7 +53,7 @@ const SearchAccountForm = ({ emailValue }: Props) => {
                 type="button"
                 sx={{ bgcolor: "#3B82F6" }}
                 variant="contained"
-                disabled={verifyLoading}
+                disabled={isLoading}
                 onClick={handleVerify}
             >
                 Search

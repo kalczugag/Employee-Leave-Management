@@ -170,17 +170,13 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
     "user/login",
     async (data: { email: string; password: string }) => {
-        try {
-            const response = await axios.post("/api/auth/login", data);
+        const response = await axios.post("/api/auth/login", data);
 
-            if (response.status === 200) {
-                window.location.href = "/";
-            }
-
-            return response.data;
-        } catch (err) {
-            console.error(err);
+        if (response.status === 200) {
+            window.location.href = "/";
         }
+
+        return response.data;
     }
 );
 
@@ -218,30 +214,22 @@ export const logout = createAsyncThunk("user/logout", async () => {
 export const verifyEmail = createAsyncThunk(
     "user/verify",
     async (email: string) => {
-        try {
-            const response = await axios.post("/api/auth/verify", { email });
+        const response = await axios.post("/api/auth/verify", { email });
 
-            return response.data;
-        } catch (err) {
-            console.error(err);
-        }
+        return response.data;
     }
 );
 
 export const resetPassword = createAsyncThunk(
     "user/reset",
     async (data: { email: string; password: string }) => {
-        try {
-            const response = await axios.patch("/api/auth/reset", data);
+        const response = await axios.patch("/api/auth/reset", data);
 
-            if (response.status === 200) {
-                window.location.href = "/login";
-            }
-
-            return response.data;
-        } catch (err) {
-            console.error(err);
+        if (response.status === 200) {
+            window.location.href = "/login";
         }
+
+        return response.data;
     }
 );
 
