@@ -5,7 +5,7 @@ import { FormPassword } from "../../forms/FormView/FormPassword";
 import { InputLabel } from "@mui/material";
 import { useFormState } from "react-final-form";
 
-const UserForm = () => {
+const UserFormFields = () => {
     const form = useFormState();
 
     const { isLoading } = useSelector((state: RootState) => state.employee);
@@ -83,4 +83,4 @@ const UserForm = () => {
     );
 };
 
-export default UserForm;
+export default UserFormFields;

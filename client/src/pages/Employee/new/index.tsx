@@ -11,7 +11,7 @@ import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
-import UserForm from "../../../components/UserForm";
+import UserForm from "../../../components/UserFormFields";
 
 const EmployeeNew = () => {
     const dispatch = useDispatch<AppDispatch>();

@@ -1,6 +1,6 @@
-import LeaveForm from "../../../components/LeaveForm";
 import { FormView } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
+import LeaveFormFields from "../../../components/LeaveFormFields";
 
 const LeaveNew = () => {
     const handleSubmit = (values: any) => {
@@ -10,7 +10,7 @@ const LeaveNew = () => {
     return (
         <DefaultPage label="Leave New" bg>
             <FormView onSubmit={handleSubmit}>
-                <LeaveForm />
+                <LeaveFormFields />
             </FormView>
         </DefaultPage>
     );

@@ -1,6 +1,6 @@
 import { FormEditor, FormField, FormSelect } from "../../forms/FormView";
 
-const LeaveForm = () => {
+const LeaveFormFields = () => {
     return (
         <div className="grid grid-cols-2 gap-6">
             <FormSelect
@@ -32,4 +32,4 @@ const LeaveForm = () => {
     );
 };
 
-export default LeaveForm;
+export default LeaveFormFields;

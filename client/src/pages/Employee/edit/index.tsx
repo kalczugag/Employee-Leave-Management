@@ -12,7 +12,7 @@ import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
-import UserForm from "../../../components/UserForm";
+import UserForFields from "../../../components/UserFormFields";
 
 const EmployeeEdit = () => {
     const { id } = useParams();
@@ -95,7 +95,7 @@ const EmployeeEdit = () => {
                 }}
                 onSubmit={handleSubmit}
             >
-                <UserForm />
+                <UserForFields />
             </FormView>
         </DefaultPage>
     );
