@@ -97,11 +97,11 @@ export const updateDepartment = async (
         const { id } = req.params;
         const { name, shortName, details, active } = req.body;
 
-        if (!name) {
+        const department = await getDepartmentById(id);
+
+        if (!department) {
             return res.sendStatus(400);
         }
-
-        const department = await getDepartmentById(id);
 
         department!.set("name", name);
         department!.set("shortName", shortName);

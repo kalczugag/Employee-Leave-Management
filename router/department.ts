@@ -7,13 +7,22 @@ import {
     updateDepartment,
     deleteDepartment,
 } from "../controllers/departments";
-import { isAuthenticated } from "../middlewares";
+import { isAdmin, isAuthenticated } from "../middlewares";
 
 export default (router: express.Router) => {
     router.get("/departments", isAuthenticated, getAllDepartments);
     router.get("/departments/:id", isAuthenticated, getDepartment);
     router.post("/departments", isAuthenticated, addDepartment);
-    //add isAdmin middleware to protect routes below
-    router.delete("/departments/:id", isAuthenticated, deleteDepartment);
-    router.patch("/departments/:id", isAuthenticated, updateDepartment);
+    router.delete(
+        "/departments/:id",
+        isAuthenticated,
+        isAdmin,
+        deleteDepartment
+    );
+    router.patch(
+        "/departments/:id",
+        isAuthenticated,
+        isAdmin,
+        updateDepartment
+    );
 };

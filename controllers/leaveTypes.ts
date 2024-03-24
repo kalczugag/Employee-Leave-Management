@@ -80,9 +80,9 @@ export const deleteLeaveType = async (
     try {
         const { id } = req.params;
 
-        const deletedDepartment = await deleteLeaveTypeById(id);
+        const deletedLeaveType = await deleteLeaveTypeById(id);
 
-        return res.json(deletedDepartment);
+        return res.json(deletedLeaveType);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
@@ -97,19 +97,19 @@ export const updateLeaveType = async (
         const { id } = req.params;
         const { name, shortName, details, active } = req.body;
 
-        if (!name) {
+        const leaveType = await getLeaveTypeById(id);
+
+        if (!leaveType) {
             return res.sendStatus(400);
         }
 
-        const department = await getLeaveTypeById(id);
+        leaveType!.set("name", name);
+        leaveType!.set("shortName", shortName);
+        leaveType!.set("details", details);
+        leaveType!.set("active", active);
+        await leaveType!.save();
 
-        department!.set("name", name);
-        department!.set("shortName", shortName);
-        department!.set("details", details);
-        department!.set("active", active);
-        await department!.save();
-
-        return res.status(200).json(department).end();
+        return res.status(200).json(leaveType).end();
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
