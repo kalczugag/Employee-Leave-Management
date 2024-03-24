@@ -18,7 +18,7 @@ const EmployeeList = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
 
-    const [doFetchEmployee, isFetching] = useThunk(getEmployees);
+    const [doFetchEmployees] = useThunk(getEmployees);
 
     const { data, isLoading } = useSelector(
         (state: RootState) => state.employee
@@ -35,12 +35,12 @@ const EmployeeList = () => {
     );
 
     useEffect(() => {
-        if (employeeData.length <= 1 && !isFetching) {
-            doFetchEmployee();
+        if (employeeData.length <= 1 && !isLoading) {
+            doFetchEmployees();
         }
     }, []);
 
-    if (!employeeData && isFetching) {
+    if (!employeeData && isLoading) {
         return null;
     }
 

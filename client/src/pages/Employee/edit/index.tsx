@@ -86,6 +86,10 @@ const EmployeeEdit = () => {
         }
     };
 
+    if (!employeeData || departmentNames.length === 0) {
+        return null;
+    }
+
     return (
         <DefaultPage label="Edit Employee" bg>
             <FormView
