@@ -2,7 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface EmployeeState {
-    data: any[];
+    data: user[];
     isLoading: boolean;
     error: any;
 }
@@ -121,8 +121,10 @@ export const getEmployees = createAsyncThunk("employee/getAll", async () => {
 
 export const getEmployee = createAsyncThunk(
     "employee/get",
-    async (id: string) => {
-        const response = await axios.get(`/api/users/${id}`);
+    async ({ id, selectQuery }: { id: string; selectQuery: string }) => {
+        const response = await axios.get(`/api/users/${id}`, {
+            params: { fields: selectQuery },
+        });
 
         return response.data;
     }

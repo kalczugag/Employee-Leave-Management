@@ -26,7 +26,18 @@ export const getAllUsers = async (
 export const getUser = async (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
-        const user = await getUserById(id);
+        let selectQuery = "";
+
+        if (req.query.fields) {
+            const requestedFields = req.query.fields.toString();
+
+            selectQuery = requestedFields
+                .split(",")
+                .map((field) => `-${field.trim()}`)
+                .join(" ");
+        }
+
+        const user = await getUserById(id).select(selectQuery);
 
         if (!user) {
             res.sendStatus(400);

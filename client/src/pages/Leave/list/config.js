@@ -7,23 +7,27 @@ export const fields = [
             <div className="flex flex-row items-center space-x-4">
                 <div className="w-[120px] h-[60px]">
                     <img
-                        src={row.img}
+                        src={row.userData?.img || ""}
                         alt="img"
                         className="w-full h-full object-contain"
                     />
                 </div>
                 <div className="flex flex-col">
                     <span className="font-semibold text-gray-600">
-                        {row.name}
+                        {row.userData?.firstName || ""}{" "}
+                        {row.userData?.lastName || ""}
                     </span>
-                    <span>{row.email}</span>
+                    <span>{row.userData?.email || ""}</span>
                 </div>
             </div>
         ),
     },
     {
         label: "Leave Type",
-        render: (row) => row.leaveType || "",
+        render: (row) => {
+            console.log(row);
+            return row.leaveType || "";
+        },
     },
     {
         label: "Application Data",
@@ -43,6 +47,8 @@ export const fields = [
     },
     {
         label: "Action",
-        render: (row) => <RowActionButtons id={row._id} />,
+        render: (row) => (
+            <RowActionButtons disabled={row.isLoading} id={row._id} />
+        ),
     },
 ];

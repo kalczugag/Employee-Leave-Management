@@ -29,7 +29,7 @@ const EmployeeList = () => {
             data.map((row) => ({
                 ...row,
                 isLoading,
-                handleDelete: () => handleDelete(row._id),
+                handleDelete: () => handleDelete(row._id!),
             })),
         [data]
     );

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface LeaveState {
-    data: any[];
+    data: LeaveProps[];
     isLoading: boolean;
     error: any;
 }
@@ -13,6 +13,7 @@ interface StatusUnion {
 
 interface LeaveProps {
     _id?: string;
+    _user: string;
     leaveType: string;
     totalDay: number;
     hodStatus?: StatusUnion;
