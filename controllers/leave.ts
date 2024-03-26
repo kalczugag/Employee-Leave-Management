@@ -8,11 +8,18 @@ import {
     deleteLeaveById,
 } from "../db/leave";
 
+interface PaginationProps {
+    page?: number;
+    pageSize?: number;
+    status?: "pending" | "approved" | "rejected";
+}
+
 export const getAllLeaves = async (
     req: express.Request,
     res: express.Response
 ) => {
     try {
+        const { page = 1, pageSize = 5, status }: PaginationProps = req.query;
         let selectQuery = "";
 
         if (req.query.fields) {
@@ -24,7 +31,20 @@ export const getAllLeaves = async (
                 .join(" ");
         }
 
-        const leaves = await getLeaves().select(selectQuery);
+        let leavesQuery = getLeaves()
+            .select(selectQuery)
+            .skip((page - 1) * pageSize)
+            .limit(pageSize);
+
+        if (status === "pending") {
+            leavesQuery = leavesQuery.where("hodStatus").equals("pending");
+        } else if (status === "approved") {
+            leavesQuery = leavesQuery.where("hodStatus").equals("approved");
+        } else if (status === "rejected") {
+            leavesQuery = leavesQuery.where("hodStatus").equals("rejected");
+        }
+
+        const leaves = await leavesQuery.exec();
 
         return res.status(200).json(leaves);
     } catch (error) {

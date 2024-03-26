@@ -7,11 +7,17 @@ import {
     deleteDepartmentById,
 } from "../db/department";
 
+interface PaginationProps {
+    page?: number;
+    pageSize?: number;
+}
+
 export const getAllDepartments = async (
     req: express.Request,
     res: express.Response
 ) => {
     try {
+        const { page = 1, pageSize = 5 }: PaginationProps = req.query;
         let selectQuery = "";
 
         if (req.query.fields) {
@@ -23,7 +29,11 @@ export const getAllDepartments = async (
                 .join(" ");
         }
 
-        const departments = await getDepartments().select(selectQuery);
+        const departments = await getDepartments()
+            .select(selectQuery)
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .exec();
 
         return res.status(200).json(departments);
     } catch (error) {

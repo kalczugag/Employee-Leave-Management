@@ -7,13 +7,13 @@ interface LeaveState {
     error: any;
 }
 
-interface StatusUnion {
+export interface StatusUnion {
     status: "pending" | "approved" | "rejected";
 }
 
-interface LeaveProps {
+export interface LeaveProps {
     _id?: string;
-    _user: string;
+    _user?: string;
     leaveType: string;
     totalDay: number;
     hodStatus?: StatusUnion;
@@ -118,11 +118,21 @@ const leaveSlice = createSlice({
     },
 });
 
-export const getLeaves = createAsyncThunk("leave/getAll", async () => {
-    const response = await axios.get("/api/leaves");
+export const getLeaves = createAsyncThunk(
+    "leave/getAll",
+    async (options: any) => {
+        const response = await axios.get("/api/leaves", {
+            params: {
+                fields: options?.selectQuery,
+                page: options?.page,
+                pageSize: options?.pageSize,
+                status: options?.status,
+            },
+        });
 
-    return response.data;
-});
+        return response.data;
+    }
+);
 
 export const getLeave = createAsyncThunk("leave/get", async (id: string) => {
     const response = await axios.get(`/api/leaves/${id}`);

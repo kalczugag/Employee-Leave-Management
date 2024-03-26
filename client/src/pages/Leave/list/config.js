@@ -24,10 +24,7 @@ export const fields = [
     },
     {
         label: "Leave Type",
-        render: (row) => {
-            console.log(row);
-            return row.leaveType || "";
-        },
+        render: (row) => row.leaveType || "",
     },
     {
         label: "Application Data",
@@ -48,7 +45,11 @@ export const fields = [
     {
         label: "Action",
         render: (row) => (
-            <RowActionButtons disabled={row.isLoading} id={row._id} />
+            <RowActionButtons
+                handleDelete={row.handleDelete}
+                disabled={row.isLoading}
+                id={row._id}
+            />
         ),
     },
 ];

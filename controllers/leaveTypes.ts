@@ -7,11 +7,17 @@ import {
     deleteLeaveTypeById,
 } from "../db/leaveType";
 
+interface PaginationProps {
+    page?: number;
+    pageSize?: number;
+}
+
 export const getAllLeaveTypes = async (
     req: express.Request,
     res: express.Response
 ) => {
     try {
+        const { page = 1, pageSize = 5 }: PaginationProps = req.query;
         let selectQuery = "";
 
         if (req.query.fields) {
@@ -23,7 +29,11 @@ export const getAllLeaveTypes = async (
                 .join(" ");
         }
 
-        const leaveTypes = await getLeaveTypes().select(selectQuery);
+        const leaveTypes = await getLeaveTypes()
+            .select(selectQuery)
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .exec();
 
         return res.status(200).json(leaveTypes);
     } catch (error) {
