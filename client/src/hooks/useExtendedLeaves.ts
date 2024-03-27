@@ -4,23 +4,24 @@ import {
     RootState,
     AppDispatch,
     getLeaves,
-    getEmployee,
     deleteLeave,
     StatusUnion,
+    getEmployeesByIds,
 } from "../store";
 import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
+import _ from "lodash";
 
 const useExtendedLeaves = ({ status }: StatusUnion) => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
     const [doFetchLeaves] = useThunk(getLeaves);
-    const [doFetchEmployee] = useThunk(getEmployee);
+    const [doFetchEmployee] = useThunk(getEmployeesByIds);
 
     const leavesData = useSelector((state: RootState) => state.leave);
     const employeesData = useSelector((state: RootState) => state.employee);
 
-    const options = {
+    const LeavesOptions = {
         // fields: '',
         // page: 1,
         // pageSize: 5,
@@ -36,31 +37,30 @@ const useExtendedLeaves = ({ status }: StatusUnion) => {
 
     useEffect(() => {
         if (leavesData.data.length === 0) {
-            doFetchLeaves(options);
+            doFetchLeaves(LeavesOptions);
         } else if (employeesData.data.length === 0) {
             fetchEmployeesById();
         }
     }, [leavesData.data.length]);
 
     const fetchEmployeesById = async () => {
-        leavesData.data.forEach((leaf) => {
-            const userId = leaf._user;
-            try {
-                doFetchEmployee({
-                    id: userId,
-                    selectQuery:
-                        "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
-                });
-            } catch (err) {
-                console.error("Error fetching employee:", err);
-            }
-        });
+        const leaveUsersIds = leavesData.data.map((e) => e._user);
+        const uniqueIds = _.uniqBy(leaveUsersIds, (e) => e);
+
+        const employeesOptions = {
+            ids: uniqueIds,
+            selectQuery:
+                "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
+        };
+
+        doFetchEmployee(employeesOptions);
     };
 
     const extendedLeaves = useMemo(() => {
         return leavesData.data.map((row) => {
             const userData =
                 employeesData.data.find((e) => e._id === row._user) || null;
+            console.log(userData);
             return {
                 ...row,
                 userData,

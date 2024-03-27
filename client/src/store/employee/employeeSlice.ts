@@ -45,6 +45,19 @@ const employeeSlice = createSlice({
             });
 
         builder
+            .addCase(getEmployeesByIds.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getEmployeesByIds.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.data = action.payload;
+            })
+            .addCase(getEmployeesByIds.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error;
+            });
+
+        builder
             .addCase(addEmployee.pending, (state) => {
                 state.isLoading = true;
             })
@@ -124,6 +137,20 @@ export const getEmployee = createAsyncThunk(
     async ({ id, selectQuery }: { id: string; selectQuery: string }) => {
         const response = await axios.get(`/api/users/${id}`, {
             params: { fields: selectQuery },
+        });
+
+        return response.data;
+    }
+);
+
+export const getEmployeesByIds = createAsyncThunk(
+    "employee/getByIds",
+    async (options: any) => {
+        const response = await axios.get("/api/users/byIds", {
+            params: {
+                ids: options.ids,
+                fields: options.selectQuery,
+            },
         });
 
         return response.data;

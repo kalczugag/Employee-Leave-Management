@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 
 import {
     deleteUserById,
@@ -54,6 +55,44 @@ export const getUser = async (req: express.Request, res: express.Response) => {
         }
 
         return res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+export const getUsersByIds = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { ids } = req.query;
+
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ message: "IDs array is required" });
+        }
+
+        let selectQuery = "";
+
+        if (req.query.fields) {
+            const requestedFields = req.query.fields.toString();
+            selectQuery = requestedFields
+                .split(",")
+                .map((field) => `-${field.trim()}`)
+                .join(" ");
+        }
+
+        console.log(selectQuery);
+
+        const uniqueIds = await getUsers().distinct("_id", {
+            _id: { $in: ids },
+        });
+
+        const users = await getUsers()
+            .select(selectQuery)
+            .find({ _id: { $in: uniqueIds } });
+
+        return res.status(200).json(users);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

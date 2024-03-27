@@ -2,6 +2,7 @@ import express from "express";
 
 import {
     getAllUsers,
+    getUsersByIds,
     getUser,
     addUser,
     deleteUser,
@@ -10,6 +11,7 @@ import {
 import { isAuthenticated, isAdmin } from "../middlewares";
 
 export default (router: express.Router) => {
+    router.get("/users/byIds", isAuthenticated, isAdmin, getUsersByIds);
     router.get("/users", isAuthenticated, isAdmin, getAllUsers);
     router.get("/users/:id", isAuthenticated, isAdmin, getUser);
     router.post("/users", isAuthenticated, isAdmin, addUser);

@@ -120,7 +120,7 @@ const leaveSlice = createSlice({
 
 export const getLeaves = createAsyncThunk(
     "leave/getAll",
-    async (options: any) => {
+    async (options?: any) => {
         const response = await axios.get("/api/leaves", {
             params: {
                 fields: options?.selectQuery,

@@ -18,5 +18,4 @@ const LeaveList = () => {
         </DefaultPage>
     );
 };
-
 export default LeaveList;
