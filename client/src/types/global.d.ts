@@ -9,7 +9,7 @@ interface user {
     gender?: "Male" | "Female";
     mobile?: string;
     address?: string;
-    roles: ["staff" | "hod" | "admin"];
+    roles: "staff" | "hod" | "admin";
     authentication?: {
         password: string;
         salt: string;

@@ -25,7 +25,7 @@ export const fields = [
     { label: "Employee Address", render: (row) => row.address || "-" },
     {
         label: "Employee Roles",
-        render: (row) => row.roles && <div>{row.roles.join(", ")}</div>,
+        render: (row) => row.roles || "-",
     },
     { label: "Created On", render: (row) => row.createdAt },
     {

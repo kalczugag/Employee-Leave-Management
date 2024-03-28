@@ -6,7 +6,7 @@ export const fields = [
         label: "Leave Type Name",
         render: (row) => row.name,
     },
-    { label: "Leave Type Details", render: (row) => "..." },
+    { label: "Leave Type Details", render: (row) => "-" },
     { label: "Created At", render: (row) => row.createdAt },
     {
         label: "Leave Type Status",

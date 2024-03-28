@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema(
         gender: { type: String, required: false },
         mobile: { type: String, required: false },
         address: { type: String, required: false },
-        roles: { type: [String], required: true, default: "staff" },
+        roles: { type: String, required: true, default: "staff" },
         authentication: {
             password: { type: String, required: true, select: false },
             salt: { type: String, select: false },

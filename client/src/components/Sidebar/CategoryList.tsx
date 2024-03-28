@@ -76,7 +76,7 @@ const CategoryList = () => {
             }}
         >
             <h5 className="font-semibold text-gray-500 mb-2">
-                {user?.roles[0]} roles
+                {user?.roles} roles
             </h5>
             {renderedOptions}
         </TreeView>
