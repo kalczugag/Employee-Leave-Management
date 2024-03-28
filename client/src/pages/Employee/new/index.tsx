@@ -31,7 +31,9 @@ const EmployeeNew = () => {
 
     useEffect(() => {
         if (departmentsData.length === 0 && !isFetchingDepartments) {
-            doFetchDepartments();
+            doFetchDepartments(
+                "shortName,details,status,createdAt,updatedAt,active,__v"
+            );
         }
     }, []);
 

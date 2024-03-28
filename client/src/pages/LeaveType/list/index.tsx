@@ -20,7 +20,7 @@ const LeaveTypeList = () => {
 
     const [doFetchLeaveTypes, isFetching] = useThunk(getLeaveTypes);
 
-    const { data, isLoading } = useSelector(
+    const { data, isLoading, fullData } = useSelector(
         (state: RootState) => state.leaveType
     );
 
@@ -36,6 +36,8 @@ const LeaveTypeList = () => {
 
     useEffect(() => {
         if (leaveTypeData.length <= 1 && !isFetching) {
+            doFetchLeaveTypes();
+        } else if (!fullData) {
             doFetchLeaveTypes();
         }
     }, []);

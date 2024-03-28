@@ -5,12 +5,14 @@ interface EmployeeState {
     data: user[];
     isLoading: boolean;
     error: any;
+    fulldata: boolean;
 }
 
 const initialState: EmployeeState = {
     data: [],
     isLoading: false,
     error: null,
+    fulldata: false,
 };
 
 const employeeSlice = createSlice({
@@ -37,7 +39,8 @@ const employeeSlice = createSlice({
             })
             .addCase(getEmployee.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.data.push(action.payload);
+                state.data.push(action.payload.data);
+                state.fulldata = action.payload.selectQuery;
             })
             .addCase(getEmployee.rejected, (state, action) => {
                 state.isLoading = false;
@@ -49,8 +52,12 @@ const employeeSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getEmployeesByIds.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
+                return {
+                    ...state,
+                    isLoading: false,
+                    data: action.payload.data,
+                    fullData: action.payload.selectQuery,
+                };
             })
             .addCase(getEmployeesByIds.rejected, (state, action) => {
                 state.isLoading = false;
@@ -139,7 +146,7 @@ export const getEmployee = createAsyncThunk(
             params: { fields: selectQuery },
         });
 
-        return response.data;
+        return { data: response.data, selectQuery: selectQuery ? false : true };
     }
 );
 
@@ -153,7 +160,10 @@ export const getEmployeesByIds = createAsyncThunk(
             },
         });
 
-        return response.data;
+        return {
+            data: response.data,
+            selectQuery: options.selectQuery ? false : true,
+        };
     }
 );
 

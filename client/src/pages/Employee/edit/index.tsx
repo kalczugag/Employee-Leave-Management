@@ -44,10 +44,10 @@ const EmployeeEdit = () => {
             !isFetchingDepartments &&
             !isFetchingEmployee
         ) {
-            doFetchEmployee(id);
+            doFetchEmployee({ id });
             doFetchDepartments(selectQuery);
         } else if (!employeeData && !isFetchingEmployee) {
-            doFetchEmployee(id);
+            doFetchEmployee({ id });
         } else if (departmentsData.length === 0 && !isFetchingDepartments) {
             doFetchDepartments(selectQuery);
         }

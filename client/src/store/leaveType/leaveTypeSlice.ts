@@ -6,6 +6,7 @@ interface LeaveTypeState {
     data: any[];
     isLoading: boolean;
     error: any;
+    fullData: boolean;
 }
 
 interface LeaveTypeProps {
@@ -20,6 +21,7 @@ const initialState: LeaveTypeState = {
     data: [],
     isLoading: false,
     error: null,
+    fullData: false,
 };
 
 const leaveTypeSlice = createSlice({
@@ -32,8 +34,12 @@ const leaveTypeSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getLeaveTypes.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
+                return {
+                    ...state,
+                    isLoading: false,
+                    data: action.payload.data,
+                    fullData: action.payload.selectQuery,
+                };
             })
             .addCase(getLeaveTypes.rejected, (state, action) => {
                 state.isLoading = false;
@@ -127,7 +133,7 @@ export const getLeaveTypes = createAsyncThunk(
             response = await axios.get("/api/leave-types");
         }
 
-        return response.data;
+        return { data: response.data, selectQuery: selectQuery ? false : true };
     }
 );
 

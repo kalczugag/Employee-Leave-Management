@@ -20,7 +20,7 @@ const DepartmentList = () => {
 
     const [doFetchDepartments, isFetching] = useThunk(getDepartments);
 
-    const { data, isLoading } = useSelector(
+    const { data, isLoading, fullData } = useSelector(
         (state: RootState) => state.department
     );
 
@@ -36,6 +36,8 @@ const DepartmentList = () => {
 
     useEffect(() => {
         if (departmentdata.length <= 1 && !isFetching) {
+            doFetchDepartments();
+        } else if (!fullData) {
             doFetchDepartments();
         }
     }, []);

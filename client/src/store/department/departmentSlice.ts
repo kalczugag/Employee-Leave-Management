@@ -6,6 +6,7 @@ interface DepartmentState {
     data: DepartmentProps[];
     isLoading: boolean;
     error: any;
+    fullData: boolean;
 }
 
 export interface DepartmentProps {
@@ -20,6 +21,7 @@ const initialState: DepartmentState = {
     data: [],
     isLoading: false,
     error: null,
+    fullData: false,
 };
 
 const departmentSlice = createSlice({
@@ -32,8 +34,12 @@ const departmentSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getDepartments.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
+                return {
+                    ...state,
+                    isLoading: false,
+                    data: action.payload.data,
+                    fullData: action.payload.selectQuery,
+                };
             })
             .addCase(getDepartments.rejected, (state, action) => {
                 state.isLoading = false;
@@ -123,12 +129,13 @@ export const getDepartments = createAsyncThunk(
             response = await axios.get("/api/departments", {
                 params: { fields: selectQuery },
             });
-            // "shortName,details,active,createdAt,updatedAt"
         } else {
             response = await axios.get("/api/departments");
         }
 
-        return response.data;
+        console.log(selectQuery);
+
+        return { data: response.data, selectQuery: selectQuery ? false : true };
     }
 );
 

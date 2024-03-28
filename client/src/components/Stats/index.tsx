@@ -13,21 +13,25 @@ const Stats = () => {
                 icon={<ContentPasteOutlined />}
                 amount={5}
                 label="Total Leave"
+                arrow={false}
             />
             <StatsViewBox
                 icon={<DisabledByDefaultOutlined />}
                 amount={3}
                 label="Rejected Leave"
+                variant="rejected"
             />
             <StatsViewBox
                 icon={<ThumbUpOutlined />}
                 amount={1}
                 label="Approved Leave"
+                variant="approved"
             />
             <StatsViewBox
                 icon={<HourglassEmptyOutlined />}
                 amount={1}
                 label="Pending Leave"
+                variant="pending"
             />
         </div>
     );

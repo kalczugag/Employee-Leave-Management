@@ -20,7 +20,7 @@ const EmployeeList = () => {
 
     const [doFetchEmployees] = useThunk(getEmployees);
 
-    const { data, isLoading } = useSelector(
+    const { data, isLoading, fulldata } = useSelector(
         (state: RootState) => state.employee
     );
 
@@ -36,6 +36,8 @@ const EmployeeList = () => {
 
     useEffect(() => {
         if (employeeData.length <= 1 && !isLoading) {
+            doFetchEmployees();
+        } else if (!fulldata) {
             doFetchEmployees();
         }
     }, []);

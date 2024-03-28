@@ -5,6 +5,7 @@ interface LeaveState {
     data: LeaveProps[];
     isLoading: boolean;
     error: any;
+    fullData: boolean;
 }
 
 export interface StatusUnion {
@@ -24,6 +25,7 @@ const initialState: LeaveState = {
     data: [],
     isLoading: false,
     error: null,
+    fullData: false,
 };
 
 const leaveSlice = createSlice({
@@ -36,8 +38,12 @@ const leaveSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getLeaves.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
+                return {
+                    ...state,
+                    isLoading: false,
+                    data: action.payload.data,
+                    fullData: action.payload.selectQuery,
+                };
             })
             .addCase(getLeaves.rejected, (state, action) => {
                 state.isLoading = false;
@@ -130,7 +136,10 @@ export const getLeaves = createAsyncThunk(
             },
         });
 
-        return response.data;
+        return {
+            data: response.data,
+            selectQuery: options.selectQuery ? false : true,
+        };
     }
 );
 
