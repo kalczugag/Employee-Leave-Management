@@ -2,10 +2,10 @@ import BasicTable from "../../../components/Table";
 import ListSearchForm from "../../../forms/SearchForm";
 import useExtendedLeaves from "../../../hooks/useExtendedLeaves";
 import DefaultPage from "../../../layout/DefaultPage";
-import { fields } from "./config";
+import { fields } from "../config";
 
 const LeaveList = () => {
-    const data = useExtendedLeaves({ status: "pending" });
+    const data = useExtendedLeaves();
 
     const handleSubmit = (values: any) => {
         console.log(values);

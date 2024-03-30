@@ -138,7 +138,11 @@ export const getLeaves = createAsyncThunk(
 
         return {
             data: response.data,
-            selectQuery: options.selectQuery ? false : true,
+            selectQuery: options.selectQuery
+                ? false
+                : options.status !== undefined
+                ? false
+                : true,
         };
     }
 );

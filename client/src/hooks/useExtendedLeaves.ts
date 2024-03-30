@@ -12,7 +12,7 @@ import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
 import _ from "lodash";
 
-const useExtendedLeaves = ({ status }: StatusUnion) => {
+const useExtendedLeaves = (status?: StatusUnion) => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
     const [doFetchLeaves] = useThunk(getLeaves);
@@ -57,6 +57,25 @@ const useExtendedLeaves = ({ status }: StatusUnion) => {
     };
 
     const extendedLeaves = useMemo(() => {
+        if (status) {
+            console.log(status);
+            return leavesData.data
+                .filter(
+                    (row) =>
+                        row.hodStatus === status || row.adminStatus === status
+                )
+                .map((row) => {
+                    const userData =
+                        employeesData.data.find((e) => e._id === row._user) ||
+                        null;
+                    return {
+                        ...row,
+                        userData,
+                        isLoading: leavesData.isLoading,
+                        handleDelete: () => handleDelete(row._id!),
+                    };
+                });
+        }
         return leavesData.data.map((row) => {
             const userData =
                 employeesData.data.find((e) => e._id === row._user) || null;
@@ -68,7 +87,7 @@ const useExtendedLeaves = ({ status }: StatusUnion) => {
                 handleDelete: () => handleDelete(row._id!),
             };
         });
-    }, [leavesData.data, employeesData.data]);
+    }, [leavesData.data, employeesData.data, status]);
 
     return leavesData.data.length === 0 || employeesData.data.length === 0
         ? null

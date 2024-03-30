@@ -1,4 +1,4 @@
-import RowActionButtons from "../../../components/Table/RowActionButtons";
+import RowActionButtons from "../../components/Table/RowActionButtons";
 
 export const fields = [
     {
