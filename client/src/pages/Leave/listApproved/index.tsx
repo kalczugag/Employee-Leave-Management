@@ -5,7 +5,7 @@ import BasicTable from "../../../components/Table";
 import { fields } from "../config";
 
 const LeaveListApproved = () => {
-    const data = useExtendedLeaves("approved");
+    const data = useExtendedLeaves({ status: "approved" });
 
     const handleSubmit = (values: any) => {
         console.log(values);

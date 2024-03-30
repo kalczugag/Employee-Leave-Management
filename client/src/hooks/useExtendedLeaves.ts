@@ -25,7 +25,7 @@ const useExtendedLeaves = (status?: StatusUnion) => {
         // fields: '',
         // page: 1,
         // pageSize: 5,
-        status,
+        status: status?.status,
     };
 
     const handleDelete = (id: string) => {
