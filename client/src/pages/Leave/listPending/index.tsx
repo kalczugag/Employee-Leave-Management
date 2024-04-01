@@ -5,7 +5,7 @@ import DefaultPage from "../../../layout/DefaultPage";
 import { fields } from "../config";
 
 const LeaveListPending = () => {
-    const data = useExtendedLeaves({ status: "pending" });
+    const data = useExtendedLeaves("pending");
 
     const handleSubmit = (values: any) => {
         console.log(values);

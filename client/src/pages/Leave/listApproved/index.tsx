@@ -5,7 +5,7 @@ import DefaultPage from "../../../layout/DefaultPage";
 import { fields } from "../config";
 
 const LeaveListApproved = () => {
-    const data = useExtendedLeaves({ status: "approved" });
+    const data = useExtendedLeaves("approved");
 
     const handleSubmit = (values: any) => {
         console.log(values);

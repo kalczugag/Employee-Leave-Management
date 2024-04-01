@@ -12,9 +12,7 @@ import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
 import _ from "lodash";
 
-const useExtendedLeaves = ({
-    status,
-}: { status?: StatusUnion["status"] } = {}) => {
+const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
     const [doFetchLeaves] = useThunk(getLeaves);

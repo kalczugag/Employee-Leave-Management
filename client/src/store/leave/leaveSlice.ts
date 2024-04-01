@@ -9,7 +9,7 @@ interface LeaveState {
 }
 
 export interface StatusUnion {
-    status: "pending" | "approved" | "rejected";
+    status?: "pending" | "approved" | "rejected";
 }
 
 export interface LeaveProps {
