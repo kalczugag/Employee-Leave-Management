@@ -7,8 +7,6 @@ import { fields } from "../config";
 const LeaveListApproved = () => {
     const data = useExtendedLeaves({ status: "approved" });
 
-    console.log(data);
-
     const handleSubmit = (values: any) => {
         console.log(values);
     };

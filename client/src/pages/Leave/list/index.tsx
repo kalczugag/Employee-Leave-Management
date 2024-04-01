@@ -6,7 +6,6 @@ import { fields } from "../config";
 
 const LeaveList = () => {
     const data = useExtendedLeaves();
-    console.log(data);
 
     const handleSubmit = (values: any) => {
         console.log(values);

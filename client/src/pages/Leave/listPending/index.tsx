@@ -6,7 +6,6 @@ import { fields } from "../config";
 
 const LeaveListPending = () => {
     const data = useExtendedLeaves({ status: "pending" });
-    console.log(data);
 
     const handleSubmit = (values: any) => {
         console.log(values);
