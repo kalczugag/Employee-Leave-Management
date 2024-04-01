@@ -17,8 +17,8 @@ export interface LeaveProps {
     _user?: string;
     leaveType: string;
     totalDay: number;
-    hodStatus?: StatusUnion;
-    adminStatus?: StatusUnion;
+    hodStatus?: StatusUnion["status"];
+    adminStatus?: StatusUnion["status"];
 }
 
 const initialState: LeaveState = {
