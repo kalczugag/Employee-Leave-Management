@@ -14,6 +14,7 @@ import LeaveTypeList from "./pages/LeaveType/list";
 import LeaveTypeEdit from "./pages/LeaveType/edit";
 import LeaveTypeNew from "./pages/LeaveType/new";
 import LeaveNew from "./pages/Leave/new";
+import LeaveEdit from "./pages/Leave/edit";
 import LeaveList from "./pages/Leave/list";
 import LeaveListPending from "./pages/Leave/listPending";
 import LeaveListApproved from "./pages/Leave/listApproved";
@@ -59,6 +60,7 @@ const App = () => {
                     </Route>
                     <Route path="/leave">
                         <Route path="new" element={<LeaveNew />} />
+                        <Route path="edit/:id" element={<LeaveEdit />} />
                         <Route path="list" element={<LeaveList />} />
                         <Route
                             path="list-pending"

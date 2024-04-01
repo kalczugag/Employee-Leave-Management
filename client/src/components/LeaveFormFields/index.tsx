@@ -11,7 +11,7 @@ const LeaveFormFields = () => {
     return (
         <div className="grid grid-cols-2 gap-6">
             <FormSelect
-                options={{ label: "Leave Type", name: "leaveType" }}
+                options={{ label: "Leave Type", name: "leaveTypes" }}
                 values={form.initialValues.departments}
                 disabled={isLoading}
                 required

@@ -23,7 +23,7 @@ const DepartmentEdit = () => {
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
 
-    const [doFetchDepartment, isFetching] = useThunk(getDepartment);
+    const [doFetchDepartment] = useThunk(getDepartment);
 
     const { isLoading } = useSelector((state: RootState) => state.department);
     const data = useSelector((state: RootState) =>
@@ -31,7 +31,7 @@ const DepartmentEdit = () => {
     );
 
     useEffect(() => {
-        if (!data && !isFetching) {
+        if (!data && !isLoading) {
             doFetchDepartment(id);
         }
     }, []);

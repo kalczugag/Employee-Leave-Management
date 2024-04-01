@@ -6,54 +6,36 @@ import {
     RootState,
     editEmployee,
     getEmployee,
-    getDepartments,
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
-import UserForFields from "../../../components/UserFormFields";
+import UserFormFields from "../../../components/UserFormFields";
+import useNamesList from "../../../hooks/useNamesList";
 
 const EmployeeEdit = () => {
     const { id } = useParams();
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
+    const { namesList } = useNamesList("department");
 
     const [doFetchEmployee, isFetchingEmployee] = useThunk(getEmployee);
-    const [doFetchDepartments, isFetchingDepartments] =
-        useThunk(getDepartments);
 
     const employeeData = useSelector((state: RootState) =>
         state.employee.data.find((value) => value._id === id)
     );
-    const departmentsData = useSelector(
-        (state: RootState) => state.department.data
-    );
-
-    const departmentNames: string[] = departmentsData.map(
-        (department) => department.name
-    );
 
     useEffect(() => {
-        const selectQuery = "shortName,details,status,createdAt,updatedAt,__v";
-
-        if (
-            !employeeData &&
-            departmentsData.length === 0 &&
-            !isFetchingDepartments &&
-            !isFetchingEmployee
-        ) {
+        if (!employeeData && !isFetchingEmployee) {
             doFetchEmployee({ id });
-            doFetchDepartments(selectQuery);
         } else if (!employeeData && !isFetchingEmployee) {
             doFetchEmployee({ id });
-        } else if (departmentsData.length === 0 && !isFetchingDepartments) {
-            doFetchDepartments(selectQuery);
         }
     }, []);
 
-    if (!employeeData && departmentsData.length === 0) {
+    if (!employeeData && namesList.length === 0) {
         return null;
     }
 
@@ -86,7 +68,7 @@ const EmployeeEdit = () => {
         }
     };
 
-    if (!employeeData || departmentNames.length === 0) {
+    if (!employeeData || namesList.length === 0) {
         return null;
     }
 
@@ -95,11 +77,11 @@ const EmployeeEdit = () => {
             <FormView
                 initialValues={{
                     ...employeeData,
-                    departments: departmentNames,
+                    departments: namesList,
                 }}
                 onSubmit={handleSubmit}
             >
-                <UserForFields />
+                <UserFormFields />
             </FormView>
         </DefaultPage>
     );

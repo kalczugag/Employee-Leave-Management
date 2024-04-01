@@ -16,7 +16,8 @@ interface FormViewProps {
           }
         | user
         | {
-              departments: string[];
+              departments?: string[];
+              leaveTypes?: string[];
           };
     onSubmit: (values: any) => void;
 }

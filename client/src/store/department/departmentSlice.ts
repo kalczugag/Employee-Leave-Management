@@ -133,8 +133,6 @@ export const getDepartments = createAsyncThunk(
             response = await axios.get("/api/departments");
         }
 
-        console.log(selectQuery);
-
         return { data: response.data, selectQuery: selectQuery ? false : true };
     }
 );
