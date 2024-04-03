@@ -14,14 +14,13 @@ const LeaveNew = () => {
     const { namesList } = useNamesList("leaveType");
 
     const handleSubmit = (values: LeaveProps) => {
-        console.log(values);
-        // dispatch(addLeave(values))
-        //     .unwrap()
-        //     .catch((err) => handleOpen(err.message, "error"))
-        //     .finally(() => {
-        //         navigate("../list");
-        //         handleOpen("Leave Create Successful");
-        //     });
+        dispatch(addLeave(values))
+            .unwrap()
+            .catch((err) => handleOpen(err.message, "error"))
+            .finally(() => {
+                navigate("../list");
+                handleOpen("Leave Create Successful");
+            });
     };
 
     return (

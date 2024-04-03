@@ -38,14 +38,13 @@ const EmployeeNew = () => {
     }, []);
 
     const handleSubmit = (values: user) => {
-        console.log(values);
-        // dispatch(addEmployee(values))
-        //     .unwrap()
-        //     .catch((err) => handleOpen(err.message, "error"))
-        //     .finally(() => {
-        //         navigate("../list");
-        //         handleOpen("Department Create Successful");
-        //     });
+        dispatch(addEmployee(values))
+            .unwrap()
+            .catch((err) => handleOpen(err.message, "error"))
+            .finally(() => {
+                navigate("../list");
+                handleOpen("Department Create Successful");
+            });
     };
 
     if (departmentsData.length === 0 && isFetchingDepartments) {
