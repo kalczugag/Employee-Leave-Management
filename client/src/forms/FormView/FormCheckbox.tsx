@@ -24,7 +24,11 @@ export const FormCheckbox = ({
         return (
             <FormGroup>
                 {options.map((itemOptions, index) => (
-                    <Field name={itemOptions.name} type="checkbox">
+                    <Field
+                        name={itemOptions.name}
+                        type="checkbox"
+                        key={`${itemOptions.name}_${index}`}
+                    >
                         {({ input, meta }) => (
                             <FormControlLabel
                                 key={itemOptions.name + "_" + index.toString()}

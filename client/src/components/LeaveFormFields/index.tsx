@@ -1,18 +1,32 @@
 import { useSelector } from "react-redux";
 import { useFormState } from "react-final-form";
 import { RootState } from "../../store";
-import { FormEditor, FormField, FormSelect } from "../../forms/FormView";
+import {
+    FormEditor,
+    FormField,
+    FormSelect,
+    FormRadio,
+} from "../../forms/FormView";
+import { useEffect } from "react";
 
-const LeaveFormFields = () => {
+interface Props {
+    extended?: boolean;
+}
+
+const LeaveFormFields = ({ extended }: Props) => {
     const form = useFormState();
+
+    useEffect(() => {
+        console.log(form.values);
+    }, [form]);
 
     const { isLoading } = useSelector((state: RootState) => state.leave);
 
     return (
         <div className="grid grid-cols-2 gap-6">
             <FormSelect
-                options={{ label: "Leave Type", name: "leaveTypes" }}
-                values={form.initialValues.departments}
+                options={{ label: "Leave Type", name: "leaveType" }}
+                values={form.initialValues.values}
                 disabled={isLoading}
                 required
             />
@@ -23,13 +37,13 @@ const LeaveFormFields = () => {
                 required
             />
             <FormField
-                options={{ label: "Start Leave Date", name: "startLeaveDate" }}
+                options={{ label: "Start Leave Date", name: "startDate" }}
                 type="date"
                 disabled={isLoading}
                 required
             />
             <FormField
-                options={{ label: "End Leave Date", name: "endLeaveDate" }}
+                options={{ label: "End Leave Date", name: "endDate" }}
                 type="date"
                 disabled={isLoading}
                 required
@@ -40,6 +54,14 @@ const LeaveFormFields = () => {
                     disabled={isLoading}
                 />
             </div>
+            <FormRadio
+                options={{ label: "Hod Status", name: "hodStatus" }}
+                values={["pending", "approved", "rejected"]}
+            />
+            <FormRadio
+                options={{ label: "Admin Status", name: "adminStatus" }}
+                values={["pending", "approved", "rejected"]}
+            />
         </div>
     );
 };

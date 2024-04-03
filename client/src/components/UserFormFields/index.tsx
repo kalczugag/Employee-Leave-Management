@@ -35,7 +35,7 @@ const UserFormFields = () => {
             </div>
             <FormSelect
                 options={{ label: "Department id", name: "departmentId" }}
-                values={form.initialValues.departments}
+                values={form.initialValues.values}
                 disabled={isLoading}
             />
             <FormField

@@ -5,6 +5,8 @@ const LeaveSchema = new mongoose.Schema(
         _user: { type: Schema.Types.ObjectId, ref: "User" },
         leaveType: { type: String, required: true },
         totalDay: { type: Number, required: true },
+        startDate: { type: Number, required: true },
+        endDate: { type: Number, required: true },
         hodStatus: { type: String, required: false, default: "pending" },
         adminStatus: { type: String, required: false, default: "pending" },
     },

@@ -17,6 +17,8 @@ export interface LeaveProps {
     _user?: string;
     leaveType: string;
     totalDay: number;
+    startDate: string;
+    endDate: string;
     hodStatus?: StatusUnion["status"];
     adminStatus?: StatusUnion["status"];
 }

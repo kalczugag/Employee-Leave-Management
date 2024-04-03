@@ -117,7 +117,14 @@ export const updateLeave = async (
 ) => {
     try {
         const { id } = req.params;
-        const { leaveType, totalDay, hodStatus, adminStatus } = req.body;
+        const {
+            leaveType,
+            totalDay,
+            startDate,
+            endDate,
+            hodStatus,
+            adminStatus,
+        } = req.body;
 
         const leave = await getLeaveById(id);
 
@@ -127,6 +134,8 @@ export const updateLeave = async (
 
         leave!.set("leaveType", leaveType);
         leave!.set("totalDay", totalDay);
+        leave!.set("startDate", startDate);
+        leave!.set("endDate", endDate);
         leave!.set("hodStatus", hodStatus);
         leave!.set("hodStatus", hodStatus);
         leave!.set("adminStatus", adminStatus);

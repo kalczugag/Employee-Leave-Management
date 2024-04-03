@@ -4,3 +4,4 @@ export * from "./FormEditor";
 export * from "./FormCheckbox";
 export * from "./FormSelect";
 export * from "./FormFile";
+export * from "./FormRadio";

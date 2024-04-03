@@ -30,8 +30,6 @@ const EmployeeEdit = () => {
     useEffect(() => {
         if (!employeeData && !isFetchingEmployee) {
             doFetchEmployee({ id });
-        } else if (!employeeData && !isFetchingEmployee) {
-            doFetchEmployee({ id });
         }
     }, []);
 
@@ -77,7 +75,7 @@ const EmployeeEdit = () => {
             <FormView
                 initialValues={{
                     ...employeeData,
-                    departments: namesList,
+                    values: namesList,
                 }}
                 onSubmit={handleSubmit}
             >

@@ -38,13 +38,14 @@ const EmployeeNew = () => {
     }, []);
 
     const handleSubmit = (values: user) => {
-        dispatch(addEmployee(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
-                navigate("../list");
-                handleOpen("Department Create Successful");
-            });
+        console.log(values);
+        // dispatch(addEmployee(values))
+        //     .unwrap()
+        //     .catch((err) => handleOpen(err.message, "error"))
+        //     .finally(() => {
+        //         navigate("../list");
+        //         handleOpen("Department Create Successful");
+        //     });
     };
 
     if (departmentsData.length === 0 && isFetchingDepartments) {
@@ -55,7 +56,7 @@ const EmployeeNew = () => {
         <DefaultPage label="New Employee" bg>
             <FormView
                 onSubmit={handleSubmit}
-                initialValues={{ departments: departmentNames }}
+                initialValues={{ values: departmentNames }}
             >
                 <UserForm />
             </FormView>

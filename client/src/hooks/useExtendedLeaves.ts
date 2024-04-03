@@ -38,6 +38,8 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     useEffect(() => {
         if (leavesData.data.length === 0) {
             doFetchLeaves(LeavesOptions);
+        } else if (!LeavesOptions.status && !leavesData.fullData) {
+            doFetchLeaves(LeavesOptions);
         } else if (employeesData.data.length === 0) {
             fetchEmployeesById();
         }

@@ -1,10 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState, editLeave, getLeave } from "../../../store";
+import {
+    AppDispatch,
+    RootState,
+    editLeave,
+    getLeave,
+    LeaveProps,
+} from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useNamesList from "../../../hooks/useNamesList";
+import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
 import LeaveFormFields from "../../../components/LeaveFormFields";
@@ -14,6 +21,7 @@ const LeaveEdit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
     const { namesList } = useNamesList("leaveType");
 
     const [doFetchLeave] = useThunk(getLeave);
@@ -29,14 +37,34 @@ const LeaveEdit = () => {
         }
     }, []);
 
-    const handleSubmit = (values: any) => {
-        dispatch(editLeave(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
-                navigate("../list");
-                handleOpen("Leave Update Successful");
-            });
+    const handleSubmit = (values: LeaveProps) => {
+        if (!leavesData || !values) {
+            return;
+        }
+
+        let hasChanged = false;
+
+        for (const key in values) {
+            if (
+                values[key as keyof LeaveProps] !==
+                leavesData[key as keyof LeaveProps]
+            ) {
+                hasChanged = true;
+                break;
+            }
+        }
+
+        if (hasChanged) {
+            dispatch(editLeave(values))
+                .unwrap()
+                .catch((err) => handleOpen(err.message, "error"))
+                .finally(() => {
+                    navigate("../list");
+                    handleOpen("Leave Update Successful");
+                });
+        } else {
+            handleOpen("No changes detected", "error");
+        }
     };
 
     if (!leavesData || namesList.length === 0) {
@@ -49,10 +77,10 @@ const LeaveEdit = () => {
                 onSubmit={handleSubmit}
                 initialValues={{
                     ...leavesData,
-                    leaveTypes: namesList,
+                    values: namesList,
                 }}
             >
-                <LeaveFormFields />
+                <LeaveFormFields extended={user?.roles === "admin"} />
             </FormView>
         </DefaultPage>
     );
