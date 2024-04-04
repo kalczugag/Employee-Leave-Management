@@ -24,34 +24,36 @@ export const FormRadio = ({
     disabled,
 }: FormRadioProps) => {
     return (
-        <Field name={options.name} type="radio">
-            {({ input, meta }) => (
-                <FormControl>
-                    <FormLabel id="demo-radio-buttons-group-label">
-                        {options.label}
-                    </FormLabel>
-                    <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue={input.value || "pending"}
-                        name="radio-buttons-group"
-                        value={input.value}
-                        onChange={input.onChange}
-                    >
-                        {values.map((option, index) => {
-                            return (
+        <FormControl>
+            <FormLabel id="radio-buttons-group-label">
+                {options.label}
+            </FormLabel>
+            <RadioGroup aria-labelledby="radio-buttons-group-label">
+                {values.map((option, index) => {
+                    return (
+                        <Field
+                            name={options.name}
+                            type="radio"
+                            key={`${option}_${index}`}
+                        >
+                            {({ input, meta }) => (
                                 <FormControlLabel
-                                    key={`${option}_${index}`}
-                                    value={option}
-                                    control={<Radio />}
+                                    control={
+                                        <Radio
+                                            value={option}
+                                            checked={input.checked}
+                                            onChange={input.onChange}
+                                            disabled={disabled}
+                                            required={required}
+                                        />
+                                    }
                                     label={option}
-                                    required={required}
-                                    disabled={disabled}
                                 />
-                            );
-                        })}
-                    </RadioGroup>
-                </FormControl>
-            )}
-        </Field>
+                            )}
+                        </Field>
+                    );
+                })}
+            </RadioGroup>
+        </FormControl>
     );
 };

@@ -47,7 +47,6 @@ const EmployeeList = () => {
     }
 
     const handleDelete = (id: string) => {
-        console.log(id);
         dispatch(deleteEmployee(id))
             .unwrap()
             .catch((err) => handleOpen(err.message, "error"))

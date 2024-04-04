@@ -36,11 +36,37 @@ export const fields = [
     },
     {
         label: "Hod Status",
-        render: (row) => row.hodStatus || "-",
+        render: (row) =>
+            (
+                <span
+                    className={`border-b-2 ${
+                        row.hodStatus === "pending"
+                            ? "border-[#ff9800]"
+                            : row.hodStatus === "approved"
+                            ? "border-[#4caf50]"
+                            : "border-[#f44336]"
+                    }`}
+                >
+                    {row.hodStatus}
+                </span>
+            ) || "-",
     },
     {
         label: "Admin Status",
-        render: (row) => row.adminStatus || "-",
+        render: (row) =>
+            (
+                <span
+                    className={`border-b-2 ${
+                        row.adminStatus === "pending"
+                            ? "border-[#ff9800]"
+                            : row.adminStatus === "approved"
+                            ? "border-[#4caf50]"
+                            : "border-[#f44336]"
+                    }`}
+                >
+                    {row.adminStatus}
+                </span>
+            ) || "-",
     },
     {
         label: "Action",

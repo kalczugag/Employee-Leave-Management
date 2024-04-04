@@ -16,9 +16,9 @@ interface Props {
 const LeaveFormFields = ({ extended }: Props) => {
     const form = useFormState();
 
-    useEffect(() => {
-        console.log(form.values);
-    }, [form]);
+    // useEffect(() => {
+    //     console.log(form.values);
+    // }, [form]);
 
     const { isLoading } = useSelector((state: RootState) => state.leave);
 
@@ -54,14 +54,20 @@ const LeaveFormFields = ({ extended }: Props) => {
                     disabled={isLoading}
                 />
             </div>
-            <FormRadio
-                options={{ label: "Hod Status", name: "hodStatus" }}
-                values={["pending", "approved", "rejected"]}
-            />
-            <FormRadio
-                options={{ label: "Admin Status", name: "adminStatus" }}
-                values={["pending", "approved", "rejected"]}
-            />
+            {extended && (
+                <>
+                    <FormRadio
+                        options={{ label: "Hod Status", name: "hodStatus" }}
+                        values={["pending", "approved", "rejected"]}
+                        disabled={isLoading}
+                    />
+                    <FormRadio
+                        options={{ label: "Admin Status", name: "adminStatus" }}
+                        values={["pending", "approved", "rejected"]}
+                        disabled={isLoading}
+                    />
+                </>
+            )}
         </div>
     );
 };

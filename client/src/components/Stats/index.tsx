@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
 import {
     ContentPasteOutlined,
     DisabledByDefaultOutlined,
@@ -7,6 +10,8 @@ import {
 import StatsViewBox from "./StatsViewBox";
 
 const Stats = () => {
+    const dispatch = useDispatch<AppDispatch>();
+
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
             <StatsViewBox

@@ -68,9 +68,16 @@ export const getLeave = async (req: express.Request, res: express.Response) => {
 
 export const addLeave = async (req: express.Request, res: express.Response) => {
     try {
-        const { leaveType, totalDay, hodStatus, adminStatus } = req.body;
+        const {
+            leaveType,
+            totalDay,
+            startDate,
+            endDate,
+            hodStatus,
+            adminStatus,
+        } = req.body;
 
-        if (!leaveType || !totalDay) {
+        if (!leaveType || !totalDay || !startDate || !endDate) {
             return res.sendStatus(400);
         }
 
@@ -84,6 +91,8 @@ export const addLeave = async (req: express.Request, res: express.Response) => {
             _user: currentUserId,
             leaveType,
             totalDay,
+            startDate,
+            endDate,
             hodStatus,
             adminStatus,
         });

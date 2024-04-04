@@ -97,6 +97,8 @@ const leaveSlice = createSlice({
                             ...state.data[index],
                             leaveType: editedLeave?.leaveType,
                             totalDay: editedLeave?.totalDay,
+                            startDate: editedLeave?.startDate,
+                            endDate: editedLeave?.endDate,
                             hodStatus: editedLeave?.hodStatus,
                             adminStatus: editedLeave?.adminStatus,
                         };
