@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState, getLeaves } from "../../store";
 import useThunk from "../../hooks/useThunk";
+import useAuth from "../../hooks/useAuth";
 import {
     ContentPasteOutlined,
     DisabledByDefaultOutlined,
@@ -11,6 +12,7 @@ import {
 import StatsViewBox from "./StatsViewBox";
 
 const Stats = () => {
+    const { user } = useAuth();
     const { data, isLoading, fullData } = useSelector(
         (state: RootState) => state.leave
     );
@@ -56,8 +58,13 @@ const Stats = () => {
     };
 
     useEffect(() => {
-        if (data.length === 0 || !fullData) {
+        if (
+            (data.length === 0 || !fullData) &&
+            !user?.roles.includes("admin")
+        ) {
             doFetchLeaves(options);
+        } else {
+            //fetch leaves by ids list
         }
     }, []);
 
