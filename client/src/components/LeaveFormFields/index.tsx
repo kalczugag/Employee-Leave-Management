@@ -6,7 +6,6 @@ import {
     FormField,
     FormSelect,
     FormRadio,
-    FormDateRange,
 } from "../../forms/FormView";
 
 interface Props {
@@ -36,7 +35,18 @@ const LeaveFormFields = ({ extended }: Props) => {
                 disabled={isLoading}
                 required
             />
-            <FormDateRange />
+            <FormField
+                options={{ label: "Start Leave Date", name: "startDate" }}
+                type="date"
+                disabled={isLoading}
+                required
+            />
+            <FormField
+                options={{ label: "End Leave Date", name: "endDate" }}
+                type="date"
+                disabled={isLoading}
+                required
+            />
             <div className="col-span-2">
                 <FormEditor
                     options={{ label: "Leave Details", name: "details" }}

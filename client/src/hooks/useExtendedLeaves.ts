@@ -43,7 +43,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         } else if (employeesData.data.length === 0) {
             fetchEmployeesById();
         }
-    }, [leavesData.data.length]);
+    }, [leavesData.data.length, leavesData.fullData]);
 
     const fetchEmployeesById = async () => {
         const leaveUsersIds = leavesData.data.map((e) => e._user);
