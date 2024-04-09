@@ -9,6 +9,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
+import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
 import UserForm from "../../../components/UserFormFields";
@@ -17,6 +18,7 @@ const EmployeeNew = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const [doFetchDepartments, isFetchingDepartments] =
         useThunk(getDepartments);
@@ -56,6 +58,11 @@ const EmployeeNew = () => {
             <FormView
                 onSubmit={handleSubmit}
                 initialValues={{ values: departmentNames }}
+                disabled={
+                    isFetchingDepartments ||
+                    !user?.roles.includes("hod") ||
+                    !user?.roles.includes("admin")
+                }
             >
                 <UserForm />
             </FormView>

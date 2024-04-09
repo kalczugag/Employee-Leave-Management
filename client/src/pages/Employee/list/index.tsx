@@ -7,6 +7,7 @@ import {
     deleteEmployee,
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
+import useAuth from "../../../hooks/useAuth";
 import useSnackbar from "../../../hooks/useSnackbar";
 import ListSearchForm from "../../../forms/SearchForm";
 import DefaultPage from "../../../layout/DefaultPage";
@@ -17,6 +18,7 @@ import { fields } from "./config";
 const EmployeeList = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const [doFetchEmployees] = useThunk(getEmployees);
 
@@ -29,6 +31,7 @@ const EmployeeList = () => {
             data.map((row) => ({
                 ...row,
                 isLoading,
+                userRole: user?.roles,
                 handleDelete: () => handleDelete(row._id!),
             })),
         [data]
@@ -61,7 +64,12 @@ const EmployeeList = () => {
 
     return (
         <DefaultPage label="Employee List" bg>
-            <ActionButtons label="Add Employee" />
+            <ActionButtons
+                label="Add Employee"
+                extended={
+                    user?.roles.includes("hod") || user?.roles.includes("admin")
+                }
+            />
             <ListSearchForm onSubmit={handleSubmit} />
             <BasicTable headerOptions={fields} rowData={employeeData} />
         </DefaultPage>

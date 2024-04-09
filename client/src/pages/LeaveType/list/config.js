@@ -15,7 +15,17 @@ export const fields = [
     {
         label: "Action",
         render: (row) => (
-            <RowActionButtons handleDelete={row.handleDelete} id={row._id} />
+            <>
+                {row.userRole !== "staff" ? (
+                    <RowActionButtons
+                        id={row._id}
+                        disabled={row.isLoading}
+                        handleDelete={row.handleDelete}
+                    />
+                ) : (
+                    <span>No actions available</span>
+                )}
+            </>
         ),
     },
 ];

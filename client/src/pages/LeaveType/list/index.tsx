@@ -8,6 +8,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
+import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
 import ListSearchForm from "../../../forms/SearchForm";
@@ -17,6 +18,7 @@ import { fields } from "./config";
 const LeaveTypeList = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const [doFetchLeaveTypes, isFetching] = useThunk(getLeaveTypes);
 
@@ -29,6 +31,7 @@ const LeaveTypeList = () => {
             data.map((row) => ({
                 ...row,
                 isLoading,
+                userRole: user?.roles,
                 handleDelete: () => handleDelete(row._id),
             })),
         [data]
@@ -61,7 +64,12 @@ const LeaveTypeList = () => {
 
     return (
         <DefaultPage label="Leave Type List" bg>
-            <ActionButtons label="Add Leave Type" />
+            <ActionButtons
+                label="Add Leave Type"
+                extended={
+                    user?.roles.includes("hod") || user?.roles.includes("admin")
+                }
+            />
             <ListSearchForm onSubmit={handleSubmit} />
             <BasicTable headerOptions={fields} rowData={leaveTypeData} />
         </DefaultPage>

@@ -8,6 +8,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
+import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
 import ListSearchForm from "../../../forms/SearchForm";
@@ -17,6 +18,7 @@ import { fields } from "./config";
 const DepartmentList = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const [doFetchDepartments, isFetching] = useThunk(getDepartments);
 
@@ -29,6 +31,7 @@ const DepartmentList = () => {
             data.map((row) => ({
                 ...row,
                 isLoading,
+                userRole: user?.roles,
                 handleDelete: () => handleDelete(row._id!),
             })),
         [data]
@@ -61,7 +64,12 @@ const DepartmentList = () => {
 
     return (
         <DefaultPage label="Department List" bg>
-            <ActionButtons label="Add Department" />
+            <ActionButtons
+                label="Add Department"
+                extended={
+                    user?.roles.includes("hod") || user?.roles.includes("admin")
+                }
+            />
             <ListSearchForm onSubmit={handleSubmit} />
             <BasicTable headerOptions={fields} rowData={departmentdata} />
         </DefaultPage>

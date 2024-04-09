@@ -9,6 +9,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
+import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import {
     FormView,
@@ -22,6 +23,7 @@ const DepartmentEdit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const [doFetchDepartment] = useThunk(getDepartment);
 
@@ -46,28 +48,37 @@ const DepartmentEdit = () => {
             });
     };
 
+    const disabled =
+        isLoading ||
+        !user?.roles.includes("hod") ||
+        !user?.roles.includes("admin");
+
     return (
         <DefaultPage label="Edit Department" bg>
-            <FormView onSubmit={handleSubmit} initialValues={data}>
+            <FormView
+                onSubmit={handleSubmit}
+                initialValues={data}
+                disabled={
+                    isLoading ||
+                    !user?.roles.includes("hod") ||
+                    !user?.roles.includes("admin")
+                }
+            >
                 <FormField
                     required
                     options={{ label: "Department Name", name: "name" }}
-                    disabled={isLoading}
                 />
                 <FormField
                     options={{
                         label: "Department Short Name",
                         name: "shortName",
                     }}
-                    disabled={isLoading}
                 />
                 <FormEditor
                     options={{ label: "Department Details", name: "details" }}
-                    disabled={isLoading}
                 />
                 <FormCheckbox
                     options={{ label: "Department Status", name: "active" }}
-                    disabled={isLoading}
                 />
             </FormView>
         </DefaultPage>

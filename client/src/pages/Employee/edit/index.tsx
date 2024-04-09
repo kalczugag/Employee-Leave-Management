@@ -9,10 +9,11 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
+import useNamesList from "../../../hooks/useNamesList";
+import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
 import UserFormFields from "../../../components/UserFormFields";
-import useNamesList from "../../../hooks/useNamesList";
 
 const EmployeeEdit = () => {
     const { id } = useParams();
@@ -20,6 +21,7 @@ const EmployeeEdit = () => {
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { namesList } = useNamesList("department");
+    const { user } = useAuth();
 
     const [doFetchEmployee, isFetchingEmployee] = useThunk(getEmployee);
 
@@ -77,6 +79,11 @@ const EmployeeEdit = () => {
                     ...employeeData,
                     values: namesList,
                 }}
+                disabled={
+                    isFetchingEmployee ||
+                    !user?.roles.includes("hod") ||
+                    !user?.roles.includes("admin")
+                }
                 onSubmit={handleSubmit}
             >
                 <UserFormFields />

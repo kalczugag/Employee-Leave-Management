@@ -1,10 +1,12 @@
 import { DashboardOutlined, CallMadeOutlined } from "@mui/icons-material";
 
-interface CategoriesConfigProps {
+type UserRole = "admin" | "hod" | "all"; //"all" means that every existing role can access to see the panel
+
+export interface CategoriesConfigProps {
     label: string;
     to: string;
     element: JSX.Element;
-    admin: boolean;
+    access: UserRole[];
     expendable?: boolean;
 }
 
@@ -14,30 +16,30 @@ export const CategoriesConfig: CategoriesConfigProps[] = [
         to: "/",
         expendable: false,
         element: <DashboardOutlined />,
-        admin: false,
+        access: ["all"],
     },
     {
         label: "Department",
         to: "/department",
         element: <CallMadeOutlined />,
-        admin: true,
+        access: ["all"],
     },
     {
         label: "Leave Type",
         to: "/leave-type",
         element: <CallMadeOutlined />,
-        admin: true,
+        access: ["all"],
     },
     {
         label: "Employee",
         to: "/employee",
         element: <CallMadeOutlined />,
-        admin: true,
+        access: ["admin", "hod"],
     },
     {
         label: "Leave",
         to: "/leave",
         element: <CallMadeOutlined />,
-        admin: false,
+        access: ["admin", "hod"],
     },
 ];

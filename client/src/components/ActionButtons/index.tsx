@@ -6,9 +6,10 @@ import { GrDocumentCsv } from "react-icons/gr";
 
 interface Props {
     label: string;
+    extended?: boolean;
 }
 
-const ActionButtons = ({ label }: Props) => {
+const ActionButtons = ({ label, extended }: Props) => {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
@@ -16,15 +17,21 @@ const ActionButtons = ({ label }: Props) => {
     };
 
     return (
-        <div className="flex flex-col-reverse md:justify-between md:flex-row">
-            <Button
-                onClick={handleNavigate}
-                variant="contained"
-                color="warning"
-                startIcon={<AddCircle />}
-            >
-                {label}
-            </Button>
+        <div
+            className={`flex flex-col-reverse md:flex-row ${
+                extended ? "md:justify-between" : "md:justify-end"
+            }`}
+        >
+            {extended && (
+                <Button
+                    onClick={handleNavigate}
+                    variant="contained"
+                    color="warning"
+                    startIcon={<AddCircle />}
+                >
+                    {label}
+                </Button>
+            )}
             <div className="flex flex-row mb-4 space-x-2 md:mb-0">
                 <IconButton aria-label="settings">
                     <SettingsOutlined />

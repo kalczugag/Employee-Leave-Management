@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { Form } from "react-final-form";
 import { EditorState } from "draft-js";
@@ -18,12 +18,14 @@ interface FormViewProps {
         | {
               values: string[];
           };
+    disabled?: boolean;
     onSubmit: (values: any) => void;
 }
 
 export const FormView = ({
     children,
     initialValues,
+    disabled,
     onSubmit,
 }: FormViewProps) => {
     const dispatch = useDispatch();
@@ -45,11 +47,24 @@ export const FormView = ({
                     }}
                     className="flex flex-col space-y-10"
                 >
-                    {children}
+                    {React.Children.map(children, (child) => {
+                        if (React.isValidElement(child)) {
+                            if (
+                                child.type === "input" ||
+                                child.type === Button
+                            ) {
+                                return React.cloneElement(child, {
+                                    disabled,
+                                } as any);
+                            }
+                        }
+                        return child;
+                    })}
                     <Button
                         className="md:w-32"
                         type="submit"
                         variant="contained"
+                        disabled={disabled}
                     >
                         Save
                     </Button>

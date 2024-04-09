@@ -12,7 +12,7 @@ import { isAuthenticated, isAdmin } from "../middlewares";
 export default (router: express.Router) => {
     router.get("/leave-types", isAuthenticated, getAllLeaveTypes);
     router.get("/leave-types/:id", isAuthenticated, getLeaveType);
-    router.post("/leave-types", isAuthenticated, addLeaveType);
+    router.post("/leave-types", isAuthenticated, isAdmin, addLeaveType);
     router.delete(
         "/leave-types/:id",
         isAuthenticated,

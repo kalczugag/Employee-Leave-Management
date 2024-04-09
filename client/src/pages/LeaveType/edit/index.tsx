@@ -9,6 +9,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
+import useAuth from "../../../hooks/useAuth";
 import {
     FormView,
     FormField,
@@ -22,6 +23,7 @@ const LeaveTypeEdit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const [doFetchLeaveType, isFetching] = useThunk(getLeaveType);
 
@@ -48,25 +50,29 @@ const LeaveTypeEdit = () => {
 
     return (
         <DefaultPage label="Edit Leave Type" bg>
-            <FormView onSubmit={handleSubmit} initialValues={data}>
+            <FormView
+                onSubmit={handleSubmit}
+                initialValues={data}
+                disabled={
+                    isLoading ||
+                    !user?.roles.includes("hod") ||
+                    !user?.roles.includes("admin")
+                }
+            >
                 <FormField
                     options={{ label: "Leave Type Name", name: "name" }}
-                    disabled={isLoading}
                 />
                 <FormField
                     options={{
                         label: "Leave Type Short Name",
                         name: "shortName",
                     }}
-                    disabled={isLoading}
                 />
                 <FormEditor
                     options={{ label: "Leave Type Details", name: "details" }}
-                    disabled={isLoading}
                 />
                 <FormCheckbox
                     options={{ label: "Leave Type Status", name: "active" }}
-                    disabled={isLoading}
                 />
             </FormView>
         </DefaultPage>

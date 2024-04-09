@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState, addLeaveType } from "../../../store";
+import useAuth from "../../../hooks/useAuth";
 import useSnackbar from "../../../hooks/useSnackbar";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
@@ -9,6 +10,7 @@ const LeaveTypeNew = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
     const { isLoading } = useSelector((state: RootState) => state.leaveType);
 
@@ -24,22 +26,26 @@ const LeaveTypeNew = () => {
 
     return (
         <DefaultPage label="Create Leave Type" bg>
-            <FormView onSubmit={handleSubmit}>
+            <FormView
+                onSubmit={handleSubmit}
+                disabled={
+                    isLoading ||
+                    !user?.roles.includes("hod") ||
+                    !user?.roles.includes("admin")
+                }
+            >
                 <FormField
                     required
                     options={{ label: "Leave Type Name", name: "name" }}
-                    disabled={isLoading}
                 />
                 <FormField
                     options={{
                         label: "Leave Type Short Name",
                         name: "shortName",
                     }}
-                    disabled={isLoading}
                 />
                 <FormEditor
                     options={{ label: "Leave Type Details", name: "details" }}
-                    disabled={isLoading}
                 />
             </FormView>
         </DefaultPage>
