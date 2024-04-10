@@ -82,8 +82,6 @@ export const getUsersByIds = async (
                 .join(" ");
         }
 
-        console.log(selectQuery);
-
         const uniqueIds = await getUsers().distinct("_id", {
             _id: { $in: ids },
         });

@@ -18,7 +18,11 @@ const initialState: EmployeeState = {
 const employeeSlice = createSlice({
     name: "employee",
     initialState,
-    reducers: {},
+    reducers: {
+        setEmployee(state, action: PayloadAction<user>) {
+            state.data.push(action.payload);
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(getEmployees.pending, (state) => {
@@ -193,5 +197,7 @@ export const deleteEmployee = createAsyncThunk(
         return id;
     }
 );
+
+export const { setEmployee } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

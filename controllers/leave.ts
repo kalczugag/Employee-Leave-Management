@@ -20,45 +20,6 @@ export const getAllLeaves = async (
     res: express.Response
 ) => {
     try {
-        const { page = 1, pageSize = 5, status }: PaginationProps = req.query;
-        let selectQuery = "";
-
-        if (req.query.fields) {
-            const requestedFields = req.query.fields.toString();
-
-            selectQuery = requestedFields
-                .split(",")
-                .map((field) => `-${field.trim()}`)
-                .join(" ");
-        }
-
-        let leavesQuery = getLeaves()
-            .select(selectQuery)
-            .skip((page - 1) * pageSize)
-            .limit(pageSize);
-
-        if (status === "pending") {
-            leavesQuery = leavesQuery.where("hodStatus").equals("pending");
-        } else if (status === "approved") {
-            leavesQuery = leavesQuery.where("hodStatus").equals("approved");
-        } else if (status === "rejected") {
-            leavesQuery = leavesQuery.where("hodStatus").equals("rejected");
-        }
-
-        const leaves = await leavesQuery.exec();
-
-        return res.status(200).json(leaves);
-    } catch (error) {
-        console.log(error);
-        return res.sendStatus(400);
-    }
-};
-
-export const getUserLeaves = async (
-    req: express.Request,
-    res: express.Response
-) => {
-    try {
         const {
             page = 1,
             pageSize = 5,
@@ -78,10 +39,12 @@ export const getUserLeaves = async (
 
         let leavesQuery = getLeaves()
             .select(selectQuery)
-            .where("_user")
-            .equals(userId)
             .skip((page - 1) * pageSize)
             .limit(pageSize);
+
+        if (userId) {
+            leavesQuery = leavesQuery.where("_user").equals(userId);
+        }
 
         if (status === "pending") {
             leavesQuery = leavesQuery.where("hodStatus").equals("pending");

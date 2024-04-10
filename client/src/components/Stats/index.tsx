@@ -19,7 +19,7 @@ const Stats = () => {
 
     const [doFetchLeaves] = useThunk(getLeaves);
 
-    const options = {
+    const leavesOptions = {
         selectQuery:
             "_id,createdAt,_user,leaveType,totalDay,startDate,endDate,updatedAt,__v",
     };
@@ -60,11 +60,11 @@ const Stats = () => {
     useEffect(() => {
         if (
             (data.length === 0 || !fullData) &&
-            !user?.roles.includes("admin")
+            (user?.roles.includes("admin") || user?.roles.includes("hod"))
         ) {
-            doFetchLeaves(options);
+            doFetchLeaves(leavesOptions);
         } else {
-            //fetch leaves by ids list
+            doFetchLeaves({ ...leavesOptions, userId: user!._id });
         }
     }, []);
 
