@@ -2,7 +2,12 @@ import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 
 interface LinksConfigProps {
-    [key: string]: { label: string; to: string; element?: JSX.Element }[];
+    [key: string]: {
+        label: string;
+        to: string;
+        element?: JSX.Element;
+        access?: user["roles"][];
+    }[];
 }
 
 const ICON_SIZE = 18;
@@ -13,6 +18,7 @@ export const LinksConfig: LinksConfigProps = {
             label: "New Department",
             to: "new",
             element: <PersonAddOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+            access: ["admin", "hod"],
         },
         {
             label: "Department List",
@@ -21,6 +27,12 @@ export const LinksConfig: LinksConfigProps = {
         },
     ],
     leaveType: [
+        {
+            label: "New Leave Type",
+            to: "new",
+            element: <PersonAddOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+            access: ["admin", "hod"],
+        },
         {
             label: "Leave Type List",
             to: "list",
@@ -32,6 +44,7 @@ export const LinksConfig: LinksConfigProps = {
             label: "New Employee",
             to: "new",
             element: <PersonAddOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+            access: ["admin", "hod"],
         },
         {
             label: "Employee List",

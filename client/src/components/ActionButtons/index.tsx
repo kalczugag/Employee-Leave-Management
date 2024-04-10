@@ -3,6 +3,7 @@ import { IconButton, Button } from "@mui/material";
 import { SettingsOutlined, AddCircle } from "@mui/icons-material";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { GrDocumentCsv } from "react-icons/gr";
+import ListSearchForm from "../../forms/SearchForm";
 
 interface Props {
     label: string;
@@ -17,12 +18,8 @@ const ActionButtons = ({ label, extended }: Props) => {
     };
 
     return (
-        <div
-            className={`flex flex-col-reverse md:flex-row ${
-                extended ? "md:justify-between" : "md:justify-end"
-            }`}
-        >
-            {extended && (
+        <div className="flex flex-col-reverse items-center md:flex-row md:justify-between">
+            {extended ? (
                 <Button
                     onClick={handleNavigate}
                     variant="contained"
@@ -31,6 +28,8 @@ const ActionButtons = ({ label, extended }: Props) => {
                 >
                     {label}
                 </Button>
+            ) : (
+                <ListSearchForm onSubmit={() => console.log("")} />
             )}
             <div className="flex flex-row mb-4 space-x-2 md:mb-0">
                 <IconButton aria-label="settings">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store";
+import useAuth from "../../hooks/useAuth";
 import { LinksConfig } from "../../config/LinksConfig";
 import { TreeItem } from "@mui/x-tree-view";
 
@@ -11,32 +12,44 @@ interface Props {
 
 const LinksList = ({ target, upHref }: Props) => {
     const dispatch = useDispatch();
+    const { user } = useAuth();
 
     let renderedLinks: null | any;
 
     if (target in LinksConfig) {
         renderedLinks = LinksConfig[target].map(
-            ({ label, to, element }, index) => {
+            (
+                { label, to, element, access = ["admin", "hod", "staff"] },
+                index
+            ) => {
+                const hasAccess = access.includes(user!.roles);
+
                 return (
-                    <TreeItem
-                        key={label + "_" + index.toString()}
-                        nodeId={label + "_" + index.toString()}
-                        label={
-                            <Link
-                                to={`${upHref}/${to}`}
-                                onClick={() => dispatch(toggleSidebar(false))}
-                                className={`flex flex-row items-center space-x-2 p-2 text-sm`}
-                            >
-                                <div className="flex items-center">
-                                    {element}
-                                </div>
-                                <div>
-                                    {label.charAt(0).toUpperCase() +
-                                        label.slice(1)}
-                                </div>
-                            </Link>
-                        }
-                    />
+                    <>
+                        {hasAccess && (
+                            <TreeItem
+                                key={label + "_" + index.toString()}
+                                nodeId={label + "_" + index.toString()}
+                                label={
+                                    <Link
+                                        to={`${upHref}/${to}`}
+                                        onClick={() =>
+                                            dispatch(toggleSidebar(false))
+                                        }
+                                        className={`flex flex-row items-center space-x-2 p-2 text-sm`}
+                                    >
+                                        <div className="flex items-center">
+                                            {element}
+                                        </div>
+                                        <div>
+                                            {label.charAt(0).toUpperCase() +
+                                                label.slice(1)}
+                                        </div>
+                                    </Link>
+                                }
+                            />
+                        )}
+                    </>
                 );
             }
         );

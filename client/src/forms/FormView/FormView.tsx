@@ -47,27 +47,22 @@ export const FormView = ({
                     }}
                     className="flex flex-col space-y-10"
                 >
-                    {React.Children.map(children, (child) => {
-                        if (React.isValidElement(child)) {
-                            if (
-                                child.type === "input" ||
-                                child.type === Button
-                            ) {
-                                return React.cloneElement(child, {
-                                    disabled,
-                                } as any);
-                            }
-                        }
-                        return child;
-                    })}
-                    <Button
-                        className="md:w-32"
-                        type="submit"
-                        variant="contained"
-                        disabled={disabled}
-                    >
-                        Save
-                    </Button>
+                    {children}
+                    <div className="space-x-2">
+                        <Button
+                            className="md:w-32"
+                            type="submit"
+                            variant="contained"
+                            disabled={disabled}
+                        >
+                            Save
+                        </Button>
+                        {disabled && (
+                            <span className="text-sm text-red-600">
+                                Not enough permissions to access.
+                            </span>
+                        )}
+                    </div>
                 </form>
             )}
         />

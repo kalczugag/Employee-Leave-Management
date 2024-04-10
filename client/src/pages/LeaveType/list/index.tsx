@@ -11,7 +11,6 @@ import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
-import ListSearchForm from "../../../forms/SearchForm";
 import BasicTable from "../../../components/Table";
 import { fields } from "./config";
 
@@ -58,10 +57,6 @@ const LeaveTypeList = () => {
             });
     };
 
-    const handleSubmit = (values: any) => {
-        console.log(values);
-    };
-
     return (
         <DefaultPage label="Leave Type List" bg>
             <ActionButtons
@@ -70,7 +65,6 @@ const LeaveTypeList = () => {
                     user?.roles.includes("hod") || user?.roles.includes("admin")
                 }
             />
-            <ListSearchForm onSubmit={handleSubmit} />
             <BasicTable headerOptions={fields} rowData={leaveTypeData} />
         </DefaultPage>
     );

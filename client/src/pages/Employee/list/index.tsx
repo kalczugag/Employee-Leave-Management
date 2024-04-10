@@ -9,7 +9,6 @@ import {
 import useThunk from "../../../hooks/useThunk";
 import useAuth from "../../../hooks/useAuth";
 import useSnackbar from "../../../hooks/useSnackbar";
-import ListSearchForm from "../../../forms/SearchForm";
 import DefaultPage from "../../../layout/DefaultPage";
 import BasicTable from "../../../components/Table";
 import ActionButtons from "../../../components/ActionButtons";
@@ -58,10 +57,6 @@ const EmployeeList = () => {
             });
     };
 
-    const handleSubmit = (values: any) => {
-        console.log(values);
-    };
-
     return (
         <DefaultPage label="Employee List" bg>
             <ActionButtons
@@ -70,7 +65,6 @@ const EmployeeList = () => {
                     user?.roles.includes("hod") || user?.roles.includes("admin")
                 }
             />
-            <ListSearchForm onSubmit={handleSubmit} />
             <BasicTable headerOptions={fields} rowData={employeeData} />
         </DefaultPage>
     );

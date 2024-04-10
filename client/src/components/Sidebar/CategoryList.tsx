@@ -22,7 +22,7 @@ const CategoryList = () => {
     const { expanded } = useSelector((state: RootState) => state.sidebar);
 
     const renderedOptions = CategoriesConfig.map(
-        ({ label, to, element, expendable = true }, index) => {
+        ({ label, to, element, expendable = true, access }, index) => {
             const resultLabel = removeSpacesAndCamelCase(label);
 
             const treeItemLabel = (
@@ -38,25 +38,28 @@ const CategoryList = () => {
                 dispatch(collapseAll());
             };
 
+            const hasAccess = access.includes(user!.roles);
+
             return (
                 <Box
                     key={label + "_" + index.toString()}
                     sx={{ width: "230px" }}
                 >
-                    {expendable ? (
-                        <TreeItem
-                            nodeId={label + "_" + index.toString()}
-                            label={treeItemLabel}
-                        >
-                            <LinksList target={resultLabel} upHref={to} />
-                        </TreeItem>
-                    ) : (
-                        <TreeItem
-                            nodeId={label + "_" + index.toString()}
-                            onClick={handleNavigate}
-                            label={treeItemLabel}
-                        />
-                    )}
+                    {hasAccess &&
+                        (expendable ? (
+                            <TreeItem
+                                nodeId={label + "_" + index.toString()}
+                                label={treeItemLabel}
+                            >
+                                <LinksList target={resultLabel} upHref={to} />
+                            </TreeItem>
+                        ) : (
+                            <TreeItem
+                                nodeId={label + "_" + index.toString()}
+                                onClick={handleNavigate}
+                                label={treeItemLabel}
+                            />
+                        ))}
                 </Box>
             );
         }
