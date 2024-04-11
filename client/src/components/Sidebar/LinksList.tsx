@@ -25,10 +25,9 @@ const LinksList = ({ target, upHref }: Props) => {
                 const hasAccess = access.includes(user!.roles);
 
                 return (
-                    <>
+                    <div key={label + "_" + index.toString()}>
                         {hasAccess && (
                             <TreeItem
-                                key={label + "_" + index.toString()}
                                 nodeId={label + "_" + index.toString()}
                                 label={
                                     <Link
@@ -49,7 +48,7 @@ const LinksList = ({ target, upHref }: Props) => {
                                 }
                             />
                         )}
-                    </>
+                    </div>
                 );
             }
         );

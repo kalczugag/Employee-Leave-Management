@@ -10,6 +10,15 @@ export const isAdmin = async (
     next: express.NextFunction
 ) => {
     try {
+        const { byRole } = req.query;
+
+        const safeOperations = ["/api/users"];
+        const isSafeOperation = safeOperations.includes(req.path);
+
+        if (byRole || isSafeOperation) {
+            return next();
+        }
+
         const currentUserRoles = get(req, "identity.roles") as
             | string[]
             | undefined;

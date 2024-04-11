@@ -13,6 +13,7 @@ import { random, authentication } from "../helpers";
 interface PaginationProps {
     page?: number;
     pageSize?: number;
+    byRole?: string;
 }
 
 export const getAllUsers = async (
@@ -20,12 +21,17 @@ export const getAllUsers = async (
     res: express.Response
 ) => {
     try {
-        const { page = 1, pageSize = 5 }: PaginationProps = req.query;
+        const { page = 1, pageSize = 5, byRole }: PaginationProps = req.query;
 
-        const users = await getUsers()
+        let usersQuery = getUsers()
             .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .exec();
+            .limit(pageSize);
+
+        if (byRole) {
+            usersQuery = usersQuery.where("role").equals(byRole);
+        }
+
+        const users = await usersQuery.exec();
 
         return res.status(200).json(users);
     } catch (error) {
