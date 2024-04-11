@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
     children?: ReactNode;
@@ -14,9 +15,9 @@ const Footer = ({ children, buttons, center, spacing }: Props) => {
                 <div className="flex flex-col items-center justify-between text-sm text-gray-500 md:items-start md:flex-row">
                     <p>2024 &copy; Gabriel Kałczuga</p>
                     <div className="flex flex-row items-end space-x-4">
-                        <a href="#">About</a>
-                        <a href="#">Support</a>
-                        <a href="#">Contact Us</a>
+                        <Link to="/about">About</Link>
+                        <Link to="/support">Support</Link>
+                        <Link to="/contact">Contact Us</Link>
                     </div>
                 </div>
             ) : (

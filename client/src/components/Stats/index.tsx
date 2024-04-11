@@ -60,11 +60,12 @@ const Stats = () => {
     useEffect(() => {
         if (
             (data.length === 0 || !fullData) &&
-            (user?.roles.includes("admin") || user?.roles.includes("hod"))
+            (user?.roles.includes("admin") || user?.roles.includes("hod")) &&
+            !isLoading
         ) {
             doFetchLeaves(leavesOptions);
-        } else {
-            doFetchLeaves({ ...leavesOptions, userId: user!._id });
+        } else if (user) {
+            doFetchLeaves({ ...leavesOptions, userId: user._id });
         }
     }, []);
 

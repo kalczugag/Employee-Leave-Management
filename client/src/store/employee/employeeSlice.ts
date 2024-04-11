@@ -137,11 +137,16 @@ const employeeSlice = createSlice({
     },
 });
 
-export const getEmployees = createAsyncThunk("employee/getAll", async () => {
-    const response = await axios.get("/api/users");
+export const getEmployees = createAsyncThunk(
+    "employee/getAll",
+    async (byRole: string) => {
+        const response = await axios.get("/api/users", {
+            params: { byRole },
+        });
 
-    return response.data;
-});
+        return response.data;
+    }
+);
 
 export const getEmployee = createAsyncThunk(
     "employee/get",

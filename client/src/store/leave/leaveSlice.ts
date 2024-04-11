@@ -131,7 +131,6 @@ const leaveSlice = createSlice({
 export const getLeaves = createAsyncThunk(
     "leave/getAll",
     async (options?: any) => {
-        console.log(options);
         const response = await axios.get("/api/leaves", {
             params: {
                 userId: options?.userId,
