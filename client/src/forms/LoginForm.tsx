@@ -72,7 +72,7 @@ const LoginWindow = () => {
                                     to="/password/reset"
                                     className="w-full text-end text-xs text-gray-500 hover:text-gray-700"
                                 >
-                                    Forget your password?
+                                    Forgot your password?
                                 </Link>
                                 <FormControl variant="outlined" fullWidth>
                                     <InputLabel htmlFor="outlined-adornment-password">
