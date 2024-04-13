@@ -28,7 +28,8 @@ export const getAllUsers = async (
             .limit(pageSize);
 
         if (byRole) {
-            usersQuery = usersQuery.where("role").equals(byRole);
+            const roles = byRole.split(",");
+            usersQuery = usersQuery.where("roles").in(roles);
         }
 
         const users = await usersQuery.exec();

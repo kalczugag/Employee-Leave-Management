@@ -105,7 +105,7 @@ export const updateDepartment = async (
 ) => {
     try {
         const { id } = req.params;
-        const { name, shortName, details, active } = req.body;
+        const { name, shortName, details, head, active } = req.body;
 
         const department = await getDepartmentById(id);
 
@@ -116,6 +116,7 @@ export const updateDepartment = async (
         department!.set("name", name);
         department!.set("shortName", shortName);
         department!.set("details", details);
+        department!.set("head", head);
         department!.set("active", active);
         await department!.save();
 

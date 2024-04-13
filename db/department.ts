@@ -9,6 +9,7 @@ const DepartmentSchema = new mongoose.Schema(
             required: false,
             default: "N/A",
         },
+        head: { type: String, required: false, default: "Not assigned" },
         active: { type: Boolean, required: false, default: true },
     },
     {

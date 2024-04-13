@@ -29,8 +29,12 @@ const employeeSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getEmployees.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
+                return {
+                    ...state,
+                    isLoading: false,
+                    data: action.payload.data,
+                    fulldata: action.payload.fullData,
+                };
             })
             .addCase(getEmployees.rejected, (state, action) => {
                 state.isLoading = false;
@@ -144,7 +148,7 @@ export const getEmployees = createAsyncThunk(
             params: { byRole },
         });
 
-        return response.data;
+        return { data: response.data, fullData: byRole ? false : true };
     }
 );
 
