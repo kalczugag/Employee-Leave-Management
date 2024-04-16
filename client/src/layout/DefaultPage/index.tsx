@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 import Footer from "../../components/Footer";
+import BasicBreadcrumbs from "../../components/BasicBreadcrumbs";
 
 interface Props {
     children: ReactNode;
@@ -9,10 +11,25 @@ interface Props {
 }
 
 const DefaultPage = ({ children, label, bg, footer = true }: Props) => {
+    const { pathname } = useLocation();
+
+    const links = pathname.split("/");
+    const breadcrumbLinks = links.map((link, index) => ({
+        label: link.charAt(0).toUpperCase() + link.slice(1).toLowerCase(),
+        path: `${links.slice(0, index + 1).join("/")}`,
+    }));
+
+    console.log(breadcrumbLinks);
+
     return (
         <div className="flex flex-col">
             <div className="flex-1 flex flex-col space-y-4">
-                <h3 className="font-semibold text-gray-500 text-lg">{label}</h3>
+                <div className="flex flex-row justify-between items-center">
+                    <h3 className="font-semibold text-gray-500 text-lg">
+                        {label}
+                    </h3>
+                    <BasicBreadcrumbs links={breadcrumbLinks} />
+                </div>
                 {bg ? (
                     <div className="flex flex-col space-y-5 bg-white p-5 rounded">
                         {children}
