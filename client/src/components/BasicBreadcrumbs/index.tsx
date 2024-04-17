@@ -26,7 +26,10 @@ const BasicBreadcrumbs = ({ links }: Props) => {
                     }
 
                     return (
-                        <Typography color="text.primary">
+                        <Typography
+                            key={link.path + "_" + index.toString()}
+                            color="text.primary"
+                        >
                             {link.label}
                         </Typography>
                     );

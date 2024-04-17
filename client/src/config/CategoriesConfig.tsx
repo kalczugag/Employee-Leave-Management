@@ -20,19 +20,19 @@ export const CategoriesConfig: CategoriesConfigProps[] = [
         label: "Department",
         to: "/department",
         element: <CallMadeOutlined />,
-        access: ["admin", "hod", "staff"],
+        access: ["admin"],
     },
     {
         label: "Leave Type",
         to: "/leave-type",
         element: <CallMadeOutlined />,
-        access: ["admin", "hod", "staff"],
+        access: ["admin"],
     },
     {
         label: "Employee",
         to: "/employee",
         element: <CallMadeOutlined />,
-        access: ["admin", "hod"],
+        access: ["admin"],
     },
     {
         label: "Leave",
