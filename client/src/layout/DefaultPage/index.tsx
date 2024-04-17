@@ -19,8 +19,6 @@ const DefaultPage = ({ children, label, bg, footer = true }: Props) => {
         path: `${links.slice(0, index + 1).join("/")}`,
     }));
 
-    console.log(breadcrumbLinks);
-
     return (
         <div className="flex flex-col">
             <div className="flex-1 flex flex-col space-y-4">

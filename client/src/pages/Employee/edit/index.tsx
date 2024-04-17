@@ -72,6 +72,10 @@ const EmployeeEdit = () => {
         return null;
     }
 
+    const disabled =
+        (isFetchingEmployee && !user?.roles.includes("hod")) ||
+        !user?.roles.includes("admin");
+
     return (
         <DefaultPage label="Edit Employee" bg>
             <FormView
@@ -79,11 +83,7 @@ const EmployeeEdit = () => {
                     ...employeeData,
                     values: namesList,
                 }}
-                disabled={
-                    isFetchingEmployee ||
-                    !user?.roles.includes("hod") ||
-                    !user?.roles.includes("admin")
-                }
+                disabled={disabled}
                 onSubmit={handleSubmit}
             >
                 <UserFormFields />

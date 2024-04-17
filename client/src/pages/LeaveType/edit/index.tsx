@@ -48,16 +48,16 @@ const LeaveTypeEdit = () => {
             });
     };
 
+    const disabled =
+        (isLoading && !user?.roles.includes("hod")) ||
+        !user?.roles.includes("admin");
+
     return (
         <DefaultPage label="Edit Leave Type" bg>
             <FormView
                 onSubmit={handleSubmit}
                 initialValues={data}
-                disabled={
-                    isLoading ||
-                    !user?.roles.includes("hod") ||
-                    !user?.roles.includes("admin")
-                }
+                disabled={disabled}
             >
                 <FormField
                     options={{ label: "Leave Type Name", name: "name" }}

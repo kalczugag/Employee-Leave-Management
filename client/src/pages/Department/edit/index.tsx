@@ -49,8 +49,7 @@ const DepartmentEdit = () => {
     };
 
     const disabled =
-        isLoading ||
-        !user?.roles.includes("hod") ||
+        (isLoading && !user?.roles.includes("hod")) ||
         !user?.roles.includes("admin");
 
     return (
@@ -58,11 +57,7 @@ const DepartmentEdit = () => {
             <FormView
                 onSubmit={handleSubmit}
                 initialValues={data}
-                disabled={
-                    isLoading ||
-                    !user?.roles.includes("hod") ||
-                    !user?.roles.includes("admin")
-                }
+                disabled={disabled}
             >
                 <FormField
                     required
