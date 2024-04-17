@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { SignType } from "../../enums/signType.enum";
+import { LinearProgress } from "@mui/material";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
@@ -10,6 +13,20 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
     const { pathname } = useLocation();
+    const isLoading = useSelector((state: RootState) => {
+        if (
+            state.department.isLoading ||
+            state.leaveType.isLoading ||
+            state.employee.isLoading ||
+            state.leave.isLoading ||
+            state.user.isLoading
+        ) {
+            return true;
+        }
+
+        return false;
+    });
+
     const isAuthPage =
         SignType.Login === pathname || SignType.Register === pathname;
 
@@ -21,6 +38,17 @@ const Layout = ({ children }: Props) => {
 
                     <Sidebar />
                 </>
+            )}
+            {isLoading && (
+                <LinearProgress
+                    sx={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: "100",
+                    }}
+                />
             )}
             {children}
         </div>
