@@ -14,5 +14,8 @@ export default (router: express.Router) => {
     router.get("/leaves/:id", isAuthenticated, getLeave);
     router.post("/leaves", isAuthenticated, addLeave);
     router.delete("/leaves/:id", isAuthenticated, deleteLeave);
+
+    //add isOwner middleware here to restrict access to owner only
+    //also allow admin to edit only status of leave
     router.patch("/leaves/:id", isAuthenticated, updateLeave);
 };

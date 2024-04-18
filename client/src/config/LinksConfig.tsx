@@ -57,6 +57,7 @@ export const LinksConfig: LinksConfigProps = {
             label: "New Leave",
             to: "new",
             element: <CircleOutlinedIcon sx={{ fontSize: ICON_SIZE }} />,
+            access: ["staff"],
         },
         {
             label: "Leave List",
