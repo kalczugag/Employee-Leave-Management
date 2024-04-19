@@ -9,6 +9,7 @@ interface Props {
     };
 }
 
+//this is not highly reusable for now
 const ChartView = ({ data }: Props) => {
     return (
         <PieChart

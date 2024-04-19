@@ -19,6 +19,7 @@ import LeaveList from "./pages/Leave/list";
 import LeaveListPending from "./pages/Leave/listPending";
 import LeaveListApproved from "./pages/Leave/listApproved";
 import LeaveListRejected from "./pages/Leave/listRejected";
+import ProfileSettings from "./pages/ProfileSettings";
 import NotFound from "./pages/404";
 import PrivateOutlet from "./components/PrivateOutlet";
 import SnackbarMsg from "./components/SnackbarMsg";
@@ -75,6 +76,7 @@ const App = () => {
                             element={<LeaveListRejected />}
                         />
                     </Route>
+                    <Route path="/settings" element={<ProfileSettings />} />
                     <Route path="/test" element={<Test />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />

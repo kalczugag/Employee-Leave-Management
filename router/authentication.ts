@@ -7,8 +7,9 @@ import {
     logout,
     verifyEmail,
     resetPassword,
+    changePassword,
 } from "../controllers/authentication";
-import { isEmailVerified } from "../middlewares";
+import { isAuthenticated, isEmailVerified, isOwner } from "../middlewares";
 
 export default (router: express.Router) => {
     router.get("/auth/current_user", getUser);
@@ -17,4 +18,5 @@ export default (router: express.Router) => {
     router.post("/auth/login", login);
     router.post("/auth/verify", verifyEmail);
     router.patch("/auth/reset", isEmailVerified, resetPassword);
+    router.patch("/auth/change_password", isAuthenticated, changePassword);
 };

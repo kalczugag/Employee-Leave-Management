@@ -165,6 +165,7 @@ export const verifyEmail = async (
     }
 };
 
+// this is for sign in page
 export const resetPassword = async (
     req: express.Request,
     res: express.Response
@@ -199,6 +200,64 @@ export const resetPassword = async (
         });
 
         res.clearCookie(keys.verifyEmailCookieKey);
+
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+// this is for profile/settings to chagne own password by authenticated user
+export const changePassword = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { currentPassword, newPassword, confirmNewPassword } = req.body;
+        const sessionToken = req.cookies[keys.authCookieKey];
+
+        if (!sessionToken) {
+            return res.sendStatus(403);
+        }
+
+        if (!currentPassword || !newPassword || !confirmNewPassword) {
+            return res.sendStatus(400);
+        }
+
+        if (
+            newPassword !== confirmNewPassword ||
+            currentPassword === newPassword
+        ) {
+            return res.sendStatus(400);
+        }
+
+        const user = await getUserBySessionToken(sessionToken).select(
+            "+authentication.salt +authentication.password"
+        );
+
+        if (!user) {
+            return res.sendStatus(400);
+        }
+
+        const expectedHash = authentication(
+            user.authentication?.salt ?? "",
+            currentPassword
+        );
+
+        if (expectedHash !== user.authentication?.password) {
+            return res.sendStatus(403);
+        }
+
+        const salt = random();
+        const hashedPassword = authentication(salt, newPassword);
+
+        await updateUserById(user!._id.toString(), {
+            authentication: {
+                salt,
+                password: hashedPassword,
+            },
+        });
 
         return res.sendStatus(200);
     } catch (error) {

@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { FormField, FormFile, FormSelect } from "../../forms/FormView";
-import { FormPassword } from "../../forms/FormView/FormPassword";
+import {
+    FormPassword,
+    FormField,
+    FormFile,
+    FormSelect,
+} from "../../forms/FormView";
 import { InputLabel } from "@mui/material";
 import { useFormState } from "react-final-form";
 
@@ -63,7 +67,10 @@ const UserFormFields = () => {
                 placeholder="Enter Email"
                 disabled={isLoading}
             />
-            <FormPassword disabled={isLoading} />
+            <FormPassword
+                options={{ label: "Password", name: "password" }}
+                disabled={isLoading}
+            />
             <FormSelect
                 options={{ label: "Roles", name: "roles" }}
                 values={ROLES}

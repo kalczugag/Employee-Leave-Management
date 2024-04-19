@@ -9,11 +9,19 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface FormPasswordProps {
+    options: {
+        label: string;
+        name: string;
+    };
     required?: boolean;
     disabled?: boolean;
 }
 
-export const FormPassword = ({ required, disabled }: FormPasswordProps) => {
+export const FormPassword = ({
+    options,
+    required,
+    disabled,
+}: FormPasswordProps) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -25,12 +33,11 @@ export const FormPassword = ({ required, disabled }: FormPasswordProps) => {
     };
 
     return (
-        <Field name="password">
+        <Field name={options.name}>
             {({ input, meta }) => (
                 <div className="space-y-1">
-                    <InputLabel>Password</InputLabel>
+                    <InputLabel>{options.label}</InputLabel>
                     <OutlinedInput
-                        id="outlined-adornment-password"
                         type={showPassword ? "text" : "password"}
                         name={input.name}
                         value={input.value}
