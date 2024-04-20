@@ -165,7 +165,7 @@ export const verifyEmail = async (
     }
 };
 
-// this is for sign in page
+// this is for sign in page using OTP (not existing now)
 export const resetPassword = async (
     req: express.Request,
     res: express.Response

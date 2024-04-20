@@ -9,7 +9,7 @@ import {
     resetPassword,
     changePassword,
 } from "../controllers/authentication";
-import { isAuthenticated, isEmailVerified, isOwner } from "../middlewares";
+import { isAuthenticated, isEmailVerified } from "../middlewares";
 
 export default (router: express.Router) => {
     router.get("/auth/current_user", getUser);
