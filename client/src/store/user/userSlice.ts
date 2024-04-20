@@ -233,6 +233,19 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
+export const changePassword = createAsyncThunk(
+    "user/change_password",
+    async (data: {
+        currentPassword: string;
+        newPassword: string;
+        confirmNewPassword: string;
+    }) => {
+        const response = await axios.patch("/api/auth/change_password", data);
+
+        return response.data;
+    }
+);
+
 export const { setPage } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -16,12 +16,11 @@ const DepartmentNew = () => {
 
     const handleSubmit = (values: any) => {
         dispatch(addDepartment(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 navigate("../list");
                 handleOpen("Department Create Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (

@@ -41,12 +41,11 @@ const EmployeeNew = () => {
 
     const handleSubmit = (values: user) => {
         dispatch(addEmployee(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 navigate("../list");
                 handleOpen("Department Create Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     if (departmentsData.length === 0 && isFetchingDepartments) {

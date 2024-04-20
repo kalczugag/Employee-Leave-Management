@@ -40,12 +40,11 @@ const LeaveTypeEdit = () => {
 
     const handleSubmit = (values: any) => {
         dispatch(editLeaveType(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 navigate("../list");
                 handleOpen("Leave Type Update Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     const disabled =

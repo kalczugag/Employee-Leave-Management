@@ -50,11 +50,10 @@ const DepartmentList = () => {
 
     const handleDelete = (id: string) => {
         dispatch(deleteDepartment(id))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 handleOpen("Department Remove Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (

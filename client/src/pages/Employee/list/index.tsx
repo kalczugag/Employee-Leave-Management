@@ -50,11 +50,10 @@ const EmployeeList = () => {
 
     const handleDelete = (id: string) => {
         dispatch(deleteEmployee(id))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 handleOpen("Employee Remove Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (

@@ -50,11 +50,10 @@ const LeaveTypeList = () => {
 
     const handleDelete = (id: string) => {
         dispatch(deleteLeaveType(id))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 handleOpen("Leave Type Remove Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (

@@ -1,19 +1,17 @@
-import { FormPassword, FormView } from "../../forms/FormView";
+import { useDispatch } from "react-redux";
+import { AppDispatch, changePassword } from "../../store";
 import useSnackbar from "../../hooks/useSnackbar";
+import { FormPassword, FormView } from "../../forms/FormView";
 import DefaultPage from "../../layout/DefaultPage";
 
 const ProfileSettings = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
 
     const handleSubmit = (values: any) => {
-        if (
-            !values.currentPassword ||
-            !values.confirmNewPassword ||
-            !values.newPassword
-        ) {
-            handleOpen("Fields can't be empty", "error");
-        } else {
-        }
+        dispatch(changePassword(values))
+            .then(() => handleOpen("Password Change Successful"))
+            .catch((err) => handleOpen("Something went wrong!", "error"));
     };
 
     return (

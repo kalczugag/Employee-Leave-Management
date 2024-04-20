@@ -15,12 +15,11 @@ const LeaveNew = () => {
 
     const handleSubmit = (values: LeaveProps) => {
         dispatch(addLeave(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 navigate("../list");
                 handleOpen("Leave Create Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (

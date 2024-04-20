@@ -40,12 +40,11 @@ const DepartmentEdit = () => {
 
     const handleSubmit = (values: any) => {
         dispatch(editDepartment(values))
-            .unwrap()
-            .catch((err) => handleOpen(err.message, "error"))
-            .finally(() => {
+            .then(() => {
                 navigate("../list");
                 handleOpen("Department Update Successful");
-            });
+            })
+            .catch((err) => handleOpen(err.message, "error"));
     };
 
     const disabled =

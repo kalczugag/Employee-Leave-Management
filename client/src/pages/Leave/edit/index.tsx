@@ -56,12 +56,11 @@ const LeaveEdit = () => {
 
         if (hasChanged) {
             dispatch(editLeave(values))
-                .unwrap()
-                .catch((err) => handleOpen(err.message, "error"))
-                .finally(() => {
+                .then(() => {
                     navigate("../list");
                     handleOpen("Leave Update Successful");
-                });
+                })
+                .catch((err) => handleOpen(err.message, "error"));
         } else {
             handleOpen("No changes detected", "error");
         }

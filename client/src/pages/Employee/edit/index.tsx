@@ -55,13 +55,12 @@ const EmployeeEdit = () => {
 
         if (hasChanged) {
             dispatch(editEmployee(values))
-                .unwrap()
-                .catch((err) => {
-                    handleOpen(err.message, "error");
-                })
-                .finally(() => {
+                .then(() => {
                     navigate("../list");
                     handleOpen("Employee Update Successful");
+                })
+                .catch((err) => {
+                    handleOpen(err.message, "error");
                 });
         } else {
             handleOpen("No changes detected", "error");
