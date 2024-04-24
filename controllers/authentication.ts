@@ -222,17 +222,17 @@ export const changePassword = async (
         }
 
         if (!currentPassword || !newPassword || !confirmNewPassword) {
-            return res.status(400).send("Fields can't be empty");
+            return res.status(400).json({ message: "Fields can't be empty" });
         }
 
         if (newPassword !== confirmNewPassword) {
-            return res.status(400).send("Password doesn't match");
+            return res.status(400).json({ message: "Password doesn't match" });
         }
 
         if (currentPassword === newPassword) {
             return res
                 .status(400)
-                .send("Current password and new are the same");
+                .json({ message: "Current password and new are the same" });
         }
 
         const user = await getUserBySessionToken(sessionToken).select(
@@ -249,7 +249,7 @@ export const changePassword = async (
         );
 
         if (expectedHash !== user.authentication?.password) {
-            return res.status(403).send("Wrong current password");
+            return res.status(403).json({ message: "Wrong current password" });
         }
 
         const salt = random();

@@ -147,6 +147,21 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.error;
             });
+
+        builder
+            .addCase(changePassword.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(changePassword.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(
+                changePassword.rejected,
+                (state, action: PayloadAction<any>) => {
+                    state.isLoading = false;
+                    state.error = action.payload.message;
+                }
+            );
     },
 });
 
@@ -235,14 +250,31 @@ export const resetPassword = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
     "user/change_password",
-    async (data: {
-        currentPassword: string;
-        newPassword: string;
-        confirmNewPassword: string;
-    }) => {
-        const response = await axios.patch("/api/auth/change_password", data);
-
-        return response.data;
+    async (
+        data: {
+            currentPassword: string;
+            newPassword: string;
+            confirmNewPassword: string;
+        },
+        { rejectWithValue }
+    ) => {
+        try {
+            const response = await axios.patch(
+                "/api/auth/change_password",
+                data
+            );
+            return response.data;
+        } catch (error: any) {
+            if (error.response) {
+                return rejectWithValue(error.response.data);
+            } else if (error.request) {
+                return rejectWithValue({
+                    error: "No response received from the server",
+                });
+            } else {
+                return rejectWithValue({ error: error.message });
+            }
+        }
     }
 );
 

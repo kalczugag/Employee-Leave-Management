@@ -34,7 +34,7 @@ const App = () => {
         if (isAuthenticated) {
             handleOpen("Successful logged in", "success");
         }
-    }, [handleOpen, isAuthenticated]);
+    }, [isAuthenticated]);
 
     return (
         <>
