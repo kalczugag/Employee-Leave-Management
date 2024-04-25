@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import { Search, Menu } from "@mui/icons-material";
-import CustomIconButtom from "../MenuIconButton";
+import IconButton from "../IconButton";
 import AccountMenu from "./AccountMenu";
 import Logo from "../Logo";
 
@@ -20,12 +20,12 @@ const Header = () => {
                 <Logo />
             </section>
             <section className="flex flex-row items-center md:space-x-4 md:flex-1">
-                <CustomIconButtom
+                <IconButton
                     className="md:hidden"
                     handleOpen={() => dispatch(toggleSidebar(true))}
                 >
                     <Menu />
-                </CustomIconButtom>
+                </IconButton>
                 {/* change to reusable */}
                 <Form
                     onSubmit={onSubmit}

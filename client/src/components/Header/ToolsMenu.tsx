@@ -3,20 +3,20 @@ import {
     NightlightOutlined,
     NotificationsOutlined,
 } from "@mui/icons-material";
-import CustomIconButtom from "../MenuIconButton";
+import IconButton from "../IconButton";
 
 const ToolsMenu = () => {
     return (
         <>
-            <CustomIconButtom>
+            <IconButton>
                 <NotificationsOutlined />
-            </CustomIconButtom>
-            <CustomIconButtom>
+            </IconButton>
+            <IconButton>
                 <Apps />
-            </CustomIconButtom>
-            <CustomIconButtom>
+            </IconButton>
+            <IconButton>
                 <NightlightOutlined />
-            </CustomIconButtom>
+            </IconButton>
         </>
     );
 };

@@ -3,8 +3,9 @@ import { IconButton, MenuItem, Menu } from "@mui/material";
 
 interface Props {
     children: ReactNode;
-    options?: any[]; //change to required
+    customMenuItem?: JSX.Element;
     className?: string;
+    options?: any[]; //options or handleOpen should not be null
     handleOpen?: () => void;
 }
 
@@ -25,7 +26,12 @@ const options = [
     "Umbriel",
 ];
 
-const CustomIconButtom = ({ children, handleOpen, className }: Props) => {
+const CustomIconButton = ({
+    children,
+    customMenuItem,
+    className,
+    handleOpen,
+}: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -53,7 +59,6 @@ const CustomIconButtom = ({ children, handleOpen, className }: Props) => {
             </IconButton>
             {!handleOpen && (
                 <Menu
-                    id="long-menu"
                     MenuListProps={{
                         "aria-labelledby": "long-button",
                     }}
@@ -67,9 +72,15 @@ const CustomIconButtom = ({ children, handleOpen, className }: Props) => {
                     }}
                 >
                     {options.map((option) => (
-                        <MenuItem key={option} onClick={handleClose}>
-                            {option}
-                        </MenuItem>
+                        <>
+                            {!customMenuItem ? (
+                                <MenuItem key={option} onClick={handleClose}>
+                                    {option}
+                                </MenuItem>
+                            ) : (
+                                customMenuItem
+                            )}
+                        </>
                     ))}
                 </Menu>
             )}
@@ -77,4 +88,4 @@ const CustomIconButtom = ({ children, handleOpen, className }: Props) => {
     );
 };
 
-export default CustomIconButtom;
+export default CustomIconButton;

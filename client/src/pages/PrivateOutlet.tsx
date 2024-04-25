@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import useThunk from "../../hooks/useThunk";
-import { getUser } from "../../store";
-import useAuth from "../../hooks/useAuth";
-import Layout from "../../layout/Layout";
+import useThunk from "../hooks/useThunk";
+import { getUser } from "../store";
+import useAuth from "../hooks/useAuth";
+import Layout from "../layout/Layout";
 
 const PrivateOutlet = () => {
     const auth = useAuth();
