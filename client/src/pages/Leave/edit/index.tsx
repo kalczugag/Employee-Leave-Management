@@ -14,7 +14,7 @@ import useNamesList from "../../../hooks/useNamesList";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
-import LeaveFormFields from "../../../components/LeaveFormFields";
+import LeaveFormFields from "../../../containers/Forms/LeaveFormFields";
 
 const LeaveEdit = () => {
     const { id } = useParams();

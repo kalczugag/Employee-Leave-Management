@@ -4,7 +4,7 @@ import { AppDispatch, addLeave, LeaveProps } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { FormView } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
-import LeaveFormFields from "../../../components/LeaveFormFields";
+import LeaveFormFields from "../../../containers/Forms/LeaveFormFields";
 import useNamesList from "../../../hooks/useNamesList";
 
 const LeaveNew = () => {

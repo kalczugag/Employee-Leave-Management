@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { useFormState } from "react-final-form";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 import {
     FormEditor,
     FormField,
     FormSelect,
     FormRadio,
-} from "../../forms/FormView";
+} from "../../../forms/FormView";
 
 interface Props {
     extended?: boolean;

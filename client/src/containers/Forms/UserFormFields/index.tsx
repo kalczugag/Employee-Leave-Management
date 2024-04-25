@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 import {
     FormPassword,
     FormField,
     FormFile,
     FormSelect,
-} from "../../forms/FormView";
+} from "../../../forms/FormView";
 import { InputLabel } from "@mui/material";
 import { useFormState } from "react-final-form";
 

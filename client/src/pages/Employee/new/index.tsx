@@ -12,7 +12,7 @@ import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
-import UserForm from "../../../components/UserFormFields";
+import UserForm from "../../../containers/Forms/UserFormFields";
 
 const EmployeeNew = () => {
     const dispatch = useDispatch<AppDispatch>();
