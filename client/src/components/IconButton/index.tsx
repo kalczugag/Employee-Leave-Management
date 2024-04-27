@@ -2,10 +2,11 @@ import React, { ReactNode, useState } from "react";
 import { IconButton, MenuItem, Menu } from "@mui/material";
 
 interface Props {
-    children: ReactNode;
-    customMenuItem?: JSX.Element;
+    children?: ReactNode;
+    menuIcon: JSX.Element;
+    label?: string;
     className?: string;
-    options?: any[]; //options or handleOpen should not be null
+    options?: any[];
     handleOpen?: () => void;
 }
 
@@ -28,7 +29,8 @@ const options = [
 
 const CustomIconButton = ({
     children,
-    customMenuItem,
+    label,
+    menuIcon,
     className,
     handleOpen,
 }: Props) => {
@@ -55,7 +57,7 @@ const CustomIconButton = ({
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
             >
-                {children}
+                {menuIcon}
             </IconButton>
             {!handleOpen && (
                 <Menu
@@ -71,16 +73,16 @@ const CustomIconButton = ({
                         },
                     }}
                 >
+                    {label && (
+                        <div className="flex flex-col p-1 pb-2 px-2 text-gray-500 border-b">
+                            {label}
+                        </div>
+                    )}
                     {options.map((option) => (
-                        <>
-                            {!customMenuItem ? (
-                                <MenuItem key={option} onClick={handleClose}>
-                                    {option}
-                                </MenuItem>
-                            ) : (
-                                customMenuItem
-                            )}
-                        </>
+                        <MenuItem key={option} onClick={handleClose}>
+                            {option}
+                            {children}
+                        </MenuItem>
                     ))}
                 </Menu>
             )}

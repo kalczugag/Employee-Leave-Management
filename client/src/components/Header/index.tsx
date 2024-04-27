@@ -21,11 +21,10 @@ const Header = () => {
             </section>
             <section className="flex flex-row items-center md:space-x-4 md:flex-1">
                 <IconButton
+                    menuIcon={<Menu />}
                     className="md:hidden"
                     handleOpen={() => dispatch(toggleSidebar(true))}
-                >
-                    <Menu />
-                </IconButton>
+                />
                 {/* change to reusable */}
                 <Form
                     onSubmit={onSubmit}
