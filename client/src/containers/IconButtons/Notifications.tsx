@@ -53,6 +53,7 @@ const Notifications = () => {
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -62,7 +63,7 @@ const Notifications = () => {
             <IconButton
                 onClick={handleClick}
                 size="small"
-                aria-controls={open ? "account-menu" : undefined}
+                aria-controls={open ? "Notifications" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
             >

@@ -1,13 +1,13 @@
-import { Apps, NightlightOutlined } from "@mui/icons-material";
-import IconButton from "../IconButton";
 import Notifications from "../../containers/IconButtons/Notifications";
+import NightMode from "../../containers/IconButtons/NightMode";
+import Apps from "../../containers/IconButtons/Apps";
 
 const ToolsMenu = () => {
     return (
         <>
             <Notifications />
-            <IconButton menuIcon={<Apps />}>x</IconButton>
-            <IconButton menuIcon={<NightlightOutlined />}>x</IconButton>
+            <Apps />
+            <NightMode />
         </>
     );
 };
