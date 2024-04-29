@@ -119,16 +119,7 @@ const AccountMenu = () => {
                 >
                     <Avatar /> Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <Avatar /> My account
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <PersonAdd fontSize="small" />
-                    </ListItemIcon>
-                    Add another account
-                </MenuItem>
+                <Divider sx={{ width: "215px" }} />
                 <MenuItem
                     onClick={() => {
                         handleClose();
