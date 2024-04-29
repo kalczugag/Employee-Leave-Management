@@ -27,7 +27,7 @@ const Apps = () => {
             <IconButton
                 onClick={handleClick}
                 size="small"
-                aria-controls={open ? "Notifications" : undefined}
+                aria-controls={open ? "Apps" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
             >
