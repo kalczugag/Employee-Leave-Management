@@ -6,6 +6,8 @@ interface LeaveState {
     isLoading: boolean;
     error: any;
     fullData: boolean;
+    page: number;
+    rowsPerPage: number;
 }
 
 export interface StatusUnion {
@@ -28,12 +30,21 @@ const initialState: LeaveState = {
     isLoading: false,
     error: null,
     fullData: false,
+    page: 0,
+    rowsPerPage: 5,
 };
 
 const leaveSlice = createSlice({
     name: "leave",
     initialState,
-    reducers: {},
+    reducers: {
+        setPage(state, action: PayloadAction<number>) {
+            state.page = action.payload;
+        },
+        setRowsPerPage(state, action: PayloadAction<number>) {
+            state.rowsPerPage = action.payload;
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(getLeaves.pending, (state) => {
@@ -184,5 +195,7 @@ export const deleteLeave = createAsyncThunk(
         return id;
     }
 );
+
+export const { setPage, setRowsPerPage } = leaveSlice.actions;
 
 export default leaveSlice.reducer;

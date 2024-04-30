@@ -1,8 +1,10 @@
 import { Form, Field } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store";
+import { CategoriesConfig } from "../../config/CategoriesConfig";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import { Search, Menu } from "@mui/icons-material";
+import SearchForm from "../../forms/SearchForm";
 import IconButton from "../IconButton";
 import AccountMenu from "./AccountMenu";
 import Logo from "../Logo";
@@ -26,6 +28,7 @@ const Header = () => {
                     handleOpen={() => dispatch(toggleSidebar(true))}
                 />
                 {/* change to reusable */}
+                <SearchForm data={CategoriesConfig} />
                 <Form
                     onSubmit={onSubmit}
                     render={({ handleSubmit }) => (

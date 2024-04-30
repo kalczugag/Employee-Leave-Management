@@ -1,6 +1,6 @@
-import Notifications from "../../containers/IconButtons/Notifications";
-import NightMode from "../../containers/IconButtons/NightMode";
-import Apps from "../../containers/IconButtons/Apps";
+import Notifications from "../../containers/IconButton/Notifications";
+import NightMode from "../../containers/IconButton/NightMode";
+import Apps from "../../containers/IconButton/Apps";
 
 const ToolsMenu = () => {
     return (

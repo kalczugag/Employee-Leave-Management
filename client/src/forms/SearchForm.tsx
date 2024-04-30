@@ -1,26 +1,33 @@
-import { Form, Field } from "react-final-form";
-import { OnChange } from "react-final-form-listeners";
+import { Autocomplete, Stack, TextField } from "@mui/material";
 
-interface Props {
-    onSubmit: (values: any) => void;
+interface dataProp {
+    label: string;
 }
 
-const ListSearchForm = ({ onSubmit }: Props) => {
+interface Props {
+    data: dataProp[];
+}
+
+const ListSearchForm = ({ data }: Props) => {
     return (
-        <Form onSubmit={onSubmit}>
-            {(props) => (
-                <div>
-                    <form onSubmit={props.handleSubmit}>
-                        <Field name="search" component="input" />
-                    </form>
-                    <OnChange name="search">
-                        {(value, prev) => {
-                            console.log(value, prev);
+        <Stack spacing={2} sx={{ width: 300 }}>
+            <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={data.map((option) => option.label)}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label="Search input"
+                        InputProps={{
+                            ...params.InputProps,
+                            type: "search",
                         }}
-                    </OnChange>
-                </div>
-            )}
-        </Form>
+                    />
+                )}
+            />
+        </Stack>
     );
 };
 

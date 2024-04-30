@@ -11,6 +11,7 @@ import {
 } from "../store";
 import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
+import usePageAndRows from "./usePageAndRows";
 import useAuth from "./useAuth";
 import _ from "lodash";
 
@@ -18,6 +19,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
+    const { page, rowsPerPage } = usePageAndRows();
 
     const [doFetchLeaves] = useThunk(getLeaves);
     const [doFetchEmployee] = useThunk(getEmployeesByIds);
@@ -27,8 +29,8 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
 
     const leavesOptions = {
         // fields: '',
-        // page: 1,
-        // pageSize: 5,
+        page,
+        pageSize: rowsPerPage,
         status,
     };
 
@@ -60,7 +62,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
                 dispatch(setEmployee(user));
             }
         }
-    }, [leavesData.data.length, leavesData.fullData]);
+    }, [leavesData.data.length, leavesData.fullData, page, rowsPerPage]);
 
     const fetchEmployeesById = async () => {
         const leaveUsersIds = leavesData.data.map((e) => e._user);

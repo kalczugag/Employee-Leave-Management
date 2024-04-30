@@ -13,7 +13,7 @@ const LeaveListApproved = () => {
 
     return (
         <DefaultPage label="Leave List Approved" bg>
-            <ListSearchForm onSubmit={handleSubmit} />
+            <ListSearchForm data={[{ label: "x" }]} />
             <BasicTable headerOptions={fields} rowData={data || []} />
         </DefaultPage>
     );

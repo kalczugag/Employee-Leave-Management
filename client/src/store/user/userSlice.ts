@@ -26,7 +26,7 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setPage(state, action: PayloadAction<number>) {
+        setAuthPage(state, action: PayloadAction<number>) {
             state.resetPage = action.payload || 0;
         },
     },
@@ -278,6 +278,6 @@ export const changePassword = createAsyncThunk(
     }
 );
 
-export const { setPage } = userSlice.actions;
+export const { setAuthPage } = userSlice.actions;
 
 export default userSlice.reducer;

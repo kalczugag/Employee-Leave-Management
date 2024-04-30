@@ -29,7 +29,7 @@ const ActionButtons = ({ label, extended }: Props) => {
                     {label}
                 </Button>
             ) : (
-                <ListSearchForm onSubmit={() => console.log("")} />
+                <ListSearchForm data={[{ label: "x" }]} />
             )}
             <div className="flex flex-row mb-4 space-x-2 md:mb-0">
                 <IconButton aria-label="settings">

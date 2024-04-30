@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Field } from "react-final-form";
-import { setPage } from "../../store";
+import { setAuthPage } from "../../store";
 import {
     TextField,
     Button,
@@ -84,7 +84,7 @@ const ResetPasswordForm = () => {
             <div className="flex flex-row justify-between w-[calc(320px)]">
                 <Button
                     type="button"
-                    onClick={() => dispatch(setPage(0))}
+                    onClick={() => dispatch(setAuthPage(0))}
                     variant="contained"
                     color="inherit"
                 >

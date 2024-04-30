@@ -13,7 +13,7 @@ const LeaveListPending = () => {
 
     return (
         <DefaultPage label="Leave List Pending" bg>
-            <ListSearchForm onSubmit={handleSubmit} />
+            <ListSearchForm data={[{ label: "x" }]} />
             <BasicTable headerOptions={fields} rowData={data || []} />
         </DefaultPage>
     );
