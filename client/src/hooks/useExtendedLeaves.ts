@@ -5,15 +5,14 @@ import {
     AppDispatch,
     getLeaves,
     deleteLeave,
-    setEmployee,
     StatusUnion,
     getEmployeesByIds,
 } from "../store";
 import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
-import usePageAndRows from "./usePageAndRows";
 import useAuth from "./useAuth";
 import _ from "lodash";
+import usePageAndRows from "./usePageAndRows";
 
 const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -27,42 +26,24 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const leavesData = useSelector((state: RootState) => state.leave);
     const employeesData = useSelector((state: RootState) => state.employee);
 
-    const leavesOptions = {
-        // fields: '',
-        page,
-        pageSize: rowsPerPage,
-        status,
-    };
-
-    const handleDelete = (id: string) => {
-        dispatch(deleteLeave(id))
-            .unwrap()
-            .then(() => handleOpen("Leave Removed Successfully"))
-            .catch((err) => handleOpen(err.message, "error"));
-    };
-
-    const hasAccess =
-        user?.roles.includes("admin") || user?.roles.includes("hod");
-
     useEffect(() => {
-        if (leavesData.data.length === 0 && hasAccess) {
-            doFetchLeaves(leavesOptions);
-        } else if (!leavesOptions.status && !leavesData.fullData && hasAccess) {
-            doFetchLeaves(leavesOptions);
-        } else if (employeesData.data.length === 0 && hasAccess) {
-            fetchEmployeesById();
-        } else if (
-            (leavesData.data.length === 0 ||
-                !leavesOptions.status ||
-                !leavesData.fullData) &&
-            !hasAccess
-        ) {
-            doFetchLeaves({ ...leavesData, userId: user!._id });
-            if (user) {
-                dispatch(setEmployee(user));
+        if (user) {
+            const leavesOptions = { page, pageSize: rowsPerPage, status };
+
+            if (
+                leavesData.data.length === 0 ||
+                (!status && !leavesData.fullData)
+            ) {
+                doFetchLeaves(leavesOptions);
+            } else if (leavesData.data.length < page * rowsPerPage) {
+                doFetchLeaves(leavesOptions);
+            }
+
+            if (employeesData.data.length === 0) {
+                fetchEmployeesById();
             }
         }
-    }, [leavesData.data.length, leavesData.fullData, page, rowsPerPage]);
+    }, [user, leavesData.fullData, status, page, rowsPerPage]);
 
     const fetchEmployeesById = async () => {
         const leaveUsersIds = leavesData.data.map((e) => e._user);
@@ -74,31 +55,27 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
                 "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
         };
 
-        if (leaveUsersIds) {
+        if (leaveUsersIds.length > 0) {
             doFetchEmployee(employeesOptions);
         }
     };
 
+    const handleDelete = (id: string) => {
+        dispatch(deleteLeave(id))
+            .unwrap()
+            .then(() => handleOpen("Leave Removed Successfully"))
+            .catch((err) => handleOpen(err.message, "error"));
+    };
+
     const extendedLeaves = useMemo(() => {
+        let filteredLeaves = leavesData.data;
         if (status) {
-            return leavesData.data
-                .filter(
-                    (row) =>
-                        row.hodStatus === status || row.adminStatus === status
-                )
-                .map((row) => {
-                    const userData =
-                        employeesData.data.find((e) => e._id === row._user) ||
-                        null;
-                    return {
-                        ...row,
-                        userData,
-                        isLoading: leavesData.isLoading,
-                        handleDelete: () => handleDelete(row._id!),
-                    };
-                });
+            filteredLeaves = filteredLeaves.filter(
+                (row) => row.hodStatus === status || row.adminStatus === status
+            );
         }
-        return leavesData.data.map((row) => {
+
+        return filteredLeaves.map((row) => {
             const userData =
                 employeesData.data.find((e) => e._id === row._user) || null;
             return {
@@ -110,9 +87,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         });
     }, [leavesData.data, employeesData.data, status]);
 
-    return leavesData.data.length === 0 || employeesData.data.length === 0
-        ? null
-        : extendedLeaves;
+    return extendedLeaves;
 };
 
 export default useExtendedLeaves;
