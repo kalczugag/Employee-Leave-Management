@@ -27,6 +27,7 @@ export const getAllLeaves = async (
             userId,
         }: PaginationProps = req.query;
         let selectQuery = "";
+        console.log(status, userId);
 
         if (req.query.fields) {
             const requestedFields = req.query.fields.toString();

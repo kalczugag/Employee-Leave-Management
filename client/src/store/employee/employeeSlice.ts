@@ -29,12 +29,13 @@ const employeeSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getEmployees.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    isLoading: false,
-                    data: action.payload.data,
-                    fulldata: action.payload.fullData,
-                };
+                state.isLoading = false;
+                if (state.data.length === 0) {
+                    state.data = action.payload.data;
+                } else {
+                    state.data.push(...action.payload.data);
+                }
+                state.fulldata = action.payload.fullData;
             })
             .addCase(getEmployees.rejected, (state, action) => {
                 state.isLoading = false;
@@ -60,12 +61,13 @@ const employeeSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getEmployeesByIds.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    isLoading: false,
-                    data: action.payload.data,
-                    fullData: action.payload.selectQuery,
-                };
+                state.isLoading = false;
+                if (state.data.length === 0) {
+                    state.data = action.payload.data;
+                } else {
+                    state.data.push(...action.payload.data);
+                }
+                state.fulldata = action.payload.selectQuery;
             })
             .addCase(getEmployeesByIds.rejected, (state, action) => {
                 state.isLoading = false;

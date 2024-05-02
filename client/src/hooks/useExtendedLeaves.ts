@@ -14,6 +14,7 @@ import useAuth from "./useAuth";
 import _ from "lodash";
 import usePageAndRows from "./usePageAndRows";
 
+//incomplete employees array when switching from employees page to leaves
 const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
@@ -30,16 +31,19 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         if (user) {
             const leavesOptions = { page, pageSize: rowsPerPage, status };
 
-            if (
-                leavesData.data.length === 0 ||
-                (!status && !leavesData.fullData)
-            ) {
+            if (leavesData.data.length === 0 || !leavesData.fullData) {
                 doFetchLeaves(leavesOptions);
-            } else if (leavesData.data.length < page * rowsPerPage) {
-                doFetchLeaves(leavesOptions);
+            } else if (status) {
+                const filteredLeaves = leavesData.data.filter(
+                    (row) =>
+                        row.hodStatus === status || row.adminStatus === status
+                );
+                if (filteredLeaves.length < page * rowsPerPage) {
+                    doFetchLeaves(leavesOptions);
+                }
             }
 
-            if (employeesData.data.length === 0) {
+            if (employeesData.data.length === 0 || !employeesData.fulldata) {
                 fetchEmployeesById();
             }
         }
@@ -49,13 +53,19 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         const leaveUsersIds = leavesData.data.map((e) => e._user);
         const uniqueIds = _.uniqBy(leaveUsersIds, (e) => e);
 
-        const employeesOptions = {
-            ids: uniqueIds,
-            selectQuery:
-                "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
-        };
+        const newIdsToFetch = uniqueIds.filter(
+            (id) => !employeesData.data.some((employee) => employee._id === id)
+        );
 
-        if (leaveUsersIds.length > 0) {
+        console.log(newIdsToFetch);
+
+        if (newIdsToFetch && newIdsToFetch.length > 0) {
+            const employeesOptions = {
+                ids: newIdsToFetch!,
+                selectQuery:
+                    "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
+            };
+
             doFetchEmployee(employeesOptions);
         }
     };
