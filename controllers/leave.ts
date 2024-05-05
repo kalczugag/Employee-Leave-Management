@@ -13,6 +13,7 @@ interface PaginationProps {
     pageSize?: number;
     status?: "pending" | "approved" | "rejected";
     userId?: string;
+    stats?: boolean;
 }
 
 export const getAllLeaves = async (
@@ -25,9 +26,9 @@ export const getAllLeaves = async (
             pageSize = 5,
             status,
             userId,
+            stats,
         }: PaginationProps = req.query;
         let selectQuery = "";
-        console.log(status, userId);
 
         if (req.query.fields) {
             const requestedFields = req.query.fields.toString();
@@ -57,7 +58,34 @@ export const getAllLeaves = async (
 
         const leaves = await leavesQuery.exec();
 
-        return res.status(200).json(leaves);
+        if (!leaves) {
+            res.sendStatus(400);
+        }
+
+        const stat = {
+            total: 0,
+            rejected: 0,
+            approved: 0,
+            pending: 0,
+        };
+
+        leaves.forEach((e) => {
+            stat.total++;
+            if (e.hodStatus === "approved" || e.adminStatus === "approved") {
+                stat.approved++;
+            } else if (
+                e.hodStatus === "pending" ||
+                e.adminStatus === "pending"
+            ) {
+                stat.pending++;
+            } else {
+                stat.rejected++;
+            }
+        });
+
+        const extendedLeaves = Object.assign({}, leaves[0].toObject(), stat);
+
+        return res.status(200).json(extendedLeaves);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
