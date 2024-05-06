@@ -149,6 +149,7 @@ export const getLeaves = createAsyncThunk(
                 page: options?.page,
                 pageSize: options?.pageSize,
                 status: options?.status,
+                stats: options?.stats,
             },
         });
 

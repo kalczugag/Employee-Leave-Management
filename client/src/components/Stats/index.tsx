@@ -20,43 +20,7 @@ const Stats = () => {
 
     const [doFetchLeaves] = useThunk(getLeaves);
 
-    const leavesOptions = {
-        selectQuery:
-            "_id,createdAt,_user,leaveType,totalDay,startDate,endDate,updatedAt,__v",
-    };
-
-    const sortLeaves = () => {
-        let total = 0,
-            rejected = 0,
-            approved = 0,
-            pending = 0;
-
-        if (data.length > 0) {
-            data.map((val) => {
-                total++;
-                if (
-                    val.hodStatus === "approved" ||
-                    val.adminStatus === "approved"
-                ) {
-                    return approved++;
-                } else if (
-                    val.hodStatus === "pending" ||
-                    val.adminStatus === "pending"
-                ) {
-                    return pending++;
-                } else {
-                    return rejected++;
-                }
-            });
-        }
-
-        return {
-            total,
-            rejected,
-            approved,
-            pending,
-        };
-    };
+    const options = { stats: true };
 
     useEffect(() => {
         if (
@@ -64,13 +28,16 @@ const Stats = () => {
             user?.roles !== "staff" &&
             !isLoading
         ) {
-            doFetchLeaves(leavesOptions);
+            doFetchLeaves(options);
         } else if (user && user?.roles === "staff") {
-            doFetchLeaves({ ...leavesOptions, userId: user._id });
+            doFetchLeaves({ options, userId: user._id });
         }
     }, []);
 
-    const { total, pending, approved, rejected } = sortLeaves();
+    const total = 0,
+        pending = 0,
+        rejected = 0,
+        approved = 0;
 
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">

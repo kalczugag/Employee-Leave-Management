@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _ from "lodash";
 import {
     RootState,
     AppDispatch,
@@ -11,7 +12,6 @@ import {
 import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
 import useAuth from "./useAuth";
-import _ from "lodash";
 import usePageAndRows from "./usePageAndRows";
 
 //incomplete employees array when switching from employees page to leaves
@@ -50,24 +50,26 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     }, [user, leavesData.fullData, status, page, rowsPerPage]);
 
     const fetchEmployeesById = async () => {
-        const leaveUsersIds = leavesData.data.map((e) => e._user);
-        const uniqueIds = _.uniqBy(leaveUsersIds, (e) => e);
+        _.chain(leavesData.data)
+            .map("_user")
+            .uniq()
+            .reject((id) =>
+                employeesData.data.some((employee) => employee._id === id)
+            )
+            .tap((newIdsToFetch) => {
+                console.log(newIdsToFetch);
 
-        const newIdsToFetch = uniqueIds.filter(
-            (id) => !employeesData.data.some((employee) => employee._id === id)
-        );
+                if (newIdsToFetch.length > 0) {
+                    const employeesOptions = {
+                        ids: newIdsToFetch,
+                        selectQuery:
+                            "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
+                    };
 
-        console.log(newIdsToFetch);
-
-        if (newIdsToFetch && newIdsToFetch.length > 0) {
-            const employeesOptions = {
-                ids: newIdsToFetch!,
-                selectQuery:
-                    "address,birthDate,createdAt,departmentId,gender,mobile,roles,updatedAt,__v",
-            };
-
-            doFetchEmployee(employeesOptions);
-        }
+                    doFetchEmployee(employeesOptions);
+                }
+            })
+            .value();
     };
 
     const handleDelete = (id: string) => {

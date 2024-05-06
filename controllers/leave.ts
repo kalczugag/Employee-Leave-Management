@@ -22,17 +22,17 @@ export const getAllLeaves = async (
 ) => {
     try {
         const {
-            page = 1,
+            page = 0,
             pageSize = 5,
             status,
             userId,
             stats,
         }: PaginationProps = req.query;
+
         let selectQuery = "";
 
         if (req.query.fields) {
             const requestedFields = req.query.fields.toString();
-
             selectQuery = requestedFields
                 .split(",")
                 .map((field) => `-${field.trim()}`)
@@ -48,48 +48,70 @@ export const getAllLeaves = async (
             leavesQuery = leavesQuery.where("_user").equals(userId);
         }
 
-        if (status === "pending") {
-            leavesQuery = leavesQuery.where("hodStatus").equals("pending");
-        } else if (status === "approved") {
-            leavesQuery = leavesQuery.where("hodStatus").equals("approved");
-        } else if (status === "rejected") {
-            leavesQuery = leavesQuery.where("hodStatus").equals("rejected");
+        if (status) {
+            const statusQuery = getStatusQuery(status);
+            if (statusQuery) {
+                leavesQuery = leavesQuery
+                    .where(statusQuery.field)
+                    .equals(statusQuery.value);
+            }
+        }
+
+        if (stats) {
+            leavesQuery = leavesQuery.select(
+                "_id,createdAt,_user,leaveType,totalDay,startDate,endDate,updatedAt,__v"
+            );
         }
 
         const leaves = await leavesQuery.exec();
 
-        if (!leaves) {
-            res.sendStatus(400);
+        if (!leaves || leaves.length === 0) {
+            return res.sendStatus(403);
         }
 
-        const stat = {
-            total: 0,
-            rejected: 0,
-            approved: 0,
-            pending: 0,
-        };
+        let response;
 
-        leaves.forEach((e) => {
-            stat.total++;
-            if (e.hodStatus === "approved" || e.adminStatus === "approved") {
-                stat.approved++;
-            } else if (
-                e.hodStatus === "pending" ||
-                e.adminStatus === "pending"
-            ) {
-                stat.pending++;
-            } else {
-                stat.rejected++;
-            }
-        });
+        if (stats) {
+            const stat = generateStats(leaves);
+            response = { ...stat };
+        } else {
+            response = leaves;
+        }
 
-        const extendedLeaves = Object.assign({}, leaves[0].toObject(), stat);
-
-        return res.status(200).json(extendedLeaves);
+        return res.status(200).json(response);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
     }
+};
+
+const getStatusQuery = (status: string) => {
+    switch (status) {
+        case "pending":
+            return { field: "hodStatus", value: "pending" };
+        case "approved":
+            return { field: "hodStatus", value: "approved" };
+        case "rejected":
+            return { field: "hodStatus", value: "rejected" };
+        default:
+            return null;
+    }
+};
+
+const generateStats = (leaves: any[]) => {
+    const stat = {
+        total: leaves.length,
+        rejected: leaves.filter((leaf) => leaf.hodStatus === "rejected").length,
+        approved: leaves.filter(
+            (leaf) =>
+                leaf.hodStatus === "approved" || leaf.adminStatus === "approved"
+        ).length,
+        pending: leaves.filter(
+            (leaf) =>
+                leaf.hodStatus === "pending" || leaf.adminStatus === "pending"
+        ).length,
+    };
+    return stat;
 };
 
 export const getLeave = async (req: express.Request, res: express.Response) => {
@@ -99,6 +121,38 @@ export const getLeave = async (req: express.Request, res: express.Response) => {
         const leaves = await getLeaveById(id);
 
         return res.status(200).json(leaves);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+
+export const getLeaveStats = async (
+    req: express.Request,
+    res: express.Response
+) => {
+    try {
+        const { userId } = req.query;
+
+        const selectQuery =
+            "_id,createdAt,_user,leaveType,totalDay,startDate,endDate,updatedAt";
+
+        const stats = {
+            total: 0,
+            rejected: 0,
+            approved: 0,
+            pending: 0,
+        };
+
+        let leavesQuery = getLeaves().select(selectQuery);
+
+        if (userId) {
+            leavesQuery = leavesQuery.where("_user").equals(userId);
+        }
+
+        const stat = await leavesQuery.exec();
+
+        return res.status(200).json(stat);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

@@ -3,6 +3,8 @@ import axios from "axios";
 
 interface EmployeeState {
     data: user[];
+    totalPages: number;
+    totalUsersCount: number;
     isLoading: boolean;
     error: any;
     fulldata: boolean;
@@ -10,6 +12,8 @@ interface EmployeeState {
 
 const initialState: EmployeeState = {
     data: [],
+    totalPages: 0,
+    totalUsersCount: 0,
     isLoading: false,
     error: null,
     fulldata: false,
@@ -31,9 +35,9 @@ const employeeSlice = createSlice({
             .addCase(getEmployees.fulfilled, (state, action) => {
                 state.isLoading = false;
                 if (state.data.length === 0) {
-                    state.data = action.payload.data;
+                    state.data = action.payload.data.users;
                 } else {
-                    state.data.push(...action.payload.data);
+                    state.data.push(...action.payload.data.users);
                 }
                 state.fulldata = action.payload.fullData;
             })

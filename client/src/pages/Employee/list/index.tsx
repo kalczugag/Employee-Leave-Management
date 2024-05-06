@@ -60,9 +60,7 @@ const EmployeeList = () => {
         <DefaultPage label="Employee List" bg>
             <ActionButtons
                 label="Add Employee"
-                extended={
-                    user?.roles.includes("hod") || user?.roles.includes("admin")
-                }
+                extended={user?.roles !== "staff"}
             />
             <BasicTable headerOptions={fields} rowData={employeeData} />
         </DefaultPage>

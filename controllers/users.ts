@@ -25,7 +25,7 @@ export const getAllUsers = async (
 
         let usersQuery = getUsers()
             .skip((page - 1) * pageSize)
-            .limit(pageSize);
+            .limit(pageSize + 1);
 
         if (byRole) {
             const roles = byRole.split(",");
@@ -34,7 +34,28 @@ export const getAllUsers = async (
 
         const users = await usersQuery.exec();
 
-        return res.status(200).json(users);
+        let hasMore = false;
+        if (users.length > pageSize) {
+            hasMore = true;
+            users.pop();
+        }
+
+        const totalUsersCount = await getUsers().countDocuments();
+
+        let totalPages = Math.ceil(users.length / pageSize);
+        if (hasMore) {
+            totalPages++;
+        }
+
+        while (users.length < pageSize) {
+            const additionalUsers = await getUsers()
+                .skip(users.length)
+                .limit(pageSize - users.length)
+                .exec();
+            users.push(...additionalUsers);
+        }
+
+        return res.status(200).json({ users, totalPages, totalUsersCount });
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
