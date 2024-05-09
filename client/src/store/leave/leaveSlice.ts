@@ -6,6 +6,7 @@ interface LeaveState {
     isLoading: boolean;
     error: any;
     fullData: boolean;
+    stats: Stats;
     page: number;
     rowsPerPage: number;
 }
@@ -14,15 +15,21 @@ export interface StatusUnion {
     status?: "pending" | "approved" | "rejected";
 }
 
-export interface LeaveProps {
+interface Stats {
+    total: number;
+    rejected: number;
+    approved: number;
+    pending: number;
+}
+
+export interface LeaveProps extends Stats {
     _id?: string;
     _user?: string;
     leaveType: string;
     totalDay: number;
     startDate: string;
     endDate: string;
-    hodStatus?: StatusUnion["status"];
-    adminStatus?: StatusUnion["status"];
+    status?: StatusUnion["status"];
 }
 
 const initialState: LeaveState = {
@@ -30,6 +37,7 @@ const initialState: LeaveState = {
     isLoading: false,
     error: null,
     fullData: false,
+    stats: { total: 0, rejected: 0, approved: 0, pending: 0 },
     page: 0,
     rowsPerPage: 5,
 };
@@ -56,6 +64,7 @@ const leaveSlice = createSlice({
                     isLoading: false,
                     data: action.payload.data,
                     fullData: action.payload.selectQuery,
+                    stats: action.payload.stats,
                 };
             })
             .addCase(getLeaves.rejected, (state, action) => {
@@ -110,8 +119,7 @@ const leaveSlice = createSlice({
                             totalDay: editedLeave?.totalDay,
                             startDate: editedLeave?.startDate,
                             endDate: editedLeave?.endDate,
-                            hodStatus: editedLeave?.hodStatus,
-                            adminStatus: editedLeave?.adminStatus,
+                            status: editedLeave?.status,
                         };
                     }
                 }
@@ -153,11 +161,22 @@ export const getLeaves = createAsyncThunk(
             },
         });
 
+        if (options?.stats) {
+            return {
+                stats: response.data,
+                selectQuery: options?.selectQuery
+                    ? false
+                    : options?.status !== undefined
+                    ? false
+                    : true,
+            };
+        }
+
         return {
             data: response.data,
-            selectQuery: options.selectQuery
+            selectQuery: options?.selectQuery
                 ? false
-                : options.status !== undefined
+                : options?.status !== undefined
                 ? false
                 : true,
         };

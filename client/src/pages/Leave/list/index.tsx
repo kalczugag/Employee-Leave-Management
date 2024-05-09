@@ -52,10 +52,11 @@ const LeaveList = () => {
     }, [doFetchLeaves]);
 
     useEffect(() => {
-        if (leavesData.data) {
+        if (leavesData.data.length > 0) {
+            console.log("first");
             fetchEmployeesById();
         }
-    }, [leavesData.data, fetchEmployeesById]);
+    }, [leavesData.data.length]);
 
     const handleDelete = (id: string) => {
         dispatch(deleteLeave(id))
@@ -71,7 +72,7 @@ const LeaveList = () => {
 
         return leavesData.data.map((row) => {
             const userData =
-                employeesData.data.find((e) => e._id === row._user) || null;
+                employeesData.data?.find((e) => e._id === row._user) || null;
             return {
                 ...row,
                 userData,

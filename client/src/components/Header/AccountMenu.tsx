@@ -14,7 +14,7 @@ import {
     IconButton,
     Tooltip,
 } from "@mui/material";
-import { PersonAdd, Settings, Logout } from "@mui/icons-material";
+import { Settings, Logout } from "@mui/icons-material";
 import ToolsMenu from "./ToolsMenu";
 
 const AccountMenu = () => {

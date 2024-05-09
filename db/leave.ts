@@ -7,8 +7,7 @@ const LeaveSchema = new mongoose.Schema(
         totalDay: { type: Number, required: true },
         startDate: { type: String, required: true },
         endDate: { type: String, required: true },
-        hodStatus: { type: String, required: false, default: "pending" },
-        adminStatus: { type: String, required: false, default: "pending" },
+        status: { type: String, required: false, default: "pending" },
     },
     {
         timestamps: true,

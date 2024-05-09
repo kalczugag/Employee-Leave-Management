@@ -35,8 +35,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
                 doFetchLeaves(leavesOptions);
             } else if (status) {
                 const filteredLeaves = leavesData.data.filter(
-                    (row) =>
-                        row.hodStatus === status || row.adminStatus === status
+                    (row) => row.status === status
                 );
                 if (filteredLeaves.length < page * rowsPerPage) {
                     doFetchLeaves(leavesOptions);
@@ -83,7 +82,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         let filteredLeaves = leavesData.data;
         if (status) {
             filteredLeaves = filteredLeaves.filter(
-                (row) => row.hodStatus === status || row.adminStatus === status
+                (row) => row.status === status
             );
         }
 

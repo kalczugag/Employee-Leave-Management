@@ -37,6 +37,7 @@ export const getAllLeaves = async (
                 .split(",")
                 .map((field) => `-${field.trim()}`)
                 .join(" ");
+            console.log(selectQuery);
         }
 
         let leavesQuery = getLeaves()
@@ -59,7 +60,7 @@ export const getAllLeaves = async (
 
         if (stats) {
             leavesQuery = leavesQuery.select(
-                "_id,createdAt,_user,leaveType,totalDay,startDate,endDate,updatedAt,__v"
+                "-_id -createdAt -_user -leaveType -totalDay -startDate -endDate -updatedAt"
             );
         }
 
@@ -88,11 +89,11 @@ export const getAllLeaves = async (
 const getStatusQuery = (status: string) => {
     switch (status) {
         case "pending":
-            return { field: "hodStatus", value: "pending" };
+            return { field: "status", value: "pending" };
         case "approved":
-            return { field: "hodStatus", value: "approved" };
+            return { field: "status", value: "approved" };
         case "rejected":
-            return { field: "hodStatus", value: "rejected" };
+            return { field: "status", value: "rejected" };
         default:
             return null;
     }
@@ -101,15 +102,9 @@ const getStatusQuery = (status: string) => {
 const generateStats = (leaves: any[]) => {
     const stat = {
         total: leaves.length,
-        rejected: leaves.filter((leaf) => leaf.hodStatus === "rejected").length,
-        approved: leaves.filter(
-            (leaf) =>
-                leaf.hodStatus === "approved" || leaf.adminStatus === "approved"
-        ).length,
-        pending: leaves.filter(
-            (leaf) =>
-                leaf.hodStatus === "pending" || leaf.adminStatus === "pending"
-        ).length,
+        rejected: leaves.filter((leaf) => leaf.status === "rejected").length,
+        approved: leaves.filter((leaf) => leaf.status === "approved").length,
+        pending: leaves.filter((leaf) => leaf.status === "pending").length,
     };
     return stat;
 };
@@ -127,48 +122,9 @@ export const getLeave = async (req: express.Request, res: express.Response) => {
     }
 };
 
-export const getLeaveStats = async (
-    req: express.Request,
-    res: express.Response
-) => {
-    try {
-        const { userId } = req.query;
-
-        const selectQuery =
-            "_id,createdAt,_user,leaveType,totalDay,startDate,endDate,updatedAt";
-
-        const stats = {
-            total: 0,
-            rejected: 0,
-            approved: 0,
-            pending: 0,
-        };
-
-        let leavesQuery = getLeaves().select(selectQuery);
-
-        if (userId) {
-            leavesQuery = leavesQuery.where("_user").equals(userId);
-        }
-
-        const stat = await leavesQuery.exec();
-
-        return res.status(200).json(stat);
-    } catch (error) {
-        console.log(error);
-        return res.sendStatus(400);
-    }
-};
-
 export const addLeave = async (req: express.Request, res: express.Response) => {
     try {
-        const {
-            leaveType,
-            totalDay,
-            startDate,
-            endDate,
-            hodStatus,
-            adminStatus,
-        } = req.body;
+        const { leaveType, totalDay, startDate, endDate, status } = req.body;
 
         if (!leaveType || !totalDay || !startDate || !endDate) {
             return res.sendStatus(400);
@@ -186,8 +142,7 @@ export const addLeave = async (req: express.Request, res: express.Response) => {
             totalDay,
             startDate,
             endDate,
-            hodStatus,
-            adminStatus,
+            status,
         });
 
         return res.status(200).json(leave);
@@ -219,14 +174,7 @@ export const updateLeave = async (
 ) => {
     try {
         const { id } = req.params;
-        const {
-            leaveType,
-            totalDay,
-            startDate,
-            endDate,
-            hodStatus,
-            adminStatus,
-        } = req.body;
+        const { leaveType, totalDay, startDate, endDate, status } = req.body;
 
         const leave = await getLeaveById(id);
 
@@ -238,9 +186,7 @@ export const updateLeave = async (
         leave!.set("totalDay", totalDay);
         leave!.set("startDate", startDate);
         leave!.set("endDate", endDate);
-        leave!.set("hodStatus", hodStatus);
-        leave!.set("hodStatus", hodStatus);
-        leave!.set("adminStatus", adminStatus);
+        leave!.set("status", status);
         await leave!.save();
 
         return res.status(200).json(leave).end();

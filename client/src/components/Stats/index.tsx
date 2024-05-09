@@ -14,13 +14,15 @@ import ChartView from "./ChartView";
 
 const Stats = () => {
     const { user } = useAuth();
-    const { data, isLoading, fullData } = useSelector(
+    const { data, isLoading, stats, fullData } = useSelector(
         (state: RootState) => state.leave
     );
 
     const [doFetchLeaves] = useThunk(getLeaves);
 
-    const options = { stats: true };
+    const options = {
+        stats: true,
+    };
 
     useEffect(() => {
         if (
@@ -34,42 +36,37 @@ const Stats = () => {
         }
     }, []);
 
-    const total = 0,
-        pending = 0,
-        rejected = 0,
-        approved = 0;
-
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
             {!user?.roles.includes("staff") ? (
                 <>
                     <StatsViewBox
                         icon={<ContentPasteOutlined />}
-                        amount={total}
+                        amount={stats.total}
                         label="Total Leave"
                         arrow={false}
                     />
                     <StatsViewBox
                         icon={<DisabledByDefaultOutlined />}
-                        amount={rejected}
+                        amount={stats.rejected}
                         label="Rejected Leave"
                         variant="rejected"
                     />
                     <StatsViewBox
                         icon={<ThumbUpOutlined />}
-                        amount={approved}
+                        amount={stats.approved}
                         label="Approved Leave"
                         variant="approved"
                     />
                     <StatsViewBox
                         icon={<HourglassEmptyOutlined />}
-                        amount={pending}
+                        amount={stats.pending}
                         label="Pending Leave"
                         variant="pending"
                     />
                 </>
             ) : (
-                <ChartView data={{ total, pending, approved, rejected }} />
+                <ChartView data={stats} />
             )}
         </div>
     );

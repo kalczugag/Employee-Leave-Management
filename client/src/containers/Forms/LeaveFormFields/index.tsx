@@ -56,12 +56,7 @@ const LeaveFormFields = ({ extended }: Props) => {
             {extended && (
                 <>
                     <FormRadio
-                        options={{ label: "Hod Status", name: "hodStatus" }}
-                        values={["pending", "approved", "rejected"]}
-                        disabled={isLoading}
-                    />
-                    <FormRadio
-                        options={{ label: "Admin Status", name: "adminStatus" }}
+                        options={{ label: "Status", name: "status" }}
                         values={["pending", "approved", "rejected"]}
                         disabled={isLoading}
                     />

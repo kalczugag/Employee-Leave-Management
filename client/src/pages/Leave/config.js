@@ -35,36 +35,19 @@ export const fields = [
         render: (row) => row.totalDay || "-",
     },
     {
-        label: "Hod Status",
+        label: "Status",
         render: (row) =>
             (
                 <span
                     className={`border-b-2 ${
-                        row.hodStatus === "pending"
+                        row.status === "pending"
                             ? "border-[#ff9800]"
                             : row.hodStatus === "approved"
                             ? "border-[#4caf50]"
                             : "border-[#f44336]"
                     }`}
                 >
-                    {row.hodStatus}
-                </span>
-            ) || "-",
-    },
-    {
-        label: "Admin Status",
-        render: (row) =>
-            (
-                <span
-                    className={`border-b-2 ${
-                        row.adminStatus === "pending"
-                            ? "border-[#ff9800]"
-                            : row.adminStatus === "approved"
-                            ? "border-[#4caf50]"
-                            : "border-[#f44336]"
-                    }`}
-                >
-                    {row.adminStatus}
+                    {row.status}
                 </span>
             ) || "-",
     },
