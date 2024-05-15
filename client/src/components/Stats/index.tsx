@@ -25,42 +25,40 @@ const Stats = () => {
     };
 
     useEffect(() => {
-        if (
-            (data.length === 0 || !fullData) &&
-            user?.roles !== "staff" &&
-            !isLoading
-        ) {
-            doFetchLeaves(options);
-        } else if (user && user?.roles === "staff") {
-            doFetchLeaves({ options, userId: user._id });
+        if (stats?.total === 0) {
+            if (user?.roles !== "staff") {
+                doFetchLeaves(options);
+            } else if (user?.roles === "staff") {
+                doFetchLeaves({ options, userId: user._id });
+            }
         }
     }, []);
 
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
-            {!user?.roles.includes("staff") ? (
+            {user?.roles !== "staff" ? (
                 <>
                     <StatsViewBox
                         icon={<ContentPasteOutlined />}
-                        amount={stats.total}
+                        amount={stats?.total}
                         label="Total Leave"
                         arrow={false}
                     />
                     <StatsViewBox
                         icon={<DisabledByDefaultOutlined />}
-                        amount={stats.rejected}
+                        amount={stats?.rejected}
                         label="Rejected Leave"
                         variant="rejected"
                     />
                     <StatsViewBox
                         icon={<ThumbUpOutlined />}
-                        amount={stats.approved}
+                        amount={stats?.approved}
                         label="Approved Leave"
                         variant="approved"
                     />
                     <StatsViewBox
                         icon={<HourglassEmptyOutlined />}
-                        amount={stats.pending}
+                        amount={stats?.pending}
                         label="Pending Leave"
                         variant="pending"
                     />

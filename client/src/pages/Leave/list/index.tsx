@@ -25,6 +25,11 @@ const LeaveList = () => {
     const leavesData = useSelector((state: RootState) => state.leave);
     const employeesData = useSelector((state: RootState) => state.employee);
 
+    const fetchLeaves = () => {
+        doFetchLeaves();
+        doFetchLeaves({ stats: true });
+    };
+
     const fetchEmployeesById = useCallback(() => {
         const newIdsToFetch = _.chain(leavesData.data)
             .map("_user")
@@ -46,17 +51,9 @@ const LeaveList = () => {
     }, [leavesData.data, employeesData.data, doFetchEmployee]);
 
     useEffect(() => {
-        if (!leavesData.fullData) {
-            doFetchLeaves();
-        }
-    }, [doFetchLeaves]);
-
-    useEffect(() => {
-        if (leavesData.data.length > 0) {
-            console.log("first");
-            fetchEmployeesById();
-        }
-    }, [leavesData.data.length]);
+        fetchLeaves();
+        fetchEmployeesById();
+    }, []);
 
     const handleDelete = (id: string) => {
         dispatch(deleteLeave(id))

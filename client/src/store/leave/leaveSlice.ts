@@ -161,6 +161,8 @@ export const getLeaves = createAsyncThunk(
             },
         });
 
+        console.log(response.data);
+
         if (options?.stats) {
             return {
                 stats: response.data,

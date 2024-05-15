@@ -10,7 +10,7 @@ interface Props {
 
 const StatsViewBox = ({
     icon,
-    amount,
+    amount = 0,
     label,
     arrow = true,
     variant = "pending",
