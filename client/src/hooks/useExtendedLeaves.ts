@@ -24,8 +24,9 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const [doFetchLeaves] = useThunk(getLeaves);
     const [doFetchEmployee] = useThunk(getEmployeesByIds);
 
-    const leavesData = useSelector((state: RootState) => state.leave);
-    const employeesData = useSelector((state: RootState) => state.employee);
+    const leavesData = useSelector((state: RootState) => state.leave) || [];
+    const employeesData =
+        useSelector((state: RootState) => state.employee) || [];
 
     useEffect(() => {
         if (user) {
@@ -48,7 +49,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         }
     }, [user, leavesData.fullData, status, page, rowsPerPage]);
 
-    const fetchEmployeesById = async () => {
+    const fetchEmployeesById = () => {
         _.chain(leavesData.data)
             .map("_user")
             .uniq()
@@ -79,7 +80,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     };
 
     const extendedLeaves = useMemo(() => {
-        let filteredLeaves = leavesData.data;
+        let filteredLeaves = leavesData.data || [];
         if (status) {
             filteredLeaves = filteredLeaves.filter(
                 (row) => row.status === status

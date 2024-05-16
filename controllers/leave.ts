@@ -14,6 +14,7 @@ interface PaginationProps {
     status?: "pending" | "approved" | "rejected";
     userId?: string;
     stats?: boolean;
+    extended?: boolean;
 }
 
 export const getAllLeaves = async (
@@ -27,6 +28,7 @@ export const getAllLeaves = async (
             status,
             userId,
             stats,
+            extended,
         }: PaginationProps = req.query;
 
         let selectQuery = "";
