@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { userApi, useFetchUserQuery } from "./apis/userApi";
 import userReducer from "./user/userSlice";
 import sidebarReducer from "./sidebar/sidebarSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
@@ -10,7 +12,8 @@ import editorReducer from "./editor/editorSlice";
 
 export const store = configureStore({
     reducer: {
-        user: userReducer,
+        [userApi.reducerPath]: userApi.reducer,
+        // user: userReducer,
         sidebar: sidebarReducer,
         snackbar: snackbarReducer,
         department: departmentReducer,
@@ -22,8 +25,10 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }),
+        }).concat(userApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
