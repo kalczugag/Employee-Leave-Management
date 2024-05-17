@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Field, Form } from "react-final-form";
-import { AppDispatch, login } from "../store";
+import { useLoginMutation } from "../store";
 import useAuth from "../hooks/useAuth";
 import useSnackbar from "../hooks/useSnackbar";
 import {
@@ -18,8 +18,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const LoginWindow = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const { isLoading } = useAuth();
+    const [login, result] = useLoginMutation();
     const { handleOpen } = useSnackbar();
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -33,11 +32,7 @@ const LoginWindow = () => {
     };
 
     const onSubmit = (values: { email: string; password: string }) => {
-        dispatch(login(values))
-            .unwrap()
-            .catch((err) => {
-                handleOpen("Invalid Credentials", "error");
-            });
+        login(values);
     };
 
     return (
@@ -58,7 +53,7 @@ const LoginWindow = () => {
                                     value={input.value}
                                     onChange={input.onChange}
                                     sx={{ width: "320px" }}
-                                    disabled={isLoading}
+                                    disabled={result.isLoading}
                                     fullWidth
                                     required
                                 />
@@ -108,7 +103,7 @@ const LoginWindow = () => {
                                         }
                                         label="Password"
                                         sx={{ width: "320px" }}
-                                        disabled={isLoading}
+                                        disabled={result.isLoading}
                                         fullWidth
                                         required
                                     />
@@ -120,7 +115,7 @@ const LoginWindow = () => {
                         type="submit"
                         sx={{ bgcolor: "#3B82F6" }}
                         variant="contained"
-                        disabled={isLoading}
+                        disabled={result.isLoading}
                     >
                         Log In
                     </Button>

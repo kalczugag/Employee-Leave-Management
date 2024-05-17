@@ -25,16 +25,19 @@ import NotFound from "./pages/404";
 import SnackbarMsg from "./components/SnackbarMsg";
 import Test from "./pages/test";
 import useAuth from "./hooks/useAuth";
+import { useFetchUserQuery } from "./store";
 
 const App = () => {
+    useFetchUserQuery();
+
     const { handleOpen } = useSnackbar();
     const { isAuthenticated } = useAuth();
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            handleOpen("Successful logged in", "success");
-        }
-    }, [isAuthenticated]);
+    // useEffect(() => {
+    //     if (isAuthenticated) {
+    //         handleOpen("Successful logged in", "success");
+    //     }
+    // }, [isAuthenticated]);
 
     return (
         <>

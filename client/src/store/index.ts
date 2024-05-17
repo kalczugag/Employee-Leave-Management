@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { userApi, useFetchUserQuery } from "./apis/userApi";
-import userReducer from "./user/userSlice";
+import { userApi } from "./apis/userApi";
 import sidebarReducer from "./sidebar/sidebarSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
 import departmentReducer from "./department/departmentSlice";
@@ -13,7 +12,6 @@ import editorReducer from "./editor/editorSlice";
 export const store = configureStore({
     reducer: {
         [userApi.reducerPath]: userApi.reducer,
-        // user: userReducer,
         sidebar: sidebarReducer,
         snackbar: snackbarReducer,
         department: departmentReducer,
@@ -41,3 +39,8 @@ export * from "./leaveType/leaveTypeSlice";
 export * from "./leave/leaveSlice";
 export * from "./employee/employeeSlice";
 export * from "./editor/editorSlice";
+export {
+    useFetchUserQuery,
+    useLoginMutation,
+    useRegisterMutation,
+} from "./apis/userApi";

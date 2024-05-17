@@ -7,7 +7,7 @@ const userApi = createApi({
     }),
     endpoints(builder) {
         return {
-            fetchUser: builder.query({
+            fetchUser: builder.query<user, void>({
                 query: () => {
                     return {
                         url: "/auth/current_user",
@@ -15,9 +15,28 @@ const userApi = createApi({
                     };
                 },
             }),
+            login: builder.mutation({
+                query: (args: { email: string; password: string }) => {
+                    return {
+                        url: "/auth/login",
+                        method: "POST",
+                        body: args,
+                    };
+                },
+            }),
+            register: builder.mutation({
+                query: (args: user) => {
+                    return {
+                        url: "/auth/register",
+                        method: "POST",
+                        body: args,
+                    };
+                },
+            }),
         };
     },
 });
 
-export const { useFetchUserQuery } = userApi;
+export const { useFetchUserQuery, useLoginMutation, useRegisterMutation } =
+    userApi;
 export { userApi };

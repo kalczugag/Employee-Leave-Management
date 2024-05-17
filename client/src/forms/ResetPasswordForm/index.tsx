@@ -9,7 +9,7 @@ const ResetPasswordForm = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
 
-    const page = useSelector((state: RootState) => state.user.resetPage);
+    // const page = useSelector((state: RootState) => state.user.resetPage);
 
     const onSubmit = (values: any) => {
         dispatch(resetPassword(values))
@@ -27,7 +27,7 @@ const ResetPasswordForm = () => {
                     onSubmit={handleSubmit}
                     className="flex flex-col items-center space-y-6 pb-12 py-2 px-8"
                 >
-                    {page === 0 ? (
+                    {0 === 0 ? (
                         <SearchAccountForm
                             emailValue={form.getState().values.email}
                         />

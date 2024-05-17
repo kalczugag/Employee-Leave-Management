@@ -18,8 +18,7 @@ const Layout = ({ children }: Props) => {
             state.department.isLoading ||
             state.leaveType.isLoading ||
             state.employee.isLoading ||
-            state.leave.isLoading ||
-            state.user.isLoading
+            state.leave.isLoading
         ) {
             return true;
         }
