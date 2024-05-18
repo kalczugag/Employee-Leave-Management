@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { userApi } from "./apis/userApi";
+import { departmentApi } from "./apis/departmentApi";
+import userReducer from "./user/userSlice";
 import sidebarReducer from "./sidebar/sidebarSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
-import departmentReducer from "./department/departmentSlice";
 import leaveTypeReducer from "./leaveType/leaveTypeSlice";
 import leaveReducer from "./leave/leaveSlice";
 import employeeSlice from "./employee/employeeSlice";
@@ -11,10 +12,11 @@ import editorReducer from "./editor/editorSlice";
 
 export const store = configureStore({
     reducer: {
-        [userApi.reducerPath]: userApi.reducer,
+        // [userApi.reducerPath]: userApi.reducer,
+        [departmentApi.reducerPath]: departmentApi.reducer,
+        user: userReducer,
         sidebar: sidebarReducer,
         snackbar: snackbarReducer,
-        department: departmentReducer,
         leaveType: leaveTypeReducer,
         leave: leaveReducer,
         employee: employeeSlice,
@@ -23,7 +25,8 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(userApi.middleware),
+        }),
+    // .concat(userApi.middleware),
 });
 
 setupListeners(store.dispatch);
@@ -44,3 +47,4 @@ export {
     useLoginMutation,
     useRegisterMutation,
 } from "./apis/userApi";
+export { useGetAllDepartmentsQuery } from "./apis/departmentApi";

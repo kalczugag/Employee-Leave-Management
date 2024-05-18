@@ -3,6 +3,9 @@
         "target": "ES6",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
+        "paths": {
+            "@typ/*": ["./src/types/*"]
+        },
         "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -16,5 +19,5 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": ["src"]
+    "include": ["src", "types"]
 }

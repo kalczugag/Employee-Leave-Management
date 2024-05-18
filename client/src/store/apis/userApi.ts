@@ -5,36 +5,28 @@ const userApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:3000/api",
     }),
-    endpoints(builder) {
-        return {
-            fetchUser: builder.query<user, void>({
-                query: () => {
-                    return {
-                        url: "/auth/current_user",
-                        method: "GET",
-                    };
-                },
+    endpoints: (builder) => ({
+        fetchUser: builder.query<user, void>({
+            query: () => ({
+                url: "/auth/current_user",
+                method: "GET",
             }),
-            login: builder.mutation({
-                query: (args: { email: string; password: string }) => {
-                    return {
-                        url: "/auth/login",
-                        method: "POST",
-                        body: args,
-                    };
-                },
+        }),
+        login: builder.mutation({
+            query: (args: { email: string; password: string }) => ({
+                url: "/auth/login",
+                method: "POST",
+                body: args,
             }),
-            register: builder.mutation({
-                query: (args: user) => {
-                    return {
-                        url: "/auth/register",
-                        method: "POST",
-                        body: args,
-                    };
-                },
+        }),
+        register: builder.mutation({
+            query: (args: user) => ({
+                url: "/auth/register",
+                method: "POST",
+                body: args,
             }),
-        };
-    },
+        }),
+    }),
 });
 
 export const { useFetchUserQuery, useLoginMutation, useRegisterMutation } =

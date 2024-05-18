@@ -15,10 +15,10 @@ const Layout = ({ children }: Props) => {
     const { pathname } = useLocation();
     const isLoading = useSelector((state: RootState) => {
         if (
-            state.department.isLoading ||
             state.leaveType.isLoading ||
             state.employee.isLoading ||
-            state.leave.isLoading
+            state.leave.isLoading ||
+            state.user.isLoading
         ) {
             return true;
         }

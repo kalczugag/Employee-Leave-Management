@@ -5,6 +5,7 @@ import {
     deleteDepartment,
     getDepartments,
     RootState,
+    useGetAllDepartmentsQuery,
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
@@ -19,15 +20,11 @@ const DepartmentList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const [doFetchDepartments, isFetching] = useThunk(getDepartments);
-
-    const { data, isLoading, fullData } = useSelector(
-        (state: RootState) => state.department
-    );
+    const { data, isLoading, error } = useGetAllDepartmentsQuery();
 
     const departmentdata = useMemo(
         () =>
-            data.map((row) => ({
+            data!.map((row) => ({
                 ...row,
                 isLoading,
                 userRole: user?.roles,
@@ -36,15 +33,7 @@ const DepartmentList = () => {
         [data]
     );
 
-    useEffect(() => {
-        if (departmentdata.length <= 1 && !isFetching) {
-            doFetchDepartments();
-        } else if (!fullData) {
-            doFetchDepartments();
-        }
-    }, []);
-
-    if (!departmentdata && isFetching) {
+    if (!departmentdata) {
         return null;
     }
 

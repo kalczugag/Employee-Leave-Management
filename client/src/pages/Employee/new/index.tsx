@@ -1,13 +1,10 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-    RootState,
     AppDispatch,
     addEmployee,
-    getDepartments,
+    useGetAllDepartmentsQuery,
 } from "../../../store";
-import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
@@ -20,24 +17,15 @@ const EmployeeNew = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const [doFetchDepartments, isFetchingDepartments] =
-        useThunk(getDepartments);
-
-    const departmentsData = useSelector(
-        (state: RootState) => state.department.data
+    const { data, isFetching } = useGetAllDepartmentsQuery(
+        "shortName,details,status,createdAt,updatedAt,active,__v"
     );
 
-    const departmentNames: string[] = departmentsData.map(
-        (department) => department.name
-    );
+    if (!data) {
+        return null;
+    }
 
-    useEffect(() => {
-        if (departmentsData.length === 0 && !isFetchingDepartments) {
-            doFetchDepartments(
-                "shortName,details,status,createdAt,updatedAt,active,__v"
-            );
-        }
-    }, []);
+    const departmentNames: string[] = data.map((department) => department.name);
 
     const handleSubmit = (values: user) => {
         dispatch(addEmployee(values))
@@ -48,17 +36,13 @@ const EmployeeNew = () => {
             .catch((err) => handleOpen(err.message, "error"));
     };
 
-    if (departmentsData.length === 0 && isFetchingDepartments) {
-        return null;
-    }
-
     return (
         <DefaultPage label="New Employee" bg>
             <FormView
                 onSubmit={handleSubmit}
                 initialValues={{ values: departmentNames }}
                 disabled={
-                    isFetchingDepartments ||
+                    isFetching ||
                     !user?.roles.includes("hod") ||
                     !user?.roles.includes("admin")
                 }
