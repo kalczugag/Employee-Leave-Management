@@ -29,15 +29,53 @@ const departmentApi = createApi({
                       }))
                     : [{ type: "Departments", id: "LIST" }],
         }),
+
+        getDepartment: builder.query<Department, string>({
+            query: (id) => ({
+                url: `/departments/${id}`,
+                method: "GET",
+            }),
+        }),
+
+        addDepartment: builder.mutation<Department, Department>({
+            query: (values) => ({
+                url: "/departments",
+                method: "POST",
+                body: values,
+            }),
+            invalidatesTags: (result, error, dep) => [
+                { type: "Departments", id: dep._id },
+            ],
+        }),
+
         editDepartment: builder.mutation<Department, Department>({
-            query: (values: Department) => ({
+            query: (values) => ({
                 url: `/departments/${values._id}`,
                 method: "PATCH",
                 body: values,
             }),
+            invalidatesTags: (result, error, dep) => [
+                { type: "Departments", id: dep._id },
+            ],
+        }),
+
+        deleteDepartment: builder.mutation<string, string>({
+            query: (id) => ({
+                url: `/departments/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (result, error, id) => [
+                { type: "Departments", id: id },
+            ],
         }),
     }),
 });
 
-export const { useGetAllDepartmentsQuery } = departmentApi;
+export const {
+    useGetAllDepartmentsQuery,
+    useGetDepartmentQuery,
+    useAddDepartmentMutation,
+    useDeleteDepartmentMutation,
+    useEditDepartmentMutation,
+} = departmentApi;
 export { departmentApi };

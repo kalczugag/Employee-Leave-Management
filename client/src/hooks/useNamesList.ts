@@ -1,26 +1,34 @@
 import { useSelector } from "react-redux";
-import { RootState, getDepartments, getLeaveTypes } from "../store";
-import useThunk from "./useThunk";
-import { useEffect } from "react";
+import { useGetAllDepartmentsQuery, RootState } from "../store";
 
-const useNamesList = (type: "department" | "leaveType") => {
-    const [doFetchOption, isFetchingList] = useThunk(
-        type === "department" ? getDepartments : getLeaveTypes
+const useNamesListDepartment = () => {
+    const { data } = useGetAllDepartmentsQuery(
+        "shortName,details,status,createdAt,updatedAt,__v"
     );
 
-    const data = useSelector((state: RootState) => state[type].data);
+    if (!data) {
+        return [];
+    }
 
     const namesList: string[] = data
         .map((e) => (e.name && e.active ? e.name : ""))
         .filter((n) => n !== "");
 
-    const selectQuery = "shortName,details,status,createdAt,updatedAt,__v";
-
-    useEffect(() => {
-        if (data.length === 0 && !isFetchingList) doFetchOption(selectQuery);
-    }, []);
-
-    return { namesList, isFetchingList };
+    return namesList;
 };
 
-export default useNamesList;
+const useNamesListLeaveType = () => {
+    const data = useSelector((state: RootState) => state.leaveType.data);
+
+    if (!data) {
+        return [];
+    }
+
+    const namesList: string[] = data
+        .map((e) => (e.name && e.active ? e.name : ""))
+        .filter((n) => n !== "");
+
+    return namesList;
+};
+
+export { useNamesListDepartment, useNamesListLeaveType };

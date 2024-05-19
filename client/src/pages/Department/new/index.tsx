@@ -1,26 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch, RootState, addDepartment } from "../../../store";
+import { useAddDepartmentMutation } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView, FormField, FormEditor } from "../../../forms/FormView";
+import type { Department } from "@typ/department";
 
 const DepartmentNew = () => {
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { isLoading } = useSelector((state: RootState) => state.department);
+    const [addDepartment, result] = useAddDepartmentMutation();
 
-    const handleSubmit = (values: any) => {
-        dispatch(addDepartment(values))
-            .then(() => {
-                navigate("../list");
-                handleOpen("Department Create Successful");
-            })
-            .catch((err) => handleOpen(err.message, "error"));
+    const handleSubmit = (values: Department) => {
+        addDepartment(values);
+        // dispatch(addDepartment(values))
+        //     .then(() => {
+        //         navigate("../list");
+        //         handleOpen("Department Create Successful");
+        //     })
+        //     .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (
@@ -28,7 +28,7 @@ const DepartmentNew = () => {
             <FormView
                 onSubmit={handleSubmit}
                 disabled={
-                    isLoading ||
+                    result.isLoading ||
                     !user?.roles.includes("hod") ||
                     !user?.roles.includes("admin")
                 }

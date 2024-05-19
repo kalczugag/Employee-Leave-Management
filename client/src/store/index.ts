@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { userApi } from "./apis/userApi";
 import { departmentApi } from "./apis/departmentApi";
 import userReducer from "./user/userSlice";
 import sidebarReducer from "./sidebar/sidebarSlice";
@@ -25,7 +24,8 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }),
+        }).concat(departmentApi.middleware),
+
     // .concat(userApi.middleware),
 });
 
@@ -47,4 +47,10 @@ export {
     useLoginMutation,
     useRegisterMutation,
 } from "./apis/userApi";
-export { useGetAllDepartmentsQuery } from "./apis/departmentApi";
+export {
+    useGetAllDepartmentsQuery,
+    useGetDepartmentQuery,
+    useAddDepartmentMutation,
+    useDeleteDepartmentMutation,
+    useEditDepartmentMutation,
+} from "./apis/departmentApi";

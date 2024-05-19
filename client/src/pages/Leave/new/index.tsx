@@ -5,13 +5,13 @@ import useSnackbar from "../../../hooks/useSnackbar";
 import { FormView } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
 import LeaveFormFields from "../../../containers/Forms/LeaveFormFields";
-import useNamesList from "../../../hooks/useNamesList";
+import { useNamesListLeaveType } from "../../../hooks/useNamesList";
 
 const LeaveNew = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
-    const { namesList } = useNamesList("leaveType");
+    const namesList = useNamesListLeaveType();
 
     const handleSubmit = (values: LeaveProps) => {
         dispatch(addLeave(values))

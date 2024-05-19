@@ -9,7 +9,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
-import useNamesList from "../../../hooks/useNamesList";
+import { useNamesListDepartment } from "../../../hooks/useNamesList";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
@@ -20,7 +20,7 @@ const EmployeeEdit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
-    const { namesList } = useNamesList("department");
+    const namesList = useNamesListDepartment();
     const { user } = useAuth();
 
     const [doFetchEmployee, isFetchingEmployee] = useThunk(getEmployee);

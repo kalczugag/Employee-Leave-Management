@@ -10,7 +10,7 @@ import {
 } from "../../../store";
 import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
-import useNamesList from "../../../hooks/useNamesList";
+import { useNamesListLeaveType } from "../../../hooks/useNamesList";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
@@ -22,7 +22,7 @@ const LeaveEdit = () => {
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
-    const { namesList } = useNamesList("leaveType");
+    const namesList = useNamesListLeaveType();
 
     const [doFetchLeave] = useThunk(getLeave);
 

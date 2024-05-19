@@ -1,13 +1,8 @@
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import {
-    AppDispatch,
-    RootState,
-    editDepartment,
-    getDepartment,
+    useEditDepartmentMutation,
+    useGetDepartmentQuery,
 } from "../../../store";
-import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
@@ -17,38 +12,34 @@ import {
     FormEditor,
     FormCheckbox,
 } from "../../../forms/FormView";
+import type { Department } from "@typ/department";
 
 const DepartmentEdit = () => {
     const { id } = useParams();
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const [doFetchDepartment] = useThunk(getDepartment);
+    const { data, isLoading } = useGetDepartmentQuery(id || "");
+    const [editDepartment, result] = useEditDepartmentMutation();
 
-    const { isLoading } = useSelector((state: RootState) => state.department);
-    const data = useSelector((state: RootState) =>
-        state.department.data.find((value) => value._id === id)
-    );
+    if (!data) {
+        return null;
+    }
 
-    useEffect(() => {
-        if (!data && !isLoading) {
-            doFetchDepartment(id);
-        }
-    }, []);
+    const handleSubmit = (values: Department) => {
+        editDepartment(values);
 
-    const handleSubmit = (values: any) => {
-        dispatch(editDepartment(values))
-            .then(() => {
-                navigate("../list");
-                handleOpen("Department Update Successful");
-            })
-            .catch((err) => handleOpen(err.message, "error"));
+        // dispatch(editDepartment(values))
+        //     .then(() => {
+        //         navigate("../list");
+        //         handleOpen("Department Update Successful");
+        //     })
+        //     .catch((err) => handleOpen(err.message, "error"));
     };
 
     const disabled =
-        (isLoading && !user?.roles.includes("hod")) ||
+        (result.isLoading && !user?.roles.includes("hod")) ||
         !user?.roles.includes("admin");
 
     return (

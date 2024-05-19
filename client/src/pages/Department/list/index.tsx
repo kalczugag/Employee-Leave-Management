@@ -1,13 +1,8 @@
-import { useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useMemo } from "react";
 import {
-    AppDispatch,
-    deleteDepartment,
-    getDepartments,
-    RootState,
+    useDeleteDepartmentMutation,
     useGetAllDepartmentsQuery,
 } from "../../../store";
-import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
@@ -16,33 +11,30 @@ import BasicTable from "../../../components/Table";
 import { fields } from "./config";
 
 const DepartmentList = () => {
-    const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
     const { data, isLoading, error } = useGetAllDepartmentsQuery();
+    const [deleteDepartment, result] = useDeleteDepartmentMutation();
 
-    const departmentdata = useMemo(
-        () =>
-            data!.map((row) => ({
-                ...row,
-                isLoading,
-                userRole: user?.roles,
-                handleDelete: () => handleDelete(row._id!),
-            })),
-        [data]
-    );
-
-    if (!departmentdata) {
+    if (!data) {
         return null;
     }
 
+    const departmentdata = data.map((row) => ({
+        ...row,
+        isLoading,
+        userRole: user?.roles,
+        handleDelete: () => handleDelete(row._id!),
+    }));
+
     const handleDelete = (id: string) => {
-        dispatch(deleteDepartment(id))
-            .then(() => {
-                handleOpen("Department Remove Successful");
-            })
-            .catch((err) => handleOpen(err.message, "error"));
+        deleteDepartment(id);
+        // dispatch(deleteDepartment(id))
+        //     .then(() => {
+        //         handleOpen("Department Remove Successful");
+        //     })
+        //     .catch((err) => handleOpen(err.message, "error"));
     };
 
     return (
