@@ -27,11 +27,7 @@ const LeaveTypeNew = () => {
         <DefaultPage label="Create Leave Type" bg>
             <FormView
                 onSubmit={handleSubmit}
-                disabled={
-                    isLoading ||
-                    !user?.roles.includes("hod") ||
-                    !user?.roles.includes("admin")
-                }
+                disabled={isLoading || user?.roles === "staff"}
             >
                 <FormField
                     required

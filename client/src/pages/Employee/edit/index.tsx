@@ -71,9 +71,7 @@ const EmployeeEdit = () => {
         return null;
     }
 
-    const disabled =
-        (isFetchingEmployee && !user?.roles.includes("hod")) ||
-        !user?.roles.includes("admin");
+    const disabled = isFetchingEmployee || user?.roles === "staff";
 
     return (
         <DefaultPage label="Edit Employee" bg>

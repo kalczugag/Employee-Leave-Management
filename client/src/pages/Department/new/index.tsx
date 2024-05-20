@@ -14,24 +14,17 @@ const DepartmentNew = () => {
     const [addDepartment, result] = useAddDepartmentMutation();
 
     const handleSubmit = (values: Department) => {
-        addDepartment(values);
-        // dispatch(addDepartment(values))
-        //     .then(() => {
-        //         navigate("../list");
-        //         handleOpen("Department Create Successful");
-        //     })
-        //     .catch((err) => handleOpen(err.message, "error"));
+        addDepartment(values).then(() => {
+            navigate("../list");
+            handleOpen("Department Create Successful");
+        });
     };
 
     return (
         <DefaultPage label="Create Department" bg>
             <FormView
                 onSubmit={handleSubmit}
-                disabled={
-                    result.isLoading ||
-                    !user?.roles.includes("hod") ||
-                    !user?.roles.includes("admin")
-                }
+                disabled={result.isLoading || user?.roles === "staff"}
             >
                 <FormField
                     required

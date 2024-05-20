@@ -28,19 +28,13 @@ const DepartmentEdit = () => {
     }
 
     const handleSubmit = (values: Department) => {
-        editDepartment(values);
-
-        // dispatch(editDepartment(values))
-        //     .then(() => {
-        //         navigate("../list");
-        //         handleOpen("Department Update Successful");
-        //     })
-        //     .catch((err) => handleOpen(err.message, "error"));
+        editDepartment(values).then(() => {
+            navigate("../list");
+            handleOpen("Department Update Successful");
+        });
     };
 
-    const disabled =
-        (result.isLoading && !user?.roles.includes("hod")) ||
-        !user?.roles.includes("admin");
+    const disabled = result.isLoading || user?.roles === "staff";
 
     return (
         <DefaultPage label="Edit Department" bg>

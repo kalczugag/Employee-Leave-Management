@@ -41,11 +41,7 @@ const EmployeeNew = () => {
             <FormView
                 onSubmit={handleSubmit}
                 initialValues={{ values: departmentNames }}
-                disabled={
-                    isFetching ||
-                    !user?.roles.includes("hod") ||
-                    !user?.roles.includes("admin")
-                }
+                disabled={isFetching || user?.roles === "staff"}
             >
                 <UserForm />
             </FormView>

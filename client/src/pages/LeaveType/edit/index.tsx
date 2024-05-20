@@ -47,9 +47,7 @@ const LeaveTypeEdit = () => {
             .catch((err) => handleOpen(err.message, "error"));
     };
 
-    const disabled =
-        (isLoading && !user?.roles.includes("hod")) ||
-        !user?.roles.includes("admin");
+    const disabled = isLoading || user?.roles === "staff";
 
     return (
         <DefaultPage label="Edit Leave Type" bg>
