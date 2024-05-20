@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Department } from "@typ/department";
 
-const departmentApi = createApi({
+export const departmentApi = createApi({
     reducerPath: "department",
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:3000/api",
@@ -20,7 +20,6 @@ const departmentApi = createApi({
                     params,
                 };
             },
-
             providesTags: (result) =>
                 result
                     ? result.map((dep) => ({
@@ -78,4 +77,3 @@ export const {
     useDeleteDepartmentMutation,
     useEditDepartmentMutation,
 } = departmentApi;
-export { departmentApi };

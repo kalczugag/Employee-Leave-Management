@@ -17,7 +17,8 @@ interface FormViewProps {
         | user
         | {
               values: string[];
-          };
+          }
+        | any;
     disabled?: boolean;
     onSubmit: (values: any) => void;
 }
@@ -57,11 +58,11 @@ export const FormView = ({
                         >
                             Save
                         </Button>
-                        {disabled && (
+                        {/* {disabled && (
                             <span className="text-sm text-red-600">
                                 Not enough permissions to access.
                             </span>
-                        )}
+                        )} */}
                     </div>
                 </form>
             )}

@@ -1,32 +1,32 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { departmentApi } from "./apis/departmentApi";
+import { leaveTypeApi } from "./apis/leaveTypeApi";
+import { employeeApi } from "./apis/employeeApi";
 import userReducer from "./user/userSlice";
 import sidebarReducer from "./sidebar/sidebarSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
-import leaveTypeReducer from "./leaveType/leaveTypeSlice";
 import leaveReducer from "./leave/leaveSlice";
-import employeeSlice from "./employee/employeeSlice";
 import editorReducer from "./editor/editorSlice";
 
 export const store = configureStore({
     reducer: {
-        // [userApi.reducerPath]: userApi.reducer,
         [departmentApi.reducerPath]: departmentApi.reducer,
+        [leaveTypeApi.reducerPath]: leaveTypeApi.reducer,
+        [employeeApi.reducerPath]: employeeApi.reducer,
         user: userReducer,
         sidebar: sidebarReducer,
         snackbar: snackbarReducer,
-        leaveType: leaveTypeReducer,
         leave: leaveReducer,
-        employee: employeeSlice,
         editor: editorReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(departmentApi.middleware),
-
-    // .concat(userApi.middleware),
+        })
+            .concat(departmentApi.middleware)
+            .concat(leaveTypeApi.middleware)
+            .concat(employeeApi.middleware),
 });
 
 setupListeners(store.dispatch);
@@ -43,14 +43,23 @@ export * from "./leave/leaveSlice";
 export * from "./employee/employeeSlice";
 export * from "./editor/editorSlice";
 export {
-    useFetchUserQuery,
-    useLoginMutation,
-    useRegisterMutation,
-} from "./apis/userApi";
-export {
     useGetAllDepartmentsQuery,
     useGetDepartmentQuery,
     useAddDepartmentMutation,
     useDeleteDepartmentMutation,
     useEditDepartmentMutation,
 } from "./apis/departmentApi";
+export {
+    useGetLeaveTypesQuery,
+    useGetLeaveTypeQuery,
+    useAddLeaveTypeMutation,
+    useEditLeaveTypeMutation,
+    useDeleteLeaveTypeMutation,
+} from "./apis/leaveTypeApi";
+export {
+    useGetEmployeesQuery,
+    useGetEmployeeQuery,
+    useAddEmployeeMutation,
+    useEditEmployeeMutation,
+    useDeleteEmployeeMutation,
+} from "./apis/employeeApi";

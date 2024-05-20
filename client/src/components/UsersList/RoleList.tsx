@@ -1,34 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { RootState, getEmployees } from "../../store";
-import useThunk from "../../hooks/useThunk";
+import { useGetEmployeesQuery } from "../../store";
 import ProfileCell from "../ProfileCell";
 
-const ONE_REQUEST_PAGES = ["/"];
-
 const RoleList = ({ role }: { role: "hod" | "staff" }) => {
-    const { pathname } = useLocation();
-    const { data, isLoading } = useSelector(
-        (state: RootState) => state.employee
-    );
+    const { data } = useGetEmployeesQuery("staff,hod");
 
-    const employeeData = useMemo(
-        () => data.filter((e) => e.roles === role),
-        [data]
-    );
+    if (!data) {
+        return null;
+    }
 
-    const [doFetchEmployees] = useThunk(getEmployees);
-
-    const isOneRequest = ONE_REQUEST_PAGES.some((page) =>
-        pathname.includes(page)
-    );
-
-    useEffect(() => {
-        if (data.length === 0 && !isLoading && !isOneRequest) {
-            doFetchEmployees(role);
-        }
-    }, []);
+    const employeeData = data.filter((e) => e.roles === role);
 
     return (
         <div className="flex-1 p-6 rounded space-y-2 bg-white shadow">

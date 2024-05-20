@@ -1,13 +1,9 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import {
     AppDispatch,
-    RootState,
-    editLeaveType,
-    getLeaveType,
+    useGetLeaveTypeQuery,
+    useEditLeaveTypeMutation,
 } from "../../../store";
-import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
 import {
@@ -17,37 +13,25 @@ import {
     FormCheckbox,
 } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
+import type { LeaveType } from "@typ/leaveType";
 
 const LeaveTypeEdit = () => {
     const { id } = useParams();
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const [doFetchLeaveType, isFetching] = useThunk(getLeaveType);
+    const { data } = useGetLeaveTypeQuery(id || "");
+    const [editLeaveType, result] = useEditLeaveTypeMutation();
 
-    const { isLoading } = useSelector((state: RootState) => state.leaveType);
-    const data = useSelector((state: RootState) =>
-        state.leaveType.data.find((value) => value._id === id)
-    );
-
-    useEffect(() => {
-        if (!data && !isFetching) {
-            doFetchLeaveType(id);
-        }
-    }, []);
-
-    const handleSubmit = (values: any) => {
-        dispatch(editLeaveType(values))
-            .then(() => {
-                navigate("../list");
-                handleOpen("Leave Type Update Successful");
-            })
-            .catch((err) => handleOpen(err.message, "error"));
+    const handleSubmit = (values: LeaveType) => {
+        editLeaveType(values).then(() => {
+            navigate("../list");
+            handleOpen("Leave Type Update Successful");
+        });
     };
 
-    const disabled = isLoading || user?.roles === "staff";
+    const disabled = result.isLoading || user?.roles === "staff";
 
     return (
         <DefaultPage label="Edit Leave Type" bg>

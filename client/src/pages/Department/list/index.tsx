@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import {
     useDeleteDepartmentMutation,
     useGetAllDepartmentsQuery,
@@ -14,7 +13,7 @@ const DepartmentList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isLoading, error } = useGetAllDepartmentsQuery();
+    const { data } = useGetAllDepartmentsQuery();
     const [deleteDepartment, result] = useDeleteDepartmentMutation();
 
     if (!data) {
@@ -23,27 +22,22 @@ const DepartmentList = () => {
 
     const departmentdata = data.map((row) => ({
         ...row,
-        isLoading,
+        isLoading: result.isLoading,
         userRole: user?.roles,
         handleDelete: () => handleDelete(row._id!),
     }));
 
     const handleDelete = (id: string) => {
-        deleteDepartment(id);
-        // dispatch(deleteDepartment(id))
-        //     .then(() => {
-        //         handleOpen("Department Remove Successful");
-        //     })
-        //     .catch((err) => handleOpen(err.message, "error"));
+        deleteDepartment(id).then(() => {
+            handleOpen("Department Remove Successful");
+        });
     };
 
     return (
         <DefaultPage label="Department List" bg>
             <ActionButtons
                 label="Add Department"
-                extended={
-                    user?.roles.includes("hod") || user?.roles.includes("admin")
-                }
+                extended={user?.roles !== "staff"}
             />
             <BasicTable headerOptions={fields} rowData={departmentdata} />
         </DefaultPage>

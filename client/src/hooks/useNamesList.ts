@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux";
-import { useGetAllDepartmentsQuery, RootState } from "../store";
+import { useGetAllDepartmentsQuery, useGetLeaveTypesQuery } from "../store";
 
 const useNamesListDepartment = () => {
     const { data } = useGetAllDepartmentsQuery(
@@ -18,7 +17,9 @@ const useNamesListDepartment = () => {
 };
 
 const useNamesListLeaveType = () => {
-    const data = useSelector((state: RootState) => state.leaveType.data);
+    const { data } = useGetLeaveTypesQuery(
+        "shortName,details,status,createdAt,updatedAt,__v"
+    );
 
     if (!data) {
         return [];
