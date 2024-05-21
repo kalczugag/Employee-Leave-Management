@@ -16,7 +16,7 @@ const LeaveTypeList = () => {
     const { data } = useGetLeaveTypesQuery();
     const [deleteLeaveType, result] = useDeleteLeaveTypeMutation();
 
-    if (!data) {
+    if (!Array.isArray(data)) {
         return null;
     }
 

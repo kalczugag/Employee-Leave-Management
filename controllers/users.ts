@@ -55,7 +55,7 @@ export const getAllUsers = async (
             users.push(...additionalUsers);
         }
 
-        return res.status(200).json({ users, totalPages, totalUsersCount });
+        return res.status(200).json(users);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
@@ -147,6 +147,8 @@ export const addUser = async (req: express.Request, res: express.Response) => {
             },
         });
 
+        console.log(newUser);
+
         return res.status(200).json(newUser);
     } catch (error) {
         console.log(error);
@@ -162,6 +164,7 @@ export const deleteUser = async (
         const { id } = req.params;
 
         const deletedUser = await deleteUserById(id);
+        console.log(deletedUser?.toObject());
 
         return res.status(200).json(deletedUser);
     } catch (error) {
@@ -179,6 +182,7 @@ export const updateUser = async (
         const values = req.body;
 
         const updatedUser = await updateUserById(id, values);
+        console.log(updateUser);
 
         return res.status(200).json(updatedUser).end();
     } catch (error) {

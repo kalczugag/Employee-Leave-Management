@@ -5,6 +5,12 @@ interface GetEmployeeParams {
     selectQuery?: string;
 }
 
+interface extendedUsers {
+    totalPages: number;
+    totalUsersCount: number;
+    users: user[];
+}
+
 export const employeeApi = createApi({
     reducerPath: "employee",
     baseQuery: fetchBaseQuery({
@@ -72,13 +78,13 @@ export const employeeApi = createApi({
             ],
         }),
 
-        deleteEmployee: builder.mutation<string, string>({
+        deleteEmployee: builder.mutation<user, string>({
             query: (id) => ({
                 url: `/users/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: (result, error, id) => [
-                { type: "Employees", id: id },
+            invalidatesTags: (result) => [
+                { type: "Employees", id: result?._id },
             ],
         }),
     }),

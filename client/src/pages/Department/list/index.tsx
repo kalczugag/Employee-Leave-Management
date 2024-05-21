@@ -16,7 +16,7 @@ const DepartmentList = () => {
     const { data } = useGetAllDepartmentsQuery();
     const [deleteDepartment, result] = useDeleteDepartmentMutation();
 
-    if (!data) {
+    if (!Array.isArray(data)) {
         return null;
     }
 

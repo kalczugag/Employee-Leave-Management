@@ -14,11 +14,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
     const { pathname } = useLocation();
     const isLoading = useSelector((state: RootState) => {
-        if (
-            state.employee.isLoading ||
-            state.leave.isLoading ||
-            state.user.isLoading
-        ) {
+        if (state.leave.isLoading || state.user.isLoading) {
             return true;
         }
 

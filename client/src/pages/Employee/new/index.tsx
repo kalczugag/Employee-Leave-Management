@@ -43,7 +43,7 @@ const EmployeeNew = () => {
                 initialValues={{ values: departmentNames }}
                 disabled={isFetching || user?.roles === "staff"}
             >
-                <UserForm />
+                <UserForm isLoading={isFetching} />
             </FormView>
         </DefaultPage>
     );

@@ -20,7 +20,7 @@ const DepartmentEdit = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isLoading } = useGetDepartmentQuery(id || "");
+    const { data } = useGetDepartmentQuery(id || "");
     const [editDepartment, result] = useEditDepartmentMutation();
 
     if (!data) {

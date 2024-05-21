@@ -8,6 +8,7 @@ import {
     deleteLeave,
     StatusUnion,
     getEmployeesByIds,
+    useGetEmployeesQuery,
 } from "../store";
 import useThunk from "./useThunk";
 import useSnackbar from "./useSnackbar";
@@ -21,12 +22,12 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const { user } = useAuth();
     const { page, rowsPerPage } = usePageAndRows();
 
+    const employeesData = useGetEmployeesQuery();
+
     const [doFetchLeaves] = useThunk(getLeaves);
     const [doFetchEmployee] = useThunk(getEmployeesByIds);
 
     const leavesData = useSelector((state: RootState) => state.leave) || [];
-    const employeesData =
-        useSelector((state: RootState) => state.employee) || [];
 
     useEffect(() => {
         if (user) {
@@ -42,10 +43,6 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
                     doFetchLeaves(leavesOptions);
                 }
             }
-
-            if (employeesData.data.length === 0 || !employeesData.fulldata) {
-                fetchEmployeesById();
-            }
         }
     }, [user, leavesData.fullData, status, page, rowsPerPage]);
 
@@ -54,7 +51,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
             .map("_user")
             .uniq()
             .reject((id) =>
-                employeesData.data.some((employee) => employee._id === id)
+                employeesData.data!.some((employee) => employee._id === id)
             )
             .tap((newIdsToFetch) => {
                 console.log(newIdsToFetch);
@@ -89,7 +86,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
 
         return filteredLeaves.map((row) => {
             const userData =
-                employeesData.data.find((e) => e._id === row._user) || null;
+                employeesData.data!.find((e) => e._id === row._user) || null;
             return {
                 ...row,
                 userData,

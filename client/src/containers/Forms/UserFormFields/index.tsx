@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 import {
     FormPassword,
     FormField,
@@ -9,10 +7,12 @@ import {
 import { InputLabel } from "@mui/material";
 import { useFormState } from "react-final-form";
 
-const UserFormFields = () => {
-    const form = useFormState();
+interface Props {
+    isLoading: boolean;
+}
 
-    const { isLoading } = useSelector((state: RootState) => state.employee);
+const UserFormFields = ({ isLoading }: Props) => {
+    const form = useFormState();
 
     const ROLES = ["staff", "hod", "admin"];
 
