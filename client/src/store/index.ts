@@ -3,10 +3,10 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { departmentApi } from "./apis/departmentApi";
 import { leaveTypeApi } from "./apis/leaveTypeApi";
 import { employeeApi } from "./apis/employeeApi";
+import { leaveApi } from "./apis/leaveApi";
 import userReducer from "./user/userSlice";
 import sidebarReducer from "./sidebar/sidebarSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
-import leaveReducer from "./leave/leaveSlice";
 import editorReducer from "./editor/editorSlice";
 
 export const store = configureStore({
@@ -14,10 +14,11 @@ export const store = configureStore({
         [departmentApi.reducerPath]: departmentApi.reducer,
         [leaveTypeApi.reducerPath]: leaveTypeApi.reducer,
         [employeeApi.reducerPath]: employeeApi.reducer,
+        [leaveApi.reducerPath]: leaveApi.reducer,
         user: userReducer,
         sidebar: sidebarReducer,
         snackbar: snackbarReducer,
-        leave: leaveReducer,
+
         editor: editorReducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -26,7 +27,8 @@ export const store = configureStore({
         })
             .concat(departmentApi.middleware)
             .concat(leaveTypeApi.middleware)
-            .concat(employeeApi.middleware),
+            .concat(employeeApi.middleware)
+            .concat(leaveApi.middleware),
 });
 
 setupListeners(store.dispatch);
@@ -63,3 +65,10 @@ export {
     useEditEmployeeMutation,
     useDeleteEmployeeMutation,
 } from "./apis/employeeApi";
+export {
+    useGetLeavesQuery,
+    useGetLeaveQuery,
+    useAddLeaveMutation,
+    useEditLeaveMutation,
+    useDeleteLeaveMutation,
+} from "./apis/leaveApi";

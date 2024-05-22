@@ -1,7 +1,4 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState, getLeaves } from "../../store";
-import useThunk from "../../hooks/useThunk";
+import { useGetLeavesQuery } from "../../store";
 import useAuth from "../../hooks/useAuth";
 import {
     ContentPasteOutlined,
@@ -9,62 +6,65 @@ import {
     ThumbUpOutlined,
     HourglassEmptyOutlined,
 } from "@mui/icons-material";
-import StatsViewBox from "./StatsViewBox";
 import ChartView from "./ChartView";
+import StatsViewBox from "./StatsViewBox";
+import type { Leave, Stats as StatsProps } from "@typ/leave";
 
 const Stats = () => {
     const { user } = useAuth();
-    const { data, isLoading, stats, fullData } = useSelector(
-        (state: RootState) => state.leave
-    );
-
-    const [doFetchLeaves] = useThunk(getLeaves);
 
     const options = {
         stats: true,
+        ...(user?.roles === "staff" && { userId: user._id }),
     };
 
-    useEffect(() => {
-        if (stats?.total === 0) {
-            if (user?.roles !== "staff") {
-                doFetchLeaves(options);
-            } else if (user?.roles === "staff") {
-                doFetchLeaves({ options, userId: user._id });
-            }
-        }
-    }, []);
+    const { data } = useGetLeavesQuery(options);
+
+    const isStatsData = (data: any): data is StatsProps => {
+        return (
+            data &&
+            typeof data === "object" &&
+            !Array.isArray(data) &&
+            "total" in data
+        );
+    };
+
+    const isLeaveArray = (data: any): data is Array<Leave> => {
+        return Array.isArray(data);
+    };
 
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
-            {user?.roles !== "staff" ? (
+            {user?.roles !== "staff" && isStatsData(data) ? (
                 <>
                     <StatsViewBox
                         icon={<ContentPasteOutlined />}
-                        amount={stats?.total}
+                        amount={data.total}
                         label="Total Leave"
                         arrow={false}
                     />
                     <StatsViewBox
                         icon={<DisabledByDefaultOutlined />}
-                        amount={stats?.rejected}
+                        amount={data.rejected}
                         label="Rejected Leave"
                         variant="rejected"
                     />
                     <StatsViewBox
                         icon={<ThumbUpOutlined />}
-                        amount={stats?.approved}
+                        amount={data.approved}
                         label="Approved Leave"
                         variant="approved"
                     />
                     <StatsViewBox
                         icon={<HourglassEmptyOutlined />}
-                        amount={stats?.pending}
+                        amount={data.pending}
                         label="Pending Leave"
                         variant="pending"
                     />
                 </>
             ) : (
-                <ChartView data={stats} />
+                // isLeaveArray(data) && <ChartView data={data} />
+                <></>
             )}
         </div>
     );

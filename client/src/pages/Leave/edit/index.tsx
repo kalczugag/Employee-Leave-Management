@@ -1,14 +1,9 @@
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import {
-    AppDispatch,
-    RootState,
-    editLeave,
-    getLeave,
     LeaveProps,
+    useGetLeaveQuery,
+    useEditLeaveMutation,
 } from "../../../store";
-import useThunk from "../../../hooks/useThunk";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { useNamesListLeaveType } from "../../../hooks/useNamesList";
 import useAuth from "../../../hooks/useAuth";
@@ -18,68 +13,34 @@ import LeaveFormFields from "../../../containers/Forms/LeaveFormFields";
 
 const LeaveEdit = () => {
     const { id } = useParams();
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
     const namesList = useNamesListLeaveType();
 
-    const [doFetchLeave] = useThunk(getLeave);
-
-    const { isLoading } = useSelector((state: RootState) => state.leave);
-    const leavesData = useSelector((state: RootState) =>
-        state.leave.data.find((value) => value._id === id)
-    );
-
-    useEffect(() => {
-        if (!leavesData && !isLoading) {
-            doFetchLeave(id);
-        }
-    }, []);
+    const { data } = useGetLeaveQuery(id || "");
+    const [editLeave, result] = useEditLeaveMutation();
 
     const handleSubmit = (values: LeaveProps) => {
-        if (!leavesData || !values) {
-            return;
-        }
-
-        let hasChanged = false;
-
-        for (const key in values) {
-            if (
-                values[key as keyof LeaveProps] !==
-                leavesData[key as keyof LeaveProps]
-            ) {
-                hasChanged = true;
-                break;
-            }
-        }
-
-        if (hasChanged) {
-            dispatch(editLeave(values))
-                .then(() => {
-                    navigate("../list");
-                    handleOpen("Leave Update Successful");
-                })
-                .catch((err) => handleOpen(err.message, "error"));
-        } else {
-            handleOpen("No changes detected", "error");
-        }
+        editLeave(values).then(() => {
+            navigate("../list");
+            handleOpen("Leave Update Successful");
+        });
     };
-
-    if (!leavesData || namesList.length === 0) {
-        return null;
-    }
 
     return (
         <DefaultPage label="Edit Leave" bg>
             <FormView
                 onSubmit={handleSubmit}
                 initialValues={{
-                    ...leavesData,
+                    ...data,
                     values: namesList,
                 }}
             >
-                <LeaveFormFields extended={user?.roles === "admin"} />
+                <LeaveFormFields
+                    extended={user?.roles === "admin"}
+                    isLoading={result.isLoading}
+                />
             </FormView>
         </DefaultPage>
     );

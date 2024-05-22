@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import { useFormState } from "react-final-form";
-import { RootState } from "../../../store";
 import {
     FormEditor,
     FormField,
@@ -10,16 +8,11 @@ import {
 
 interface Props {
     extended?: boolean;
+    isLoading: boolean;
 }
 
-const LeaveFormFields = ({ extended }: Props) => {
+const LeaveFormFields = ({ extended, isLoading }: Props) => {
     const form = useFormState();
-
-    // useEffect(() => {
-    //     console.log(form.values);
-    // }, [form]);
-
-    const { isLoading } = useSelector((state: RootState) => state.leave);
 
     return (
         <div className="grid grid-cols-2 gap-6">

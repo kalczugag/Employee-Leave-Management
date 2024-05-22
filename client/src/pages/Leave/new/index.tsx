@@ -1,6 +1,5 @@
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch, addLeave, LeaveProps } from "../../../store";
+import { LeaveProps, useAddLeaveMutation } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { FormView } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
@@ -9,17 +8,16 @@ import { useNamesListLeaveType } from "../../../hooks/useNamesList";
 
 const LeaveNew = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
     const { handleOpen } = useSnackbar();
     const namesList = useNamesListLeaveType();
 
+    const [addLeave, result] = useAddLeaveMutation();
+
     const handleSubmit = (values: LeaveProps) => {
-        dispatch(addLeave(values))
-            .then(() => {
-                navigate("../list");
-                handleOpen("Leave Create Successful");
-            })
-            .catch((err) => handleOpen(err.message, "error"));
+        addLeave(values).then(() => {
+            navigate("../list");
+            handleOpen("Leave Create Successful");
+        });
     };
 
     return (
@@ -28,7 +26,7 @@ const LeaveNew = () => {
                 initialValues={{ values: namesList }}
                 onSubmit={handleSubmit}
             >
-                <LeaveFormFields />
+                <LeaveFormFields isLoading={result.isLoading} />
             </FormView>
         </DefaultPage>
     );

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTheme, styled } from "@mui/material/styles";
 import {
     Box,
@@ -19,7 +20,6 @@ import {
     KeyboardArrowRight,
     LastPage,
 } from "@mui/icons-material";
-import usePageAndRows from "../../hooks/usePageAndRows";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     wordBreak: "normal",
@@ -128,8 +128,8 @@ const CustomPaginationActionsTable = ({
     headerOptions,
     rowData,
 }: CustomPaginationActionsTableProps) => {
-    const { page, rowsPerPage, changePage, changeRowsPerPage } =
-        usePageAndRows();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowData.length) : 0;
@@ -138,14 +138,14 @@ const CustomPaginationActionsTable = ({
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number
     ) => {
-        changePage(newPage);
+        setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        changeRowsPerPage(parseInt(event.target.value, 10));
-        changePage(0);
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
     };
 
     return (

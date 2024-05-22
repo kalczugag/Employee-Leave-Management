@@ -14,7 +14,10 @@ const LeaveListRejected = () => {
     return (
         <DefaultPage label="Leave List Rejected" bg>
             <ListSearchForm data={[{ label: "x" }]} />
-            <BasicTable headerOptions={fields} rowData={data || []} />
+            <BasicTable
+                headerOptions={fields}
+                rowData={Array.isArray(data) ? data : []}
+            />
         </DefaultPage>
     );
 };

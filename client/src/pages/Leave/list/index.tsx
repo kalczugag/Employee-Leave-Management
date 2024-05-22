@@ -23,7 +23,10 @@ const LeaveList = () => {
     return (
         <DefaultPage label="Leave List" bg>
             <ListSearchForm data={dd} />
-            <BasicTable headerOptions={fields} rowData={data} />
+            <BasicTable
+                headerOptions={fields}
+                rowData={Array.isArray(data) ? data : []}
+            />
         </DefaultPage>
     );
 };

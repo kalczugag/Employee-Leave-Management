@@ -14,7 +14,10 @@ const LeaveListApproved = () => {
     return (
         <DefaultPage label="Leave List Approved" bg>
             <ListSearchForm data={[{ label: "x" }]} />
-            <BasicTable headerOptions={fields} rowData={data || []} />
+            <BasicTable
+                headerOptions={fields}
+                rowData={Array.isArray(data) ? data : []}
+            />
         </DefaultPage>
     );
 };
