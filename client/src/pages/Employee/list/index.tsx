@@ -13,10 +13,10 @@ const EmployeeList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data } = useGetEmployeesQuery();
+    const { data, isLoading } = useGetEmployeesQuery();
     const [deleteEmployee, result] = useDeleteEmployeeMutation();
 
-    if (!data) {
+    if (!data && !isLoading) {
         return null;
     }
 

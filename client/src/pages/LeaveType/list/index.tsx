@@ -13,19 +13,21 @@ const LeaveTypeList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data } = useGetLeaveTypesQuery();
+    const { data, isLoading } = useGetLeaveTypesQuery();
     const [deleteLeaveType, result] = useDeleteLeaveTypeMutation();
 
-    if (!Array.isArray(data)) {
+    if (!data && !isLoading) {
         return null;
     }
 
-    const leaveTypeData = data.map((row) => ({
-        ...row,
-        isLoading: result.isLoading,
-        userRole: user?.roles,
-        handleDelete: () => handleDelete(row._id!),
-    }));
+    const leaveTypeData = Array.isArray(data)
+        ? data.map((row) => ({
+              ...row,
+              isLoading: result.isLoading,
+              userRole: user?.roles,
+              handleDelete: () => handleDelete(row._id!),
+          }))
+        : [];
 
     const handleDelete = (id: string) => {
         deleteLeaveType(id)

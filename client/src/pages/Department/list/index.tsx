@@ -13,19 +13,21 @@ const DepartmentList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data } = useGetAllDepartmentsQuery();
+    const { data, isLoading } = useGetAllDepartmentsQuery();
     const [deleteDepartment, result] = useDeleteDepartmentMutation();
 
-    if (!Array.isArray(data)) {
+    if (!data && !isLoading) {
         return null;
     }
 
-    const departmentdata = data.map((row) => ({
-        ...row,
-        isLoading: result.isLoading,
-        userRole: user?.roles,
-        handleDelete: () => handleDelete(row._id!),
-    }));
+    const departmentdata = Array.isArray(data)
+        ? data.map((row) => ({
+              ...row,
+              isLoading: result.isLoading,
+              userRole: user?.roles,
+              handleDelete: () => handleDelete(row._id!),
+          }))
+        : [];
 
     const handleDelete = (id: string) => {
         deleteDepartment(id).then(() => {
