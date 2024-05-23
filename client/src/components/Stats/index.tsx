@@ -29,10 +29,6 @@ const Stats = () => {
         );
     };
 
-    const isLeaveArray = (data: any): data is Array<Leave> => {
-        return Array.isArray(data);
-    };
-
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
             {user?.roles !== "staff" && isStatsData(data) ? (

@@ -5,6 +5,11 @@ interface GetEmployeeParams {
     selectQuery?: string;
 }
 
+interface GetEmployeesByIdsParams {
+    ids: string[];
+    selectQuery?: string;
+}
+
 interface extendedUsers {
     totalPages: number;
     totalUsersCount: number;
@@ -54,6 +59,17 @@ export const employeeApi = createApi({
             providesTags: (result, error, { id }) => [
                 { type: "Employees", id: id },
             ],
+        }),
+
+        getEmployeesByIds: builder.query<user[], GetEmployeesByIdsParams>({
+            query: ({ ids, selectQuery }) => ({
+                url: "/users/byIds",
+                method: "GET",
+                params: {
+                    ids,
+                    fields: selectQuery,
+                },
+            }),
         }),
 
         addEmployee: builder.mutation<user, user>({
