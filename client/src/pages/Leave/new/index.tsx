@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { LeaveProps, useAddLeaveMutation } from "../../../store";
+import { useAddLeaveMutation } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { FormView } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
 import LeaveFormFields from "../../../containers/Forms/LeaveFormFields";
 import { useNamesListLeaveType } from "../../../hooks/useNamesList";
+import type { Leave } from "@typ/leave";
 
 const LeaveNew = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const LeaveNew = () => {
 
     const [addLeave, result] = useAddLeaveMutation();
 
-    const handleSubmit = (values: LeaveProps) => {
+    const handleSubmit = (values: Leave) => {
         addLeave(values).then(() => {
             navigate("../list");
             handleOpen("Leave Create Successful");

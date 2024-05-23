@@ -1,15 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {
-    LeaveProps,
-    useGetLeaveQuery,
-    useEditLeaveMutation,
-} from "../../../store";
+import { useGetLeaveQuery, useEditLeaveMutation } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
 import { useNamesListLeaveType } from "../../../hooks/useNamesList";
 import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
 import LeaveFormFields from "../../../containers/Forms/LeaveFormFields";
+import type { Leave } from "@typ/leave";
 
 const LeaveEdit = () => {
     const { id } = useParams();
@@ -21,7 +18,7 @@ const LeaveEdit = () => {
     const { data } = useGetLeaveQuery(id || "");
     const [editLeave, result] = useEditLeaveMutation();
 
-    const handleSubmit = (values: LeaveProps) => {
+    const handleSubmit = (values: Leave) => {
         editLeave(values).then(() => {
             navigate("../list");
             handleOpen("Leave Update Successful");

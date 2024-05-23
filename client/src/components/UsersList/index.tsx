@@ -1,7 +1,5 @@
-import { ReactNode, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState, getEmployees, useGetEmployeesQuery } from "../../store";
-import useThunk from "../../hooks/useThunk";
+import { ReactNode } from "react";
+import { useGetEmployeesQuery } from "../../store";
 import RoleList from "./RoleList";
 
 interface Props {

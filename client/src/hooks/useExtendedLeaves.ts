@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import {
-    StatusUnion,
     useDeleteLeaveMutation,
     useGetEmployeesQuery,
     useGetLeavesQuery,
 } from "../store";
 import { isLeaveArray } from "../utils/isLeaveArray";
 import useSnackbar from "./useSnackbar";
+import type { StatusUnion } from "@typ/leave";
 
 const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const { handleOpen } = useSnackbar();

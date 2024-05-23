@@ -18,7 +18,6 @@ export const store = configureStore({
         user: userReducer,
         sidebar: sidebarReducer,
         snackbar: snackbarReducer,
-
         editor: editorReducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -39,10 +38,6 @@ export type AppDispatch = typeof store.dispatch;
 export * from "./user/userSlice";
 export * from "./sidebar/sidebarSlice";
 export * from "./snackbar/snackbarSlice";
-export * from "./department/departmentSlice";
-export * from "./leaveType/leaveTypeSlice";
-export * from "./leave/leaveSlice";
-export * from "./employee/employeeSlice";
 export * from "./editor/editorSlice";
 export {
     useGetAllDepartmentsQuery,

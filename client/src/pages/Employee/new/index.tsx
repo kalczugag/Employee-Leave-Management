@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     AppDispatch,
-    addEmployee,
+    useAddEmployeeMutation,
     useGetAllDepartmentsQuery,
 } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
@@ -20,6 +20,7 @@ const EmployeeNew = () => {
     const { data, isFetching } = useGetAllDepartmentsQuery(
         "shortName,details,status,createdAt,updatedAt,active,__v"
     );
+    const [addEmployee] = useAddEmployeeMutation();
 
     if (!data) {
         return null;
@@ -28,12 +29,10 @@ const EmployeeNew = () => {
     const departmentNames: string[] = data.map((department) => department.name);
 
     const handleSubmit = (values: user) => {
-        dispatch(addEmployee(values))
-            .then(() => {
-                navigate("../list");
-                handleOpen("Department Create Successful");
-            })
-            .catch((err) => handleOpen(err.message, "error"));
+        addEmployee(values).then(() => {
+            navigate("../list");
+            handleOpen("Department Create Successful");
+        });
     };
 
     return (
