@@ -1,4 +1,5 @@
 import { useGetLeavesQuery } from "../../store";
+import LeavesType from "../../utils/leavesType";
 import useAuth from "../../hooks/useAuth";
 import {
     ContentPasteOutlined,
@@ -8,7 +9,6 @@ import {
 } from "@mui/icons-material";
 import ChartView from "./ChartView";
 import StatsViewBox from "./StatsViewBox";
-import type { Leave, Stats as StatsProps } from "@typ/leave";
 
 const Stats = () => {
     const { user } = useAuth();
@@ -20,18 +20,9 @@ const Stats = () => {
 
     const { data } = useGetLeavesQuery(options);
 
-    const isStatsData = (data: any): data is StatsProps => {
-        return (
-            data &&
-            typeof data === "object" &&
-            !Array.isArray(data) &&
-            "total" in data
-        );
-    };
-
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
-            {user?.roles !== "staff" && isStatsData(data) ? (
+            {user?.roles !== "staff" && LeavesType.isStatsData(data) ? (
                 <>
                     <StatsViewBox
                         icon={<ContentPasteOutlined />}
@@ -59,8 +50,7 @@ const Stats = () => {
                     />
                 </>
             ) : (
-                // isLeaveArray(data) && <ChartView data={data} />
-                <></>
+                LeavesType.isStatsData(data) && <ChartView data={data} />
             )}
         </div>
     );

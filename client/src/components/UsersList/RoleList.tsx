@@ -5,7 +5,7 @@ const RoleList = ({ role }: { role: "hod" | "staff" }) => {
     const { data } = useGetEmployeesQuery("staff,hod");
 
     if (!Array.isArray(data)) {
-        return null;
+        return <></>;
     }
 
     const employeeData = data.filter((e) => e.roles === role);
