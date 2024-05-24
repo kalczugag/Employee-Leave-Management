@@ -10,6 +10,12 @@ import {
 import ChartView from "./ChartView";
 import StatsViewBox from "./StatsViewBox";
 
+interface QueryError {
+    data?: {
+        msg?: string;
+    };
+}
+
 const Stats = () => {
     const { user } = useAuth();
 
@@ -18,7 +24,7 @@ const Stats = () => {
         ...(user?.roles === "staff" && { userId: user._id }),
     };
 
-    const { data } = useGetLeavesQuery(options);
+    const { data, error } = useGetLeavesQuery(options);
 
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
@@ -49,8 +55,19 @@ const Stats = () => {
                         variant="pending"
                     />
                 </>
+            ) : LeavesType.isStatsData(data) && !error ? (
+                <ChartView data={data} />
             ) : (
-                LeavesType.isStatsData(data) && <ChartView data={data} />
+                <div className="col-span-2 md:col-span-4 flex flex-col justify-center items-center h-full">
+                    <img
+                        src="/images/no_data.png"
+                        alt="no data icon"
+                        className="w-24"
+                    />
+                    <div className="font-bold text-gray-500">
+                        No chart data available
+                    </div>
+                </div>
             )}
         </div>
     );

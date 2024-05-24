@@ -74,7 +74,7 @@ export const employeeApi = createApi({
 
         addEmployee: builder.mutation<user, user>({
             query: (values) => ({
-                url: `/users/${values._id}`,
+                url: "/users",
                 method: "POST",
                 body: values,
             }),

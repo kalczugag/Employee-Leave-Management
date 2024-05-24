@@ -1,7 +1,5 @@
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-    AppDispatch,
     useAddEmployeeMutation,
     useGetAllDepartmentsQuery,
 } from "../../../store";
@@ -12,7 +10,6 @@ import { FormView } from "../../../forms/FormView";
 import UserForm from "../../../containers/Forms/UserFormFields";
 
 const EmployeeNew = () => {
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
@@ -31,7 +28,7 @@ const EmployeeNew = () => {
     const handleSubmit = (values: user) => {
         addEmployee(values).then(() => {
             navigate("../list");
-            handleOpen("Department Create Successful");
+            handleOpen("Employee Create Successful");
         });
     };
 

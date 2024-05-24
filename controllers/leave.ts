@@ -69,7 +69,7 @@ export const getAllLeaves = async (
         const leaves = await leavesQuery.exec();
 
         if (!leaves || leaves.length === 0) {
-            return res.sendStatus(403);
+            return res.status(403).json({ msg: "No data" });
         }
 
         let response;
@@ -80,8 +80,6 @@ export const getAllLeaves = async (
         } else {
             response = leaves;
         }
-
-        console.log(response);
 
         return res.status(200).json(response);
     } catch (error) {

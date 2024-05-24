@@ -46,11 +46,13 @@ const UserFormFields = ({ isLoading }: Props) => {
                 options={{ label: "First Name", name: "firstName" }}
                 placeholder="Enter First Name"
                 disabled={isLoading}
+                required
             />
             <FormField
                 options={{ label: "Last Name", name: "lastName" }}
                 placeholder="Enter First Last"
                 disabled={isLoading}
+                required
             />
             <FormSelect
                 options={{ label: "Gender", name: "gender" }}
@@ -66,10 +68,12 @@ const UserFormFields = ({ isLoading }: Props) => {
                 options={{ label: "Email", name: "email" }}
                 placeholder="Enter Email"
                 disabled={isLoading}
+                required
             />
             <FormPassword
                 options={{ label: "Password", name: "password" }}
                 disabled={isLoading}
+                required
             />
             <FormSelect
                 options={{ label: "Roles", name: "roles" }}
@@ -85,6 +89,7 @@ const UserFormFields = ({ isLoading }: Props) => {
                 options={{ label: "Date Of Birth", name: "birthDate" }}
                 type="date"
                 disabled={isLoading}
+                required
             />
         </div>
     );

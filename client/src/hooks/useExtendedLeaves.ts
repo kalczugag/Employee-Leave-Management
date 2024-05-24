@@ -4,14 +4,20 @@ import {
     useGetEmployeesQuery,
     useGetLeavesQuery,
 } from "../store";
-import { isLeaveArray } from "../utils/isLeaveArray";
+import LeaveTypes from "../utils/leavesType";
 import useSnackbar from "./useSnackbar";
 import type { StatusUnion } from "@typ/leave";
+import useAuth from "./useAuth";
 
 const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const { handleOpen } = useSnackbar();
+    const { user } = useAuth();
 
-    const { data: leavesData } = useGetLeavesQuery();
+    const options = {
+        ...(user?.roles === "staff" && { userId: user._id }),
+    };
+
+    const { data: leavesData } = useGetLeavesQuery(options);
     const { data: employeesData } = useGetEmployeesQuery();
     const [deleteLeave, result] = useDeleteLeaveMutation();
 
@@ -20,7 +26,10 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     };
 
     const combinedData = useMemo(() => {
-        if (!isLeaveArray(leavesData) || !Array.isArray(employeesData)) {
+        if (
+            !LeaveTypes.isLeaveArray(leavesData) ||
+            !Array.isArray(employeesData)
+        ) {
             return [];
         }
 

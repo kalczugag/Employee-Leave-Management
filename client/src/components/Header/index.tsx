@@ -28,7 +28,7 @@ const Header = () => {
                     handleOpen={() => dispatch(toggleSidebar(true))}
                 />
                 {/* change to reusable */}
-                <SearchForm data={CategoriesConfig} />
+                {/* <SearchForm data={CategoriesConfig} /> */}
                 <Form
                     onSubmit={onSubmit}
                     render={({ handleSubmit }) => (
