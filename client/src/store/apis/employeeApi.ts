@@ -19,7 +19,8 @@ interface extendedUsers {
 export const employeeApi = createApi({
     reducerPath: "employee",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3000/api",
+        baseUrl:
+            window.location.protocol + "//" + window.location.host + "/api",
     }),
     tagTypes: ["Employees"],
     endpoints: (builder) => ({

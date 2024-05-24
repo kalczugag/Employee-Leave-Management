@@ -13,7 +13,8 @@ interface optionsProps {
 export const leaveApi = createApi({
     reducerPath: "leave",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3000/api",
+        baseUrl:
+            window.location.protocol + "//" + window.location.host + "/api",
     }),
     tagTypes: ["Leaves"],
     endpoints: (builder) => ({

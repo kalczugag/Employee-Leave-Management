@@ -4,7 +4,8 @@ import type { Department } from "@typ/department";
 export const departmentApi = createApi({
     reducerPath: "department",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3000/api",
+        baseUrl:
+            window.location.protocol + "//" + window.location.host + "/api",
     }),
     tagTypes: ["Departments"],
     endpoints: (builder) => ({
