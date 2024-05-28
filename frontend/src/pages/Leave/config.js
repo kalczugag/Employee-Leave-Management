@@ -42,7 +42,7 @@ export const fields = [
                     className={`border-b-2 ${
                         row.status === "pending"
                             ? "border-[#ff9800]"
-                            : row.hodStatus === "approved"
+                            : row.status === "approved"
                             ? "border-[#4caf50]"
                             : "border-[#f44336]"
                     }`}

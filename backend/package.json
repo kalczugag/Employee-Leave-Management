@@ -4,7 +4,7 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "concurrently  \"npm run server\" \"npm run client\"",
+        "start": "node dist/server.js",
         "dev": "nodemon",
         "build": "npm install --prefix client && npm install && npm run build --prefix client && tsc --build"
     },

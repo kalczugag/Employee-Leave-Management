@@ -1,7 +1,5 @@
 FROM node:20.5.1
 
-# ENV NODE_ENV=production
-
 WORKDIR /usr/src/app
 
 RUN npm install -g npm@10.8.0
@@ -12,6 +10,6 @@ RUN npm install
 
 COPY . .
 
-# RUN npm run build
+EXPOSE 8080
 
-CMD [ "dev", "run", "dev" ]
+CMD ["npm", "run", "dev"]

@@ -24,7 +24,7 @@ const Stats = () => {
         ...(user?.roles === "staff" && { userId: user._id }),
     };
 
-    const { data, error } = useGetLeavesQuery(options);
+    const { data, isLoading, error } = useGetLeavesQuery(options);
 
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
