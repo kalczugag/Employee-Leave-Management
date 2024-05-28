@@ -3,6 +3,7 @@ interface Props {
 }
 
 const Status = ({ status }: Props) => {
+    console.log(status);
     return (
         <span
             className={`${

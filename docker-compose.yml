@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+    backend:
+        build: ./backend
+        volumes:
+            - ./backend:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - "8080:8080"
+        environment:
+            - NODE_ENV=development
+            - DATABASE=mongodb://mongo:27017/local-elm
+            - PORT=8080
+        command: sh -c "npm run dev"
+        networks:
+            - server-mongo
+        depends_on:
+            - mongo
+
+    frontend:
+        build: ./frontend
+        volumes:
+            - ./frontend:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - "3000:3000"
+        environment:
+            - NODE_ENV=development
+            - REACT_APP_API_URL=http://backend:8080/api
+        depends_on:
+            - backend
+
+    mongo:
+        image: mongo
+        volumes:
+            - mongodb_data:/data/db
+        networks:
+            - server-mongo
+
+volumes:
+    mongodb_data:
+
+networks:
+    server-mongo:
