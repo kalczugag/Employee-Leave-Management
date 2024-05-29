@@ -81,15 +81,6 @@ const App = () => {
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
-            <div className="fixed left-2 bottom-1 w-[calc(150px)] text-center text-gray-500 text-sm">
-                If data doesn't load properly{" "}
-                <button
-                    onClick={() => window.location.reload()}
-                    className="underline hover:text-gray-700"
-                >
-                    refresh the page
-                </button>
-            </div>
             {createPortal(<SnackbarMsg />, document.body)}
         </>
     );

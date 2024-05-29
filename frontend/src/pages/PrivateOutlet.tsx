@@ -4,6 +4,7 @@ import useThunk from "../hooks/useThunk";
 import { getUser } from "../store";
 import useAuth from "../hooks/useAuth";
 import Layout from "../layout/Layout";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const PrivateOutlet = () => {
     const auth = useAuth();
@@ -24,7 +25,17 @@ const PrivateOutlet = () => {
     }, [auth.isAuthenticated, auth.user, doFetchUser]);
 
     if (!auth.isAuthenticated && !auth.user) {
-        return <div>Loading...</div>;
+        return (
+            <Backdrop
+                sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={true}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        );
     }
 
     return auth.isAuthenticated ? (
