@@ -1,5 +1,6 @@
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
     RootState,
     toggleSidebar,
@@ -17,9 +18,28 @@ import LinksList from "./LinksList";
 const CategoryList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const { user } = useAuth();
 
     const { expanded } = useSelector((state: RootState) => state.sidebar);
+
+    useEffect(() => {
+        const pathToNodeId = (path: string) => {
+            const configItem = CategoriesConfig.find(({ to }) => {
+                return path.split("/")[1] === to.split("/")[1];
+            });
+            if (configItem) {
+                const index = CategoriesConfig.indexOf(configItem);
+                return configItem.label + "_" + index.toString();
+            }
+            return null;
+        };
+
+        const nodeId = pathToNodeId(location.pathname);
+        if (nodeId) {
+            dispatch(setExpanded([nodeId]));
+        }
+    }, [location.pathname, dispatch]);
 
     const renderedOptions = CategoriesConfig.map(
         ({ label, to, element, expendable = true, access }, index) => {

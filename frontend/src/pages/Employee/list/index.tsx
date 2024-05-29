@@ -13,7 +13,7 @@ const EmployeeList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isLoading } = useGetEmployeesQuery();
+    const { data, isLoading, isFetching } = useGetEmployeesQuery();
     const [deleteEmployee, result] = useDeleteEmployeeMutation();
 
     if (!data && !isLoading) {
@@ -41,7 +41,11 @@ const EmployeeList = () => {
                 label="Add Employee"
                 extended={user?.roles !== "staff"}
             />
-            <BasicTable headerOptions={fields} rowData={employeeData} />
+            <BasicTable
+                headerOptions={fields}
+                rowData={employeeData}
+                isLoading={isFetching}
+            />
         </DefaultPage>
     );
 };

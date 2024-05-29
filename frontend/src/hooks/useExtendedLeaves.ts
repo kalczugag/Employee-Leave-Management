@@ -17,13 +17,17 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         ...(user?.roles === "staff" && { userId: user._id }),
     };
 
-    const { data: leavesData } = useGetLeavesQuery(options);
-    const { data: employeesData } = useGetEmployeesQuery();
+    const { data: leavesData, isFetching: leavesFetching } =
+        useGetLeavesQuery(options);
+    const { data: employeesData, isFetching: employeesFetching } =
+        useGetEmployeesQuery();
     const [deleteLeave, result] = useDeleteLeaveMutation();
 
     const handleDelete = (id: string) => {
         deleteLeave(id).then(() => handleOpen("Leave Removed Successfully"));
     };
+
+    const isFetching = leavesFetching || employeesFetching;
 
     const combinedData = useMemo(() => {
         if (
@@ -56,7 +60,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         });
     }, [leavesData, employeesData, status]);
 
-    return combinedData;
+    return { data: combinedData, isFetching };
 };
 
 export default useExtendedLeaves;

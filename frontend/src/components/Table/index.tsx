@@ -20,6 +20,7 @@ import {
     KeyboardArrowRight,
     LastPage,
 } from "@mui/icons-material";
+import LoadingBackdrop from "../LoadingBackdrop";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     wordBreak: "normal",
@@ -122,11 +123,13 @@ interface HeaderOption {
 interface CustomPaginationActionsTableProps {
     headerOptions: HeaderOption[];
     rowData: any[];
+    isLoading: boolean;
 }
 
 const CustomPaginationActionsTable = ({
     headerOptions,
     rowData,
+    isLoading,
 }: CustomPaginationActionsTableProps) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -149,92 +152,98 @@ const CustomPaginationActionsTable = ({
     };
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-                <TableHead>
-                    <TableRow>
-                        {headerOptions.map(({ label }, index) => {
-                            if (index === 0) {
-                                return (
-                                    <StyledTableCell key={index}>
-                                        {label}
-                                    </StyledTableCell>
-                                );
-                            }
-
-                            return (
-                                <StyledTableCell align="right" key={index}>
-                                    {label}
-                                </StyledTableCell>
-                            );
-                        })}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {(rowsPerPage > 0
-                        ? rowData.slice(
-                              page * rowsPerPage,
-                              page * rowsPerPage + rowsPerPage
-                          )
-                        : rowData
-                    ).map((row, rowIndex) => (
-                        <TableRow key={rowIndex}>
-                            {headerOptions.map(({ render }, colIndex) => {
-                                if (colIndex === 0) {
+        <>
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{ minWidth: 500 }}
+                    aria-label="custom pagination table"
+                >
+                    <TableHead>
+                        <TableRow>
+                            {headerOptions.map(({ label }, index) => {
+                                if (index === 0) {
                                     return (
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            key={colIndex}
-                                        >
-                                            {render(row)}
-                                        </TableCell>
+                                        <StyledTableCell key={index}>
+                                            {label}
+                                        </StyledTableCell>
                                     );
                                 }
 
                                 return (
-                                    <TableCell key={colIndex} align="right">
-                                        {render(row)}
-                                    </TableCell>
+                                    <StyledTableCell align="right" key={index}>
+                                        {label}
+                                    </StyledTableCell>
                                 );
                             })}
                         </TableRow>
-                    ))}
-                    {emptyRows > 0 && (
-                        <TableRow style={{ height: 53 * emptyRows }}>
-                            <TableCell colSpan={headerOptions.length} />
-                        </TableRow>
-                    )}
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            rowsPerPageOptions={[
-                                5,
-                                10,
-                                25,
-                                { label: "All", value: -1 },
-                            ]}
-                            colSpan={headerOptions.length + 1}
-                            count={rowData.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            slotProps={{
-                                select: {
-                                    inputProps: {
-                                        "aria-label": "rows per page",
+                    </TableHead>
+                    <TableBody>
+                        {(rowsPerPage > 0
+                            ? rowData.slice(
+                                  page * rowsPerPage,
+                                  page * rowsPerPage + rowsPerPage
+                              )
+                            : rowData
+                        ).map((row, rowIndex) => (
+                            <TableRow key={rowIndex}>
+                                {headerOptions.map(({ render }, colIndex) => {
+                                    if (colIndex === 0) {
+                                        return (
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                key={colIndex}
+                                            >
+                                                {render(row)}
+                                            </TableCell>
+                                        );
+                                    }
+
+                                    return (
+                                        <TableCell key={colIndex} align="right">
+                                            {render(row)}
+                                        </TableCell>
+                                    );
+                                })}
+                            </TableRow>
+                        ))}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 53 * emptyRows }}>
+                                <TableCell colSpan={headerOptions.length} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: "All", value: -1 },
+                                ]}
+                                colSpan={headerOptions.length + 1}
+                                count={rowData.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                slotProps={{
+                                    select: {
+                                        inputProps: {
+                                            "aria-label": "rows per page",
+                                        },
+                                        native: true,
                                     },
-                                    native: true,
-                                },
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
-                </TableFooter>
-            </Table>
-        </TableContainer>
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+            {<LoadingBackdrop isLoading={isLoading} />}
+        </>
     );
 };
 

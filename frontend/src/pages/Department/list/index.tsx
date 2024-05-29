@@ -13,7 +13,7 @@ const DepartmentList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isLoading } = useGetAllDepartmentsQuery();
+    const { data, isLoading, isFetching } = useGetAllDepartmentsQuery();
     const [deleteDepartment, result] = useDeleteDepartmentMutation();
 
     if (!data && !isLoading) {
@@ -41,7 +41,11 @@ const DepartmentList = () => {
                 label="Add Department"
                 extended={user?.roles !== "staff"}
             />
-            <BasicTable headerOptions={fields} rowData={departmentdata} />
+            <BasicTable
+                headerOptions={fields}
+                rowData={departmentdata}
+                isLoading={isFetching}
+            />
         </DefaultPage>
     );
 };

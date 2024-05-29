@@ -13,7 +13,7 @@ const LeaveTypeList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isLoading } = useGetLeaveTypesQuery();
+    const { data, isLoading, isFetching } = useGetLeaveTypesQuery();
     const [deleteLeaveType, result] = useDeleteLeaveTypeMutation();
 
     if (!data && !isLoading) {
@@ -43,7 +43,11 @@ const LeaveTypeList = () => {
                 label="Add Leave Type"
                 extended={user?.roles !== "staff"}
             />
-            <BasicTable headerOptions={fields} rowData={leaveTypeData} />
+            <BasicTable
+                headerOptions={fields}
+                rowData={leaveTypeData}
+                isLoading={isFetching}
+            />
         </DefaultPage>
     );
 };

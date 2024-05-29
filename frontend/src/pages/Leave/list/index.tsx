@@ -6,7 +6,7 @@ import DefaultPage from "../../../layout/DefaultPage";
 import BasicTable from "../../../components/Table";
 
 const LeaveList = () => {
-    const data = useExtendedLeaves();
+    const { data, isFetching } = useExtendedLeaves();
 
     const dd = [
         { label: "1" },
@@ -26,6 +26,7 @@ const LeaveList = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={Array.isArray(data) ? data : []}
+                isLoading={isFetching}
             />
         </DefaultPage>
     );
