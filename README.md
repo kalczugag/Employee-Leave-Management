@@ -72,7 +72,7 @@ To get started with the Employee Leave Management app, follow the steps below:
 
 ## Contributing
 
-Contributions are welcome! Please follow the [Contributing Guidelines](https://github.com/kalczugag/Employee-Leave-Management).
+Contributions are welcome! Please follow the [Contributing Guidelines](https://github.com/kalczugag/Employee-Leave-Management/contributing.md).
 
 ## License
 
