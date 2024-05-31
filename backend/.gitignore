@@ -1,4 +1,4 @@
 node_modules
 dist
 dev.ts
-.env
+.env.local
