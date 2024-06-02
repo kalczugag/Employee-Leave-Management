@@ -1,6 +1,5 @@
 import express from "express";
 import { get, merge } from "lodash";
-import keys from "../config/keys";
 
 import { getUserBySessionToken } from "../db/users";
 
@@ -64,7 +63,7 @@ export const isAuthenticated = async (
     next: express.NextFunction
 ) => {
     try {
-        const sessionToken = req.cookies[keys.authCookieKey];
+        const sessionToken = req.cookies[process.env.AUTH_COOKIE_KEY!];
 
         if (!sessionToken) {
             return res.sendStatus(403);
@@ -91,7 +90,8 @@ export const isEmailVerified = async (
     next: express.NextFunction
 ) => {
     try {
-        const isEmailVerified = req.cookies[keys.verifyEmailCookieKey];
+        const isEmailVerified =
+            req.cookies[process.env.VERIFY_EMAIL_COOKIE_KEY!];
 
         if (!isEmailVerified) {
             return res.sendStatus(403);

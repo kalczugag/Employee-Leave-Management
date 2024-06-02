@@ -7,9 +7,9 @@ import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
 import { sendEmail } from "./services/nodemailer";
+import { otpEmail } from "./emailTemplate/otpEmail";
 import { smtpConfig } from "./config/smtpConfig";
 
-import keys from "./config/keys";
 import router from "./router";
 
 const app = express();
@@ -29,18 +29,21 @@ server.listen(8080, () => {
 });
 
 const emailOptions = {
-    from: "test <youremail@gmail.com>",
+    from: "Employee Leave Management <no-reply@elm.com>",
     to: "kalczugag@gmail.com",
-    subject: "Nodemailer is unicode friendly ✔",
-    text: "Hello to myself!",
-    html: "<p><b>Hello</b> to myself!</p>",
+    subject: "Employee Leave Management: OTP Verification",
+    html: otpEmail,
 };
 sendEmail(emailOptions, smtpConfig).catch((err: any) => {
     console.error("Error sending email:", err);
 });
 
+if (!process.env.DATABASE) {
+    throw new Error("DATABASE environment variable is not set");
+}
+const mongo_url = process.env.DATABASE;
 mongoose.Promise = Promise;
-mongoose.connect(keys.mongoURI);
+mongoose.connect(mongo_url);
 mongoose.connection.on("error", (error: Error) => console.log(error));
 
 app.use("/api", router());

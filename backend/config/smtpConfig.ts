@@ -12,18 +12,16 @@ const emailOptions = {
     html: "<p><b>Hello</b> to myself!</p>",
 };
 
-console.log(process.env.SMTP_USER);
-
 export const smtpConfig = {
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
     auth: {
-        user: process.env.SMTP_USER as string,
-        pass: process.env.SMTP_PASS as string,
+        user: process.env.SMTP_USER!,
+        pass: process.env.SMTP_PASS!,
     },
 };
 
-sendEmail(emailOptions, smtpConfig).catch((err: any) => {
-    console.error("Error sending email:", err);
-});
+// sendEmail(emailOptions, smtpConfig).catch((err: any) => {
+//     console.error("Error sending email:", err);
+// });

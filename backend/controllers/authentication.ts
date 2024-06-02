@@ -1,6 +1,4 @@
 import express from "express";
-import keys from "../config/keys";
-
 import {
     getUserByEmail,
     createUser,
@@ -44,9 +42,13 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         const userObject = user.toObject();
 
-        res.cookie(keys.authCookieKey, user.authentication.sessionToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-        });
+        res.cookie(
+            process.env.AUTH_COOKIE_KEY!,
+            user.authentication.sessionToken,
+            {
+                maxAge: 30 * 24 * 60 * 60 * 1000,
+            }
+        );
 
         return res
             .status(200)
@@ -93,7 +95,7 @@ export const register = async (req: express.Request, res: express.Response) => {
 
 export const getUser = async (req: express.Request, res: express.Response) => {
     try {
-        const sessionToken = req.cookies[keys.authCookieKey];
+        const sessionToken = req.cookies[process.env.AUTH_COOKIE_KEY!];
 
         if (!sessionToken) {
             return res.sendStatus(403);
@@ -121,11 +123,11 @@ export const logout = (req: express.Request, res: express.Response) => {
     try {
         const cookies = req.cookies;
 
-        if (!cookies[keys.authCookieKey]) {
+        if (!cookies[process.env.AUTH_COOKIE_KEY!]) {
             return res.sendStatus(403);
         }
 
-        res.clearCookie(keys.authCookieKey);
+        res.clearCookie(process.env.AUTH_COOKIE_KEY!);
 
         return res.sendStatus(200);
     } catch (error) {
@@ -150,7 +152,7 @@ export const verifyEmail = async (
         const salt = random();
         const hashedEmail = authentication(salt, email);
 
-        res.cookie(keys.verifyEmailCookieKey, hashedEmail, {
+        res.cookie(process.env.VERIFY_EMAIL_COOKIE_KEY!, hashedEmail, {
             maxAge: 900000,
         });
 
@@ -185,7 +187,7 @@ export const resetPassword = async (
 
         const cookies = req.cookies;
 
-        if (!cookies[keys.verifyEmailCookieKey]) {
+        if (!cookies[process.env.VERIFY_EMAIL_COOKIE_KEY!]) {
             return res.sendStatus(403);
         }
 
@@ -199,7 +201,7 @@ export const resetPassword = async (
             },
         });
 
-        res.clearCookie(keys.verifyEmailCookieKey);
+        res.clearCookie(process.env.VERIFY_EMAIL_COOKIE_KEY!);
 
         return res.sendStatus(200);
     } catch (error) {
@@ -215,7 +217,7 @@ export const changePassword = async (
 ) => {
     try {
         const { currentPassword, newPassword, confirmNewPassword } = req.body;
-        const sessionToken = req.cookies[keys.authCookieKey];
+        const sessionToken = req.cookies[process.env.AUTH_COOKIE_KEY!];
 
         if (!sessionToken) {
             return res.sendStatus(403);
