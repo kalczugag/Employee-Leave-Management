@@ -4,14 +4,6 @@ import { sendEmail } from "../services/nodemailer";
 config();
 config({ path: [".env.local", ".env"] });
 
-const emailOptions = {
-    from: `test <${process.env.SMTP_USER}>`,
-    to: "kalczugag@gmail.com",
-    subject: "Nodemailer is unicode friendly ✔",
-    text: "Hello to myself!",
-    html: "<p><b>Hello</b> to myself!</p>",
-};
-
 export const smtpConfig = {
     host: "smtp-relay.brevo.com",
     port: 587,

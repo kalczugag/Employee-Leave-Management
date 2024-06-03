@@ -32,8 +32,9 @@ const emailOptions = {
     from: "Employee Leave Management <no-reply@elm.com>",
     to: "kalczugag@gmail.com",
     subject: "Employee Leave Management: OTP Verification",
-    html: otpEmail,
+    html: otpEmail({ email: "kalczugag@gmail.com", code: 669534 }),
 };
+
 sendEmail(emailOptions, smtpConfig).catch((err: any) => {
     console.error("Error sending email:", err);
 });
