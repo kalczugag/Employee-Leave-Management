@@ -23,11 +23,6 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: "500kb" }));
 
-const server = http.createServer(app);
-server.listen(8080, () => {
-    console.log("Server running on http://localhost:8080");
-});
-
 // const emailOptions = {
 //     from: "Employee Leave Management <no-reply@elm.com>",
 //     to: "kalczugag@gmail.com",
@@ -50,7 +45,7 @@ mongoose.connection.on("error", (error: Error) => console.log(error));
 app.use("/api", router());
 
 if (process.env.NODE_ENV === "production") {
-    const clientBuildPath = path.join(__dirname, "../../frontend");
+    const clientBuildPath = path.join(__dirname, "../frontend/build");
 
     app.use(
         express.static(clientBuildPath, { maxAge: 30 * 24 * 60 * 60 * 1000 })
@@ -60,3 +55,9 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.join(clientBuildPath, "index.html"));
     });
 }
+
+const server = http.createServer(app);
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});

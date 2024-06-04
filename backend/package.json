@@ -4,9 +4,9 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "node dist/server.js",
-        "dev": "nodemon",
-        "build": "tsc --build"
+        "start": "nodemon",
+        "build": "tsc",
+        "serve": "node dist/index.js"
     },
     "keywords": [],
     "author": "",

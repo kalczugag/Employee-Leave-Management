@@ -2,7 +2,7 @@ import { useGetEmployeesQuery } from "../../store";
 import ProfileCell from "../ProfileCell";
 
 const RoleList = ({ role }: { role: "hod" | "staff" }) => {
-    const { data } = useGetEmployeesQuery("staff,hod");
+    const { data } = useGetEmployeesQuery({ byRole: "staff,hod" });
 
     if (!Array.isArray(data)) {
         return <></>;
