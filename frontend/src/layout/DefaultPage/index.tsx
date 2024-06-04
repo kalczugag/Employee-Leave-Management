@@ -20,7 +20,7 @@ const DefaultPage = ({ children, label, bg, footer = true }: Props) => {
     }));
 
     return (
-        <div className="relative flex flex-col mx-10">
+        <div className="relative flex flex-col md:mx-10">
             <div className="flex-1 flex flex-col space-y-4">
                 <div className="flex flex-row justify-between items-center">
                     <h3 className="font-semibold text-gray-500 text-lg">
