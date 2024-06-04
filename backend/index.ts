@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config({ path: [".env.local", ".env"] });
+
 import express from "express";
 import http from "http";
 import bodyParser from "body-parser";
@@ -6,9 +9,6 @@ import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
-import { sendEmail } from "./services/nodemailer";
-import { otpEmail } from "./emailTemplate/otpEmail";
-import { smtpConfig } from "./config/smtpConfig";
 
 import router from "./router";
 
@@ -28,16 +28,16 @@ server.listen(8080, () => {
     console.log("Server running on http://localhost:8080");
 });
 
-const emailOptions = {
-    from: "Employee Leave Management <no-reply@elm.com>",
-    to: "kalczugag@gmail.com",
-    subject: "Employee Leave Management: OTP Verification",
-    html: otpEmail({ email: "kalczugag@gmail.com", code: 669534 }),
-};
+// const emailOptions = {
+//     from: "Employee Leave Management <no-reply@elm.com>",
+//     to: "kalczugag@gmail.com",
+//     subject: "Employee Leave Management: OTP Verification",
+//     html: otpEmail({ email: "kalczugag@gmail.com", code: 669534 }),
+// };
 
-sendEmail(emailOptions, smtpConfig).catch((err: any) => {
-    console.error("Error sending email:", err);
-});
+// sendEmail(emailOptions, smtpConfig).catch((err: any) => {
+//     console.error("Error sending email:", err);
+// });
 
 if (!process.env.DATABASE) {
     throw new Error("DATABASE environment variable is not set");

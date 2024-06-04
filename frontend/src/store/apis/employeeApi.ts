@@ -10,10 +10,10 @@ interface GetEmployeesByIdsParams {
     selectQuery?: string;
 }
 
-interface extendedUsers {
-    totalPages: number;
-    totalUsersCount: number;
-    users: user[];
+interface GetEmployeesParams {
+    byRole?: string;
+    page?: number;
+    pageSize?: number;
 }
 
 export const employeeApi = createApi({
@@ -24,16 +24,22 @@ export const employeeApi = createApi({
     }),
     tagTypes: ["Employees"],
     endpoints: (builder) => ({
-        getEmployees: builder.query<user[], string | void>({
-            query: (byRole) => {
-                const params: Record<string, string> = {};
-                if (byRole) {
-                    params.byRole = byRole;
+        getEmployees: builder.query<user[], GetEmployeesParams | void>({
+            query: (params = {}) => {
+                const queryParams: Record<string, string> = {};
+                if (params?.byRole) {
+                    queryParams.byRole = params.byRole;
+                }
+                if (params?.page !== undefined) {
+                    queryParams.page = params.page.toString();
+                }
+                if (params?.pageSize !== undefined) {
+                    queryParams.pageSize = params.pageSize.toString();
                 }
                 return {
                     url: "/users",
                     method: "GET",
-                    params,
+                    params: queryParams,
                 };
             },
             providesTags: (result) =>

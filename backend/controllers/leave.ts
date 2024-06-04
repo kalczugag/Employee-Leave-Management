@@ -45,7 +45,7 @@ export const getAllLeaves = async (
         let leavesQuery = getLeaves()
             .select(selectQuery)
             .skip(page * pageSize)
-            .limit(pageSize + 1);
+            .limit(pageSize);
 
         if (userId) {
             leavesQuery = leavesQuery.where("_user").equals(userId);

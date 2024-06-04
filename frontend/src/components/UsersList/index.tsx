@@ -10,7 +10,7 @@ const UsersList = ({ children }: Props) => {
     useGetEmployeesQuery("staff,hod");
 
     return (
-        <div className="flex flex-col justify-between space-y-4 text-gray-500 lg:flex-row lg:space-x-6 lg:space-y-0">
+        <div className="flex flex-col justify-between space-y-4 h-full text-gray-500 xl:flex-row xl:space-x-6 xl:space-y-0">
             {children}
         </div>
     );

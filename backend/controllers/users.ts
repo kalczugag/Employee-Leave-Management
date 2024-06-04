@@ -21,11 +21,11 @@ export const getAllUsers = async (
     res: express.Response
 ) => {
     try {
-        const { page = 1, pageSize = 5, byRole }: PaginationProps = req.query;
+        const { page = 0, pageSize = 5, byRole }: PaginationProps = req.query;
 
         let usersQuery = getUsers()
-            .skip((page - 1) * pageSize)
-            .limit(pageSize + 1);
+            .skip(page * pageSize)
+            .limit(pageSize);
 
         if (byRole) {
             const roles = byRole.split(",");
@@ -34,26 +34,26 @@ export const getAllUsers = async (
 
         const users = await usersQuery.exec();
 
-        let hasMore = false;
-        if (users.length > pageSize) {
-            hasMore = true;
-            users.pop();
-        }
+        // let hasMore = false;
+        // if (users.length > pageSize) {
+        //     hasMore = true;
+        //     users.pop();
+        // }
 
-        const totalUsersCount = await getUsers().countDocuments();
+        // const totalUsersCount = await getUsers().countDocuments();
 
-        let totalPages = Math.ceil(users.length / pageSize);
-        if (hasMore) {
-            totalPages++;
-        }
+        // let totalPages = Math.ceil(users.length / pageSize);
+        // if (hasMore) {
+        //     totalPages++;
+        // }
 
-        while (users.length < pageSize) {
-            const additionalUsers = await getUsers()
-                .skip(users.length)
-                .limit(pageSize - users.length)
-                .exec();
-            users.push(...additionalUsers);
-        }
+        // while (users.length < pageSize) {
+        //     const additionalUsers = await getUsers()
+        //         .skip(users.length)
+        //         .limit(pageSize - users.length)
+        //         .exec();
+        //     users.push(...additionalUsers);
+        // }
 
         return res.status(200).json(users);
     } catch (error) {

@@ -23,7 +23,7 @@ const StatsViewBox = ({
             : "red";
 
     return (
-        <div className="flex flex-col items-center justify-center p-8 rounded bg-white shadow text-gray-500 md:p-10">
+        <div className="flex flex-col items-center justify-center p-8 rounded bg-white shadow text-gray-500 md:p-10 md:py-14 md:text-lg">
             <div>{icon}</div>
             <div className="flex items-center text-2xl font-semibold">
                 <span>{amount}</span>

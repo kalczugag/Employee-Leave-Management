@@ -1,8 +1,6 @@
-import { config } from "dotenv";
-import { sendEmail } from "../services/nodemailer";
+import dotenv from "dotenv";
 
-config();
-config({ path: [".env.local", ".env"] });
+dotenv.config({ path: [".env.local", ".env"] });
 
 export const smtpConfig = {
     host: "smtp-relay.brevo.com",

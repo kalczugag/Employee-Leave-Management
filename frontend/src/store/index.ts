@@ -6,6 +6,7 @@ import { employeeApi } from "./apis/employeeApi";
 import { leaveApi } from "./apis/leaveApi";
 import userReducer from "./user/userSlice";
 import sidebarReducer from "./sidebar/sidebarSlice";
+import tableReducer from "./table/tableSlice";
 import snackbarReducer from "./snackbar/snackbarSlice";
 import editorReducer from "./editor/editorSlice";
 
@@ -17,6 +18,7 @@ export const store = configureStore({
         [leaveApi.reducerPath]: leaveApi.reducer,
         user: userReducer,
         sidebar: sidebarReducer,
+        table: tableReducer,
         snackbar: snackbarReducer,
         editor: editorReducer,
     },
@@ -37,6 +39,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export * from "./user/userSlice";
 export * from "./sidebar/sidebarSlice";
+export * from "./table/tableSlice";
 export * from "./snackbar/snackbarSlice";
 export * from "./editor/editorSlice";
 export {

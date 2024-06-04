@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTheme, styled } from "@mui/material/styles";
 import {
     Box,
@@ -21,6 +20,8 @@ import {
     LastPage,
 } from "@mui/icons-material";
 import LoadingBackdrop from "../LoadingBackdrop";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, setPage, setPageSize } from "../../store";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     wordBreak: "normal",
@@ -131,24 +132,25 @@ const CustomPaginationActionsTable = ({
     rowData,
     isLoading,
 }: CustomPaginationActionsTableProps) => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const dispatch = useDispatch();
+    const { page, pageSize } = useSelector((state: RootState) => state.table);
+    // const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowData.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * pageSize - rowData.length) : 0;
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number
     ) => {
-        setPage(newPage);
+        dispatch(setPage(newPage));
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
+        dispatch(setPageSize(parseInt(event.target.value, 10)));
+        dispatch(setPage(0));
     };
 
     return (
@@ -178,10 +180,10 @@ const CustomPaginationActionsTable = ({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(rowsPerPage > 0
+                        {(pageSize > 0
                             ? rowData.slice(
-                                  page * rowsPerPage,
-                                  page * rowsPerPage + rowsPerPage
+                                  page * pageSize,
+                                  page * pageSize + pageSize
                               )
                             : rowData
                         ).map((row, rowIndex) => (
@@ -224,7 +226,7 @@ const CustomPaginationActionsTable = ({
                                 ]}
                                 colSpan={headerOptions.length + 1}
                                 count={rowData.length}
-                                rowsPerPage={rowsPerPage}
+                                rowsPerPage={pageSize}
                                 page={page}
                                 slotProps={{
                                     select: {

@@ -210,7 +210,7 @@ export const resetPassword = async (
     }
 };
 
-// this is for profile/settings to chagne own password by authenticated user
+// this is for profile/settings to change own password by authenticated user
 export const changePassword = async (
     req: express.Request,
     res: express.Response
