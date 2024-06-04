@@ -45,7 +45,7 @@ mongoose.connection.on("error", (error: Error) => console.log(error));
 app.use("/api", router());
 
 if (process.env.NODE_ENV === "production") {
-    const clientBuildPath = path.join(__dirname, "../frontend/build");
+    const clientBuildPath = path.join(__dirname, "../../frontend/build");
 
     app.use(
         express.static(clientBuildPath, { maxAge: 30 * 24 * 60 * 60 * 1000 })
