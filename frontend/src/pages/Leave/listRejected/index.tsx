@@ -5,7 +5,7 @@ import BasicTable from "../../../components/Table";
 import { fields } from "../config";
 
 const LeaveListRejected = () => {
-    const { data, isFetching } = useExtendedLeaves();
+    const { data, isFetching } = useExtendedLeaves("rejected");
 
     const handleSubmit = (values: any) => {
         console.log(values);
