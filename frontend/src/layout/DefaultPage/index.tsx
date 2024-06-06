@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 import BasicBreadcrumbs from "../../components/BasicBreadcrumbs";
 
 interface Props {
-    children: ReactNode;
+    children?: ReactNode;
     label: string;
     bg?: boolean;
     footer?: boolean;

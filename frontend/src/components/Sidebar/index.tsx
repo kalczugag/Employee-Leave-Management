@@ -5,7 +5,7 @@ import { Drawer } from "@mui/material";
 import CategoryList from "./CategoryList";
 import Logo from "../Logo";
 
-export default function TemporaryDrawer() {
+export default function Sidebar() {
     const dispatch = useDispatch();
     const isMobile = useMobileCheck();
     const isOpen = useSelector((state: RootState) => state.sidebar.isOpen);
