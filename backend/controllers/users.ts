@@ -96,6 +96,8 @@ export const getUsersByIds = async (
     try {
         const { ids } = req.query;
 
+        if (typeof ids === "string") console.log(ids.split(",")); //fix code
+
         if (!ids || !Array.isArray(ids)) {
             return res.status(400).json({ message: "IDs array is required" });
         }

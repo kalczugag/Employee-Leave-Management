@@ -77,6 +77,13 @@ export const employeeApi = createApi({
                     fields: selectQuery,
                 },
             }),
+            providesTags: (result, error) =>
+                result
+                    ? result.map((user) => ({
+                          type: "Employees",
+                          id: user._id,
+                      }))
+                    : [{ type: "Employees", id: "LIST" }],
         }),
 
         addEmployee: builder.mutation<user, user>({
@@ -116,6 +123,7 @@ export const employeeApi = createApi({
 export const {
     useGetEmployeesQuery,
     useGetEmployeeQuery,
+    useGetEmployeesByIdsQuery,
     useAddEmployeeMutation,
     useEditEmployeeMutation,
     useDeleteEmployeeMutation,

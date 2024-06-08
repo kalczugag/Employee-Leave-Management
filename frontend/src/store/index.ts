@@ -59,6 +59,7 @@ export {
 export {
     useGetEmployeesQuery,
     useGetEmployeeQuery,
+    useGetEmployeesByIdsQuery,
     useAddEmployeeMutation,
     useEditEmployeeMutation,
     useDeleteEmployeeMutation,

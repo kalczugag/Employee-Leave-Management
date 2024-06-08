@@ -1,13 +1,15 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
+import _ from "lodash";
 import {
     useDeleteLeaveMutation,
-    useGetEmployeesQuery,
+    useGetEmployeesByIdsQuery,
     useGetLeavesQuery,
 } from "../store";
 import LeaveTypes from "../utils/leavesType";
 import useSnackbar from "./useSnackbar";
 import type { StatusUnion } from "@typ/leave";
 import useAuth from "./useAuth";
+import { useSelector } from "react-redux";
 
 const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const { handleOpen } = useSnackbar();
@@ -19,13 +21,31 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
 
     const { data: leavesData, isFetching: leavesFetching } =
         useGetLeavesQuery(options);
-    const { data: employeesData, isFetching: employeesFetching } =
-        useGetEmployeesQuery();
     const [deleteLeave, result] = useDeleteLeaveMutation();
 
     const handleDelete = (id: string) => {
         deleteLeave(id).then(() => handleOpen("Leave Removed Successfully"));
     };
+
+    const uniqueEmployeeIds = useMemo(() => {
+        if (!LeaveTypes.isLeaveArray(leavesData)) {
+            return [];
+        }
+        const leaveUsersIds = leavesData.map((e) => e._user);
+        const uniqueIds = _.uniq(leaveUsersIds).filter(
+            (id): id is string => id !== undefined
+        );
+
+        return uniqueIds;
+    }, [leavesData]);
+
+    const { data: employeesData, isFetching: employeesFetching } =
+        useGetEmployeesByIdsQuery(
+            { ids: uniqueEmployeeIds },
+            {
+                skip: uniqueEmployeeIds.length === 0,
+            }
+        );
 
     const isFetching = leavesFetching || employeesFetching;
 
@@ -47,9 +67,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
 
         return filteredLeaves.map((leave) => {
             const employee =
-                employeesData.find(
-                    (employee) => employee._id === leave._user
-                ) || null;
+                employeesData.find((emp) => emp._id === leave._user) || null;
 
             return {
                 ...leave,
@@ -58,9 +76,9 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
                 handleDelete: () => handleDelete(leave._id!),
             };
         });
-    }, [leavesData, employeesData, status]);
+    }, [leavesData, employeesData, status, result.isLoading]);
 
-    return { data: combinedData, isFetching };
+    return { data: combinedData, isFetching: isFetching || employeesFetching };
 };
 
 export default useExtendedLeaves;
