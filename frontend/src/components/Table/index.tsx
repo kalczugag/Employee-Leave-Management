@@ -124,12 +124,14 @@ interface HeaderOption {
 interface CustomPaginationActionsTableProps {
     headerOptions: HeaderOption[];
     rowData: any[];
+    totalItems?: number;
     isLoading: boolean;
 }
 
 const CustomPaginationActionsTable = ({
     headerOptions,
     rowData,
+    totalItems = rowData.length,
     isLoading,
 }: CustomPaginationActionsTableProps) => {
     const dispatch = useDispatch();
@@ -225,7 +227,7 @@ const CustomPaginationActionsTable = ({
                                     { label: "All", value: -1 },
                                 ]}
                                 colSpan={headerOptions.length + 1}
-                                count={rowData.length}
+                                count={totalItems}
                                 rowsPerPage={pageSize}
                                 page={page}
                                 slotProps={{

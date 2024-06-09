@@ -9,7 +9,7 @@ const useNamesListDepartment = () => {
         return [];
     }
 
-    const namesList: string[] = data
+    const namesList: string[] = data.departments
         .map((e) => (e.name && e.active ? e.name : ""))
         .filter((n) => n !== "");
 
@@ -25,7 +25,7 @@ const useNamesListLeaveType = () => {
         return [];
     }
 
-    const namesList: string[] = data
+    const namesList: string[] = data.leaveTypes
         .map((e) => (e.name && e.active ? e.name : ""))
         .filter((n) => n !== "");
 

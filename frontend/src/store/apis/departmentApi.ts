@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Department } from "@typ/department";
 
+interface ResultDepartments {
+    departments: Department[];
+    totalDepartmentsCount: number;
+}
+
 export const departmentApi = createApi({
     reducerPath: "department",
     baseQuery: fetchBaseQuery({
@@ -9,7 +14,7 @@ export const departmentApi = createApi({
     }),
     tagTypes: ["Departments"],
     endpoints: (builder) => ({
-        getAllDepartments: builder.query<Department[], string | void>({
+        getAllDepartments: builder.query<ResultDepartments, string | void>({
             query: (selectQuery) => {
                 const params: Record<string, string> = {};
                 if (selectQuery) {
@@ -22,8 +27,8 @@ export const departmentApi = createApi({
                 };
             },
             providesTags: (result) =>
-                result
-                    ? result.map((dep) => ({
+                result && "departments" in result
+                    ? result.departments.map((dep) => ({
                           type: "Departments",
                           id: dep._id,
                       }))

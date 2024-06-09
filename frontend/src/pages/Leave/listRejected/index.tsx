@@ -5,7 +5,7 @@ import BasicTable from "../../../components/Table";
 import { fields } from "../config";
 
 const LeaveListRejected = () => {
-    const { data, isFetching } = useExtendedLeaves("rejected");
+    const { data, isFetching, total } = useExtendedLeaves("rejected");
 
     const handleSubmit = (values: any) => {
         console.log(values);
@@ -17,6 +17,7 @@ const LeaveListRejected = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={Array.isArray(data) ? data : []}
+                totalItems={total}
                 isLoading={isFetching}
             />
         </DefaultPage>

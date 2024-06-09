@@ -26,8 +26,8 @@ const EmployeeList = () => {
         return null;
     }
 
-    const employeeData = Array.isArray(data)
-        ? data.map((row) => ({
+    const employeeData = Array.isArray(data?.users)
+        ? data.users.map((row) => ({
               ...row,
               isLoading: result.isLoading,
               userRole: user?.roles,
@@ -50,6 +50,7 @@ const EmployeeList = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={employeeData}
+                totalItems={data?.totalUsersCount}
                 isLoading={isFetching}
             />
         </DefaultPage>

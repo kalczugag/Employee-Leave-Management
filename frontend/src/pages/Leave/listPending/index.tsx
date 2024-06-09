@@ -5,7 +5,7 @@ import DefaultPage from "../../../layout/DefaultPage";
 import { fields } from "../config";
 
 const LeaveListPending = () => {
-    const { data, isFetching } = useExtendedLeaves("pending");
+    const { data, isFetching, total } = useExtendedLeaves("pending");
 
     const handleSubmit = (values: any) => {
         console.log(values);
@@ -17,6 +17,7 @@ const LeaveListPending = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={Array.isArray(data) ? data : []}
+                totalItems={total}
                 isLoading={isFetching}
             />
         </DefaultPage>

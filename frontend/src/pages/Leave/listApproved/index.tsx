@@ -5,7 +5,7 @@ import DefaultPage from "../../../layout/DefaultPage";
 import { fields } from "../config";
 
 const LeaveListApproved = () => {
-    const { data, isFetching } = useExtendedLeaves("approved");
+    const { data, isFetching, total } = useExtendedLeaves("approved");
 
     const handleSubmit = (values: any) => {
         console.log(values);
@@ -17,6 +17,7 @@ const LeaveListApproved = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={Array.isArray(data) ? data : []}
+                totalItems={total}
                 isLoading={isFetching}
             />
         </DefaultPage>

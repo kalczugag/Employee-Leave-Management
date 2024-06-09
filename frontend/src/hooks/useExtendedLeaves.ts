@@ -28,9 +28,9 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         useGetLeavesQuery(options);
     const [deleteLeave, result] = useDeleteLeaveMutation();
 
-    const leaves = useMemo(() => {
+    const [leaves, totalLeavesCount] = useMemo(() => {
         if (LeaveTypes.isResultLeaves(leavesData)) {
-            return leavesData.leaves;
+            return [leavesData.leaves, leavesData.totalLeavesCount];
         }
         return [];
     }, [leavesData]);
@@ -87,7 +87,11 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         });
     }, [leaves, employeesData, status, result.isLoading]);
 
-    return { data: combinedData, isFetching: isFetching || employeesFetching };
+    return {
+        data: combinedData,
+        isFetching: isFetching || employeesFetching,
+        total: totalLeavesCount,
+    };
 };
 
 export default useExtendedLeaves;

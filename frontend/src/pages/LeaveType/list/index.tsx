@@ -20,8 +20,8 @@ const LeaveTypeList = () => {
         return null;
     }
 
-    const leaveTypeData = Array.isArray(data)
-        ? data.map((row) => ({
+    const leaveTypeData = Array.isArray(data?.leaveTypes)
+        ? data.leaveTypes.map((row) => ({
               ...row,
               isLoading: result.isLoading,
               userRole: user?.roles,
@@ -46,6 +46,7 @@ const LeaveTypeList = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={leaveTypeData}
+                totalItems={data?.totalLeaveTypesCount}
                 isLoading={isFetching}
             />
         </DefaultPage>

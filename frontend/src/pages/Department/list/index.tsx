@@ -20,8 +20,8 @@ const DepartmentList = () => {
         return null;
     }
 
-    const departmentdata = Array.isArray(data)
-        ? data.map((row) => ({
+    const departmentdata = Array.isArray(data?.departments)
+        ? data.departments.map((row) => ({
               ...row,
               isLoading: result.isLoading,
               userRole: user?.roles,
@@ -44,6 +44,7 @@ const DepartmentList = () => {
             <BasicTable
                 headerOptions={fields}
                 rowData={departmentdata}
+                totalItems={data?.totalDepartmentsCount}
                 isLoading={isFetching}
             />
         </DefaultPage>

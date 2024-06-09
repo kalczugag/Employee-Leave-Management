@@ -4,11 +4,11 @@ import ProfileCell from "../ProfileCell";
 const RoleList = ({ role }: { role: "hod" | "staff" }) => {
     const { data } = useGetEmployeesQuery({ byRole: "staff,hod" });
 
-    if (!Array.isArray(data)) {
+    if (!Array.isArray(data?.users)) {
         return <></>;
     }
 
-    const employeeData = data.filter((e) => e.roles === role);
+    const employeeData = data.users.filter((e) => e.roles === role);
 
     return (
         <div className="flex-1 p-6 rounded space-y-2 bg-white shadow">
