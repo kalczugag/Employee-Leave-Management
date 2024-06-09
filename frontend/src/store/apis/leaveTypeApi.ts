@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { LeaveType } from "@typ/leaveType";
 
+interface ResultLeaveTypes {
+    leaveTypes: LeaveType[];
+    totalLeaveTypesCount: number;
+}
+
 export const leaveTypeApi = createApi({
     reducerPath: "leaveType",
     baseQuery: fetchBaseQuery({
@@ -9,7 +14,7 @@ export const leaveTypeApi = createApi({
     }),
     tagTypes: ["LeaveTypes"],
     endpoints: (builder) => ({
-        getLeaveTypes: builder.query<LeaveType[], string | void>({
+        getLeaveTypes: builder.query<ResultLeaveTypes, string | void>({
             query: (selectQuery) => {
                 const params: Record<string, string> = {};
                 if (selectQuery) {
@@ -22,8 +27,8 @@ export const leaveTypeApi = createApi({
                 };
             },
             providesTags: (result) =>
-                result
-                    ? result.map((lt) => ({
+                result && "leaveTypes" in result
+                    ? result.leaveTypes.map((lt) => ({
                           type: "LeaveTypes",
                           id: lt._id,
                       }))

@@ -10,6 +10,13 @@ interface optionsProps {
     stats?: boolean;
 }
 
+interface ResultLeaves {
+    leaves: Leave[];
+    totalLeavesCount: number;
+}
+
+type ResponseData = ResultLeaves | Stats;
+
 export const leaveApi = createApi({
     reducerPath: "leave",
     baseQuery: fetchBaseQuery({
@@ -18,7 +25,7 @@ export const leaveApi = createApi({
     }),
     tagTypes: ["Leaves"],
     endpoints: (builder) => ({
-        getLeaves: builder.query<Leave[] | Stats, optionsProps | void>({
+        getLeaves: builder.query<ResponseData, optionsProps | void>({
             query: (options) => ({
                 url: "/leaves",
                 method: "GET",
@@ -32,8 +39,8 @@ export const leaveApi = createApi({
                 },
             }),
             providesTags: (result) =>
-                result && Array.isArray(result)
-                    ? result.map((leave) => ({
+                result && "leaves" in result
+                    ? result.leaves.map((leave) => ({
                           type: "Leaves",
                           id: leave._id,
                       }))

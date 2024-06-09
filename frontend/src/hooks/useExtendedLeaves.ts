@@ -1,6 +1,8 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import _ from "lodash";
 import {
+    RootState,
     useDeleteLeaveMutation,
     useGetEmployeesByIdsQuery,
     useGetLeavesQuery,
@@ -9,13 +11,16 @@ import LeaveTypes from "../utils/leavesType";
 import useSnackbar from "./useSnackbar";
 import type { StatusUnion } from "@typ/leave";
 import useAuth from "./useAuth";
-import { useSelector } from "react-redux";
 
 const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
+    const { page, pageSize } = useSelector((state: RootState) => state.table);
+
     const options = {
+        page,
+        pageSize,
         ...(user?.roles === "staff" && { userId: user._id }),
     };
 
@@ -23,21 +28,28 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
         useGetLeavesQuery(options);
     const [deleteLeave, result] = useDeleteLeaveMutation();
 
+    const leaves = useMemo(() => {
+        if (LeaveTypes.isResultLeaves(leavesData)) {
+            return leavesData.leaves;
+        }
+        return [];
+    }, [leavesData]);
+
     const handleDelete = (id: string) => {
         deleteLeave(id).then(() => handleOpen("Leave Removed Successfully"));
     };
 
     const uniqueEmployeeIds = useMemo(() => {
-        if (!LeaveTypes.isLeaveArray(leavesData)) {
+        if (!LeaveTypes.isLeaveArray(leaves)) {
             return [];
         }
-        const leaveUsersIds = leavesData.map((e) => e._user);
+        const leaveUsersIds = leaves.map((e) => e._user);
         const uniqueIds = _.uniq(leaveUsersIds).filter(
             (id): id is string => id !== undefined
         );
 
         return uniqueIds;
-    }, [leavesData]);
+    }, [leaves]);
 
     const { data: employeesData, isFetching: employeesFetching } =
         useGetEmployeesByIdsQuery(
@@ -50,14 +62,11 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
     const isFetching = leavesFetching || employeesFetching;
 
     const combinedData = useMemo(() => {
-        if (
-            !LeaveTypes.isLeaveArray(leavesData) ||
-            !Array.isArray(employeesData)
-        ) {
+        if (!LeaveTypes.isLeaveArray(leaves) || !Array.isArray(employeesData)) {
             return [];
         }
 
-        let filteredLeaves = leavesData;
+        let filteredLeaves = leaves;
 
         if (status) {
             filteredLeaves = filteredLeaves.filter(
@@ -76,7 +85,7 @@ const useExtendedLeaves = (status?: StatusUnion["status"]) => {
                 handleDelete: () => handleDelete(leave._id!),
             };
         });
-    }, [leavesData, employeesData, status, result.isLoading]);
+    }, [leaves, employeesData, status, result.isLoading]);
 
     return { data: combinedData, isFetching: isFetching || employeesFetching };
 };

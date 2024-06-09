@@ -28,7 +28,6 @@ export const getAllLeaves = async (
             status,
             userId,
             stats,
-            extended,
         }: PaginationProps = req.query;
 
         let selectQuery = "";
@@ -39,7 +38,6 @@ export const getAllLeaves = async (
                 .split(",")
                 .map((field) => `-${field.trim()}`)
                 .join(" ");
-            console.log(selectQuery);
         }
 
         let leavesQuery = getLeaves()
@@ -66,7 +64,10 @@ export const getAllLeaves = async (
             );
         }
 
-        const leaves = await leavesQuery.exec();
+        const [leaves, totalLeavesCount] = await Promise.all([
+            leavesQuery.exec(),
+            getLeaves().countDocuments(),
+        ]);
 
         if (!leaves || leaves.length === 0) {
             return res.status(403).json({ msg: "No data" });
@@ -78,12 +79,12 @@ export const getAllLeaves = async (
             const stat = generateStats(leaves);
             response = { ...stat };
         } else {
-            response = leaves;
+            response = { leaves };
         }
 
-        return res.status(200).json(response);
+        return res.status(200).json({ ...response, totalLeavesCount });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.sendStatus(400);
     }
 };

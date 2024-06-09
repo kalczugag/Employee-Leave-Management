@@ -17,7 +17,7 @@ export const getAllDepartments = async (
     res: express.Response
 ) => {
     try {
-        const { page = 1, pageSize = 5 }: PaginationProps = req.query;
+        const { page = 0, pageSize = 5 }: PaginationProps = req.query;
         let selectQuery = "";
 
         if (req.query.fields) {
@@ -29,13 +29,23 @@ export const getAllDepartments = async (
                 .join(" ");
         }
 
-        const departments = await getDepartments()
+        let departmentsQuery = getDepartments()
             .select(selectQuery)
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .exec();
+            .skip(page * pageSize)
+            .limit(pageSize);
 
-        return res.status(200).json(departments);
+        const [departments, totalDepartmentsCount] = await Promise.all([
+            departmentsQuery.exec(),
+            getDepartments().countDocuments(),
+        ]);
+
+        if (!departments || departments.length === 0) {
+            return res.status(403).json({ msg: "No data" });
+        }
+
+        return res
+            .status(200)
+            .json({ ...{ departments }, totalDepartmentsCount });
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

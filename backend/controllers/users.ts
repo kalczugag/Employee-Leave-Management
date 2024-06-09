@@ -32,30 +32,16 @@ export const getAllUsers = async (
             usersQuery = usersQuery.where("roles").in(roles);
         }
 
-        const users = await usersQuery.exec();
+        const [users, totalUsersCount] = await Promise.all([
+            usersQuery.exec(),
+            getUsers().countDocuments(),
+        ]);
 
-        // let hasMore = false;
-        // if (users.length > pageSize) {
-        //     hasMore = true;
-        //     users.pop();
-        // }
+        if (!users || users.length === 0) {
+            return res.status(403).json({ msg: "No data" });
+        }
 
-        // const totalUsersCount = await getUsers().countDocuments();
-
-        // let totalPages = Math.ceil(users.length / pageSize);
-        // if (hasMore) {
-        //     totalPages++;
-        // }
-
-        // while (users.length < pageSize) {
-        //     const additionalUsers = await getUsers()
-        //         .skip(users.length)
-        //         .limit(pageSize - users.length)
-        //         .exec();
-        //     users.push(...additionalUsers);
-        // }
-
-        return res.status(200).json(users);
+        return res.status(200).json({ ...{ users }, totalUsersCount });
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

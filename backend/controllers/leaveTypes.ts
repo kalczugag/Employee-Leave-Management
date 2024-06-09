@@ -17,7 +17,7 @@ export const getAllLeaveTypes = async (
     res: express.Response
 ) => {
     try {
-        const { page = 1, pageSize = 5 }: PaginationProps = req.query;
+        const { page = 0, pageSize = 5 }: PaginationProps = req.query;
         let selectQuery = "";
 
         if (req.query.fields) {
@@ -29,13 +29,23 @@ export const getAllLeaveTypes = async (
                 .join(" ");
         }
 
-        const leaveTypes = await getLeaveTypes()
+        let leaveTypesQuery = getLeaveTypes()
             .select(selectQuery)
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .exec();
+            .skip(page * pageSize)
+            .limit(pageSize);
 
-        return res.status(200).json(leaveTypes);
+        const [leaveTypes, totalLeaveTypesCount] = await Promise.all([
+            leaveTypesQuery.exec(),
+            getLeaveTypes().countDocuments(),
+        ]);
+
+        if (!leaveTypes || leaveTypes.length === 0) {
+            return res.status(403).json({ msg: "No data" });
+        }
+
+        return res
+            .status(200)
+            .json({ ...{ leaveTypes }, totalLeaveTypesCount });
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);

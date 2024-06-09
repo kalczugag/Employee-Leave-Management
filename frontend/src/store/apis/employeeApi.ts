@@ -16,6 +16,11 @@ interface GetEmployeesParams {
     pageSize?: number;
 }
 
+interface ResultEmployees {
+    users: user[];
+    totalUsersCount: number;
+}
+
 export const employeeApi = createApi({
     reducerPath: "employee",
     baseQuery: fetchBaseQuery({
@@ -24,32 +29,34 @@ export const employeeApi = createApi({
     }),
     tagTypes: ["Employees"],
     endpoints: (builder) => ({
-        getEmployees: builder.query<user[], GetEmployeesParams | void>({
-            query: (params = {}) => {
-                const queryParams: Record<string, string> = {};
-                if (params?.byRole) {
-                    queryParams.byRole = params.byRole;
-                }
-                if (params?.page !== undefined) {
-                    queryParams.page = params.page.toString();
-                }
-                if (params?.pageSize !== undefined) {
-                    queryParams.pageSize = params.pageSize.toString();
-                }
-                return {
-                    url: "/users",
-                    method: "GET",
-                    params: queryParams,
-                };
-            },
-            providesTags: (result) =>
-                result
-                    ? result.map((user) => ({
-                          type: "Employees",
-                          id: user._id,
-                      }))
-                    : [{ type: "Employees", id: "LIST" }],
-        }),
+        getEmployees: builder.query<ResultEmployees, GetEmployeesParams | void>(
+            {
+                query: (params = {}) => {
+                    const queryParams: Record<string, string> = {};
+                    if (params?.byRole) {
+                        queryParams.byRole = params.byRole;
+                    }
+                    if (params?.page !== undefined) {
+                        queryParams.page = params.page.toString();
+                    }
+                    if (params?.pageSize !== undefined) {
+                        queryParams.pageSize = params.pageSize.toString();
+                    }
+                    return {
+                        url: "/users",
+                        method: "GET",
+                        params: queryParams,
+                    };
+                },
+                providesTags: (result) =>
+                    result && "users" in result
+                        ? result.users.map((user) => ({
+                              type: "Employees",
+                              id: user._id,
+                          }))
+                        : [{ type: "Employees", id: "LIST" }],
+            }
+        ),
 
         getEmployee: builder.query<user, GetEmployeeParams>({
             query: ({ id, selectQuery }) => {
