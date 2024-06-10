@@ -5,12 +5,19 @@ import BasicBreadcrumbs from "../../components/BasicBreadcrumbs";
 
 interface Props {
     children?: ReactNode;
-    label: string;
+    label?: string;
     bg?: boolean;
     footer?: boolean;
+    breadCrumbs?: boolean;
 }
 
-const DefaultPage = ({ children, label, bg, footer = true }: Props) => {
+const DefaultPage = ({
+    children,
+    label,
+    bg,
+    footer = true,
+    breadCrumbs = true,
+}: Props) => {
     const { pathname } = useLocation();
 
     const links = pathname.split("/");
@@ -26,7 +33,9 @@ const DefaultPage = ({ children, label, bg, footer = true }: Props) => {
                     <h3 className="font-semibold text-gray-500 text-lg">
                         {label}
                     </h3>
-                    <BasicBreadcrumbs links={breadcrumbLinks} />
+                    {breadCrumbs && (
+                        <BasicBreadcrumbs links={breadcrumbLinks} />
+                    )}
                 </div>
                 {bg ? (
                     <div className="flex flex-col space-y-5 bg-white p-5 rounded">

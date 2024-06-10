@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { AppDispatch, changePassword } from "../../store";
-import useSnackbar from "../../hooks/useSnackbar";
-import { FormPassword, FormView } from "../../forms/FormView";
-import DefaultPage from "../../layout/DefaultPage";
+import { AppDispatch, changePassword } from "../../../store";
+import useSnackbar from "../../../hooks/useSnackbar";
+import { FormPassword, FormView } from "../../../forms/FormView";
+import DefaultPage from "../../../layout/DefaultPage";
 
 const ProfileSettings = () => {
     const dispatch = useDispatch<AppDispatch>();
