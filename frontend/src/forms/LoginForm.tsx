@@ -69,6 +69,7 @@ const LoginWindow = () => {
                         {({ input, meta }) => (
                             <div className="flex flex-col items-center space-y-1">
                                 <Link
+                                    tabIndex={-1}
                                     to="/password/reset"
                                     className="w-full text-end text-xs text-gray-500 hover:text-gray-700"
                                 >

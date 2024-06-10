@@ -23,7 +23,9 @@ const EmployeeNew = () => {
         return null;
     }
 
-    const departmentNames: string[] = data.map((department) => department.name);
+    const departmentNames: string[] = data.departments.map(
+        (department) => department.name
+    );
 
     const handleSubmit = (values: user) => {
         addEmployee(values).then(() => {
