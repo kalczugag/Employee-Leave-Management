@@ -21,7 +21,7 @@ const DepartmentList = () => {
     }
 
     const departmentdata = Array.isArray(data?.departments)
-        ? data.departments.map((row) => ({
+        ? data?.departments.map((row) => ({
               ...row,
               isLoading: result.isLoading,
               userRole: user?.roles,

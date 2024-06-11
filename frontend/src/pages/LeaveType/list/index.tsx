@@ -21,7 +21,7 @@ const LeaveTypeList = () => {
     }
 
     const leaveTypeData = Array.isArray(data?.leaveTypes)
-        ? data.leaveTypes.map((row) => ({
+        ? data?.leaveTypes.map((row) => ({
               ...row,
               isLoading: result.isLoading,
               userRole: user?.roles,

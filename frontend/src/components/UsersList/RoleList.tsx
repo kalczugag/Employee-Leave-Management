@@ -8,7 +8,7 @@ const RoleList = ({ role }: { role: "hod" | "staff" }) => {
         return <></>;
     }
 
-    const employeeData = data.users.filter((e) => e.roles === role);
+    const employeeData = data?.users.filter((e) => e.roles === role);
 
     return (
         <div className="flex-1 p-6 rounded space-y-2 bg-white shadow">
