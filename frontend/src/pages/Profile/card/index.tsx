@@ -10,8 +10,14 @@ const ProfileCard = () => {
     return (
         <DefaultPage breadCrumbs={false} bg>
             <div className="flex flex-col">
-                <div className="bg-primary"></div>
-                <div></div>
+                <div className="bg-primary w-full">
+                    <img
+                        src={data?.img}
+                        alt="profile pic"
+                        className="mx-auto w-[168px] h-[168px]"
+                    />
+                </div>
+                <div className="flex flex-col"></div>
             </div>
         </DefaultPage>
     );

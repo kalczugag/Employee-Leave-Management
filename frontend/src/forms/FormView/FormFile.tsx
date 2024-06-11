@@ -1,5 +1,5 @@
 import { Field } from "react-final-form";
-import { convertToBase64 } from "../../utils/convertToBase64";
+import { compressImage } from "../../utils/compressImage";
 
 interface FormFileProps {
     options: { label: string; name: string };
@@ -13,7 +13,7 @@ export const FormFile = ({ options, required, disabled }: FormFileProps) => {
         onChange: (event: any) => void
     ) => {
         const file = files[0];
-        const base64 = await convertToBase64(file);
+        const base64 = await compressImage(file);
         onChange(base64);
     };
 
