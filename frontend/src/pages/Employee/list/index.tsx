@@ -27,7 +27,7 @@ const EmployeeList = () => {
     }
 
     const employeeData = Array.isArray(data?.users)
-        ? data?.users.map((row) => ({
+        ? data!.users.map((row) => ({
               ...row,
               isLoading: result.isLoading,
               userRole: user?.roles,

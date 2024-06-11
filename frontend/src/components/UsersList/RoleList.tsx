@@ -2,13 +2,17 @@ import { useGetEmployeesQuery } from "../../store";
 import ProfileCell from "../ProfileCell";
 
 const RoleList = ({ role }: { role: "hod" | "staff" }) => {
-    const { data } = useGetEmployeesQuery({ byRole: "staff,hod" });
+    const { data, isLoading } = useGetEmployeesQuery({ byRole: "staff,hod" });
+
+    if (!data && !isLoading) {
+        return null;
+    }
 
     if (!Array.isArray(data?.users)) {
         return <></>;
     }
 
-    const employeeData = data?.users.filter((e) => e.roles === role);
+    const employeeData = data.users.filter((e) => e.roles === role);
 
     return (
         <div className="flex-1 p-6 rounded space-y-2 bg-white shadow">
