@@ -63,8 +63,11 @@ const AccountMenu = () => {
                         aria-expanded={open ? "true" : undefined}
                     >
                         <div className="flex flex-row items-center space-x-2">
-                            <Avatar sx={{ width: 32, height: 32 }}>
-                                {user?.firstName[0].toUpperCase()}
+                            <Avatar
+                                sx={{ width: 32, height: 32 }}
+                                src={user?.img && user.img}
+                            >
+                                {!user?.img && user?.firstName[0].toUpperCase()}
                             </Avatar>
                             <div className="hidden flex-col items-start text-sm text-gray-500 font-semibold md:flex">
                                 <p>
