@@ -57,7 +57,7 @@ const Stats = () => {
                 </>
             ) : LeavesType.isStatsData(data) && !error ? (
                 <ChartView data={data} />
-            ) : (
+            ) : user?.roles === "staff" ? (
                 <div className="col-span-2 md:col-span-4 flex flex-col justify-center items-center h-full">
                     <img
                         src="/images/no_data.png"
@@ -68,6 +68,8 @@ const Stats = () => {
                         No chart data available
                     </div>
                 </div>
+            ) : (
+                <div>xd</div>
             )}
         </div>
     );
