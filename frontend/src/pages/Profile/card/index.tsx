@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useGetEmployeeQuery } from "../../../store";
-import { EmailOutlined } from "@mui/icons-material";
+import { Phone, EmailOutlined } from "@mui/icons-material";
 import { Tooltip, IconButton } from "@mui/material";
 import DefaultPage from "../../../layout/DefaultPage";
-import Modal from "../../../components/Modal";
+import Dialog from "@components/Dialog";
+import Modal from "@components/Modal";
 
 const ProfileCard = () => {
     const { id } = useParams();
-    const [openEmail, setOpenEmail] = useState<boolean>(false);
+    const navigate = useNavigate();
     const [openImg, setOpenImg] = useState<boolean>(false);
 
     const { data } = useGetEmployeeQuery({ id: id! });
@@ -27,15 +28,20 @@ const ProfileCard = () => {
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col items-center space-y-2">
-                        <h3 className="text-2xl">{`${data?.firstName} ${data?.lastName}`}</h3>
+                    <div className="flex flex-col items-center space-y-1">
+                        <p className="text-gray-500 font-bold">{data?.roles}</p>
+                        <h3 className="text-2xl ">{`${data?.firstName} ${data?.lastName}`}</h3>
                         <div className="flex flex-row">
-                            <Tooltip title="Send Email">
+                            <Dialog
+                                label="Send Email"
+                                buttonIcon={<EmailOutlined />}
+                                fullScreen
+                            />
+                            <Tooltip title="Mobile Number">
                                 <IconButton
-                                    // href={`mailto:${data?.email}?subject=Email%20Subject&body=Email%20Body`}
-                                    onClick={() => setOpenEmail(true)}
+                                // href={`mailto:${data?.email}?subject=Email%20Subject&body=Email%20Body`}
                                 >
-                                    <EmailOutlined />
+                                    <Phone />
                                 </IconButton>
                             </Tooltip>
                         </div>
@@ -43,10 +49,11 @@ const ProfileCard = () => {
                 </div>
             </DefaultPage>
             <Modal open={openImg} handleClose={() => setOpenImg(false)}>
-                <img src={data?.img} alt="profile pic" />
-            </Modal>
-            <Modal open={openEmail} handleClose={() => setOpenEmail(false)}>
-                <h6 className="text-xl">Email to {data?.email}</h6>
+                <img
+                    src={data?.img}
+                    alt="profile pic"
+                    className="max-h-[80vh] object-contain"
+                />
             </Modal>
         </>
     );

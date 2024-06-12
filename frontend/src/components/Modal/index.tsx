@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+import { AppBar, Button, IconButton, Toolbar, Modal, Box } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 interface ModalProps {
     open: boolean;
@@ -10,19 +10,35 @@ interface ModalProps {
 
 const style = {
     position: "absolute" as "absolute",
-    top: "50%",
     left: "50%",
+    top: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
 };
 
 const BasicModal = ({ open, children, handleClose }: ModalProps) => {
     return (
         <Modal open={open} onClose={handleClose}>
-            <Box sx={style}>{children}</Box>
+            <Box sx={style} className="">
+                <AppBar
+                    sx={{
+                        position: "relative",
+                    }}
+                >
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleClose}
+                            aria-label="close"
+                        >
+                            <Close />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
+                {children}
+            </Box>
         </Modal>
     );
 };
