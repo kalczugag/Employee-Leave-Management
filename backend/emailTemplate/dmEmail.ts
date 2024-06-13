@@ -1,14 +1,5 @@
-interface otpEmailProps {
-    email: string;
-    code: number;
-}
-
-export const otpEmail = ({ email = "yourmail@email.com", code = 123456 }) => {
-    const codeString = code.toString();
-    const codeDigits = codeString.split("");
-
-    return `
-    <table
+export const dmEmail = () => {
+    return `<table
             width="500px"
             style="
                 font-family: Arial, Helvetica, sans-serif;
@@ -52,52 +43,49 @@ export const otpEmail = ({ email = "yourmail@email.com", code = 123456 }) => {
                     </a>
                 </td>
             </tr>
-        <tr>
-            <td style="padding-top: 20px">
-                <h1>Let's log you in</h1>
-                <p>
-                    Use this code to sign up to Employee Leave Management
-                    App. <br />This code will expire in 20 minutes.
-                </p>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-top: 30px; padding-bottom: 30px; border: 1px solid rgba(128, 128, 128, 0.445); background-color: rgba(243, 243, 243, 0.712)">
-                <table
-                    align="center"
-                    style="font-size: 36px; font-weight: 700"
-                >
-                    <tr>
-                        ${codeDigits
-                            .map(
-                                (digit) =>
-                                    `<td style="padding: 0 15px">${digit}</td>`
-                            )
-                            .join("")}
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-top: 20px">
-                <span>This code will securely log you in using </span>
-                <br /><a
-                    href="mailto:${email}"
-                    style="text-decoration: none; color: rgb(59, 130, 246)"
-                >${email}</a>
-                <p
+            <tr>
+                <td style="padding-top: 20px">
+                    <h1>Hi there, name</h1>
+                    <p>You have a new message.</p>
+                </td>
+            </tr>
+            <tr>
+                <td
                     style="
-                        margin-top: 30px;
-                        color: rgb(107, 114, 128);
-                        font-size: 14px;
+                        padding-top: 30px;
+                        padding-bottom: 30px;
+                        border: 1px solid rgba(128, 128, 128, 0.445);
+                        background-color: rgba(243, 243, 243, 0.712);
                     "
                 >
-                    If you didn't request this email, you can safely ignore
-                    it.
-                </p>
-            </td>
-        </tr>
-        <tr>
+                    <table
+                        align="center"
+                        style="font-size: 36px; font-weight: 700"
+                    >
+                        <tr>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Odio corporis assumenda obcaecati similique
+                            adipisci ex eius esse est, repellendus tempore
+                            consequuntur magnam. Nobis eaque illo consequuntur
+                            sunt exercitationem placeat praesentium!
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 10px">
+                    <p
+                        style="
+                            margin-top: 30px;
+                            color: rgb(107, 114, 128);
+                            font-size: 14px;
+                        "
+                    >
+                        Sent by name on date
+                    </p>
+                </td>
+            </tr>
+            <tr>
                 <td
                     style="
                         padding-top: 20px;
@@ -144,6 +132,5 @@ export const otpEmail = ({ email = "yourmail@email.com", code = 123456 }) => {
                     </div>
                 </td>
             </tr>
-    </table>
-    `;
+        </table>`;
 };
