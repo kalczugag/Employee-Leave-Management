@@ -44,7 +44,7 @@ export const otpEmail = ({ email = "yourmail@email.com", code = 123456 }) => {
                                             color: white;
                                         "
                                     >
-                                        INVENTORY
+                                        LEAVE
                                     </h2>
                                 </td>
                             </tr>

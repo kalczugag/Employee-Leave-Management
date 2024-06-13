@@ -22,6 +22,9 @@ import LeaveListRejected from "./pages/Leave/listRejected";
 import ProfileSettings from "./pages/Profile/settings";
 import ProfileCard from "./pages/Profile/card";
 import PrivateOutlet from "./pages/PrivateOutlet";
+import About from "./pages/Abous";
+import Support from "./pages/Support";
+import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/404";
 import SnackbarMsg from "./components/SnackbarMsg";
 import useAuth from "./hooks/useAuth";
@@ -78,6 +81,9 @@ const App = () => {
                     </Route>
                     <Route path="/profile/:id" element={<ProfileCard />} />
                     <Route path="/settings" element={<ProfileSettings />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/support" element={<Support />} />
+                    <Route path="/contact" element={<ContactUs />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

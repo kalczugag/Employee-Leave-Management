@@ -7,11 +7,10 @@ import UsersList from "../../components/UsersList";
 const Dashboard = () => {
     const { user } = useAuth();
 
-    const isAdmin = !user?.roles.includes("staff");
+    const isAdmin = user?.roles !== "staff";
 
     return (
         <DefaultPage label="Dashboard" bg={isAdmin ? false : true}>
-            <SnackbarStatus />
             <Stats />
             {isAdmin && (
                 <UsersList>

@@ -9,12 +9,7 @@ import {
 } from "@mui/icons-material";
 import ChartView from "./ChartView";
 import StatsViewBox from "./StatsViewBox";
-
-interface QueryError {
-    data?: {
-        msg?: string;
-    };
-}
+import { Skeleton } from "@mui/material";
 
 const Stats = () => {
     const { user } = useAuth();
@@ -25,51 +20,78 @@ const Stats = () => {
     };
 
     const { data, isLoading, error } = useGetLeavesQuery(options);
+    const statsData = LeavesType.isStatsData(data) ? data : null;
+
+    if (isLoading) {
+        return (
+            <>
+                {user?.roles !== "staff" ? (
+                    <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
+                        <Skeleton variant="rectangular" height={180} />
+                        <Skeleton variant="rectangular" height={180} />
+                        <Skeleton variant="rectangular" height={180} />
+                        <Skeleton variant="rectangular" height={180} />
+                    </div>
+                ) : (
+                    <div className="flex flex-row  space-x-4 ">
+                        <Skeleton variant="circular" width={200} height={200} />
+                        <div className="flex flex-col justify-center">
+                            <Skeleton variant="text" width={150} />
+                            <Skeleton variant="text" width={150} />
+                            <Skeleton variant="text" width={150} />
+                        </div>
+                    </div>
+                )}
+            </>
+        );
+    }
+
+    if (error || !statsData) {
+        return (
+            <div className="col-span-2 md:col-span-4 flex flex-col justify-center items-center h-full">
+                <img
+                    src="/images/no_data.png"
+                    alt="no data icon"
+                    className="w-24"
+                />
+                <div className="font-bold text-gray-500">
+                    Failed to load data
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
-            {user?.roles !== "staff" && LeavesType.isStatsData(data) ? (
+            {user?.roles !== "staff" && statsData ? (
                 <>
                     <StatsViewBox
                         icon={<ContentPasteOutlined />}
-                        amount={data.total}
+                        amount={statsData.total}
                         label="Total Leave"
                         arrow={false}
                     />
                     <StatsViewBox
                         icon={<DisabledByDefaultOutlined />}
-                        amount={data.rejected}
+                        amount={statsData.rejected}
                         label="Rejected Leave"
                         variant="rejected"
                     />
                     <StatsViewBox
                         icon={<ThumbUpOutlined />}
-                        amount={data.approved}
+                        amount={statsData.approved}
                         label="Approved Leave"
                         variant="approved"
                     />
                     <StatsViewBox
                         icon={<HourglassEmptyOutlined />}
-                        amount={data.pending}
+                        amount={statsData.pending}
                         label="Pending Leave"
                         variant="pending"
                     />
                 </>
-            ) : LeavesType.isStatsData(data) && !error ? (
-                <ChartView data={data} />
-            ) : user?.roles === "staff" ? (
-                <div className="col-span-2 md:col-span-4 flex flex-col justify-center items-center h-full">
-                    <img
-                        src="/images/no_data.png"
-                        alt="no data icon"
-                        className="w-24"
-                    />
-                    <div className="font-bold text-gray-500">
-                        No chart data available
-                    </div>
-                </div>
             ) : (
-                <div>xd</div>
+                <ChartView data={statsData} />
             )}
         </div>
     );

@@ -32,7 +32,7 @@ const Logo = ({ primary }: Props) => {
                     className={`absolute -left-3 w-5 h-5 rounded-full ${secondBall}`}
                 />
             </div>
-            <h1 className="text-2xl">INVENTORY</h1>
+            <h1 className="text-2xl">LEAVE</h1>
         </Link>
     );
 };
