@@ -5,11 +5,12 @@ WORKDIR /usr/src/app
 RUN npm install -g npm@10.8.0
 
 COPY package*.json ./
-
-RUN npm install --force
+COPY vite.config.mts ./
 
 COPY . .
 
+RUN npm install --force
+
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]

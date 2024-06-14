@@ -11,7 +11,7 @@ services:
             - NODE_ENV=development
             - DATABASE=mongodb://mongo:27017/local-elm
             - PORT=8080
-        command: sh -c "npm run dev"
+        command: "npm run dev"
         networks:
             - server-mongo
         depends_on:
