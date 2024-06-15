@@ -1,7 +1,6 @@
 import {
     useGetEmployeesQuery,
     useDeleteEmployeeMutation,
-    RootState,
 } from "../../../store";
 import useAuth from "../../../hooks/useAuth";
 import useSnackbar from "../../../hooks/useSnackbar";
@@ -9,12 +8,12 @@ import DefaultPage from "../../../layout/DefaultPage";
 import BasicTable from "../../../components/Table";
 import ActionButtons from "../../../components/ActionButtons";
 import { fields } from "./config";
-import { useSelector } from "react-redux";
+import { usePagination } from "../../../hooks/usePagination";
 
 const EmployeeList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
-    const { page, pageSize } = useSelector((state: RootState) => state.table);
+    const { page, pageSize } = usePagination();
 
     const { data, isLoading, isFetching } = useGetEmployeesQuery({
         page,
@@ -40,8 +39,6 @@ const EmployeeList = () => {
             handleOpen("Employee Remove Successful");
         });
     };
-
-    console.log(data);
 
     return (
         <DefaultPage label="Employee List" bg>

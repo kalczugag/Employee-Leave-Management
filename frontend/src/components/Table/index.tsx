@@ -136,10 +136,6 @@ const CustomPaginationActionsTable = ({
 }: CustomPaginationActionsTableProps) => {
     const dispatch = useDispatch();
     const { page, pageSize } = useSelector((state: RootState) => state.table);
-    // const [rowsPerPage, setRowsPerPage] = useState(5);
-
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * pageSize - rowData.length) : 0;
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -183,10 +179,7 @@ const CustomPaginationActionsTable = ({
                     </TableHead>
                     <TableBody>
                         {(pageSize > 0
-                            ? rowData.slice(
-                                  page * pageSize,
-                                  page * pageSize + pageSize
-                              )
+                            ? rowData.slice(0, pageSize)
                             : rowData
                         ).map((row, rowIndex) => (
                             <TableRow key={rowIndex}>
@@ -211,11 +204,6 @@ const CustomPaginationActionsTable = ({
                                 })}
                             </TableRow>
                         ))}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={headerOptions.length} />
-                            </TableRow>
-                        )}
                     </TableBody>
                     <TableFooter>
                         <TableRow>

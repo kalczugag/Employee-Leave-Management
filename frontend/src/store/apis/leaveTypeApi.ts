@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { LeaveType } from "@typ/leaveType";
 
+interface GetLeaveTypesParams {
+    fields?: string;
+    page?: number;
+    pageSize?: number;
+}
+
 interface ResultLeaveTypes {
     leaveTypes: LeaveType[];
     totalLeaveTypesCount: number;
@@ -14,16 +20,25 @@ export const leaveTypeApi = createApi({
     }),
     tagTypes: ["LeaveTypes"],
     endpoints: (builder) => ({
-        getLeaveTypes: builder.query<ResultLeaveTypes, string | void>({
-            query: (selectQuery) => {
-                const params: Record<string, string> = {};
-                if (selectQuery) {
-                    params.fields = selectQuery;
+        getLeaveTypes: builder.query<
+            ResultLeaveTypes,
+            GetLeaveTypesParams | void
+        >({
+            query: (params = {}) => {
+                const queryParams: Record<string, string> = {};
+                if (params?.fields) {
+                    queryParams.fields = params.fields;
+                }
+                if (params?.page !== undefined) {
+                    queryParams.page = params.page.toString();
+                }
+                if (params?.pageSize !== undefined) {
+                    queryParams.pageSize = params.pageSize.toString();
                 }
                 return {
                     url: "/leave-types",
                     method: "GET",
-                    params,
+                    params: queryParams,
                 };
             },
             providesTags: (result) =>

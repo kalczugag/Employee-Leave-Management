@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Department } from "@typ/department";
 
+interface GetDepartmentsParams {
+    fields?: string;
+    page?: number;
+    pageSize?: number;
+}
+
 interface ResultDepartments {
     departments: Department[];
     totalDepartmentsCount: number;
@@ -14,16 +20,25 @@ export const departmentApi = createApi({
     }),
     tagTypes: ["Departments"],
     endpoints: (builder) => ({
-        getAllDepartments: builder.query<ResultDepartments, string | void>({
-            query: (selectQuery) => {
-                const params: Record<string, string> = {};
-                if (selectQuery) {
-                    params.fields = selectQuery;
+        getAllDepartments: builder.query<
+            ResultDepartments,
+            GetDepartmentsParams | void
+        >({
+            query: (params = {}) => {
+                const queryParams: Record<string, string> = {};
+                if (params?.fields) {
+                    queryParams.fields = params.fields;
+                }
+                if (params?.page !== undefined) {
+                    queryParams.page = params.page.toString();
+                }
+                if (params?.pageSize !== undefined) {
+                    queryParams.pageSize = params.pageSize.toString();
                 }
                 return {
                     url: "/departments",
                     method: "GET",
-                    params,
+                    params: queryParams,
                 };
             },
             providesTags: (result) =>

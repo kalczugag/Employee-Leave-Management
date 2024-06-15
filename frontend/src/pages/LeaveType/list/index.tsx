@@ -4,6 +4,7 @@ import {
 } from "../../../store";
 import useSnackbar from "../../../hooks/useSnackbar";
 import useAuth from "../../../hooks/useAuth";
+import { usePagination } from "../../../hooks/usePagination";
 import DefaultPage from "../../../layout/DefaultPage";
 import ActionButtons from "../../../components/ActionButtons";
 import BasicTable from "../../../components/Table";
@@ -12,8 +13,9 @@ import { fields } from "./config";
 const LeaveTypeList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
+    const arg = usePagination();
 
-    const { data, isLoading, isFetching } = useGetLeaveTypesQuery();
+    const { data, isLoading, isFetching } = useGetLeaveTypesQuery(arg);
     const [deleteLeaveType, result] = useDeleteLeaveTypeMutation();
 
     if (!data && !isLoading) {
