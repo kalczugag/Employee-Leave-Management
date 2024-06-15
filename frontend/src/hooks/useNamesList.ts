@@ -1,9 +1,9 @@
 import { useGetAllDepartmentsQuery, useGetLeaveTypesQuery } from "../store";
 
 const useNamesListDepartment = () => {
-    const { data } = useGetAllDepartmentsQuery(
-        "shortName,details,status,createdAt,updatedAt,__v"
-    );
+    const { data } = useGetAllDepartmentsQuery({
+        fields: "shortName,details,status,createdAt,updatedAt,__v",
+    });
 
     if (!data) {
         return [];
@@ -17,9 +17,9 @@ const useNamesListDepartment = () => {
 };
 
 const useNamesListLeaveType = () => {
-    const { data } = useGetLeaveTypesQuery(
-        "shortName,details,status,createdAt,updatedAt,__v"
-    );
+    const { data } = useGetLeaveTypesQuery({
+        fields: "shortName,details,status,createdAt,updatedAt,__v",
+    });
 
     if (!data) {
         return [];
