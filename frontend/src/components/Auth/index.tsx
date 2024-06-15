@@ -27,19 +27,18 @@ const AuthContainer = () => {
         <div>
             <div className="relative flex flex-col bg-white shadow rounded w-screen md:min-w-96 md:w-full">
                 <Logo primary />
-                {process.env.NODE_ENV === "development" && (
-                    <Box className="absolute top-1 left-1">
-                        <Tooltip title="Set Credentials">
-                            <Fab
-                                onClick={handleSetCredentials}
-                                color="primary"
-                                aria-label="add"
-                            >
-                                <Key />
-                            </Fab>
-                        </Tooltip>
-                    </Box>
-                )}
+                {/* for tests */}
+                <Box className="absolute top-1 left-1">
+                    <Tooltip title="Set Credentials">
+                        <Fab
+                            onClick={handleSetCredentials}
+                            color="primary"
+                            aria-label="add"
+                        >
+                            <Key />
+                        </Fab>
+                    </Tooltip>
+                </Box>
                 <div className="flex flex-col text-center px-8 py-4">
                     {pathname === SignType.Reset ? (
                         <>
