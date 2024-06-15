@@ -41,6 +41,8 @@ const EmployeeList = () => {
         });
     };
 
+    console.log(data);
+
     return (
         <DefaultPage label="Employee List" bg>
             <ActionButtons

@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
+
 const ProfileCell = (props: { data: user }) => {
-    const { img, firstName, lastName, email } = props.data;
+    const { img, firstName, lastName, email, _id } = props.data;
 
     return (
-        <div className="flex flex-row items-center space-x-4 py-1 border-b hover:bg-gray-200">
+        <Link
+            to={`/profile/${_id}`}
+            className="flex flex-row items-center space-x-4 py-1 border-b hover:bg-gray-200"
+        >
             <div className="w-[120px] h-[60px]">
                 <img
                     src={img}
@@ -16,7 +21,7 @@ const ProfileCell = (props: { data: user }) => {
                 </span>
                 <span>{email}</span>
             </div>
-        </div>
+        </Link>
     );
 };
 

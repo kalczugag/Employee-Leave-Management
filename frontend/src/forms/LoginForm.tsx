@@ -17,7 +17,11 @@ import {
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const LoginWindow = () => {
+interface Props {
+    initialValues?: any;
+}
+
+const LoginWindow = ({ initialValues }: Props) => {
     const dispatch = useDispatch<AppDispatch>();
     const { isLoading } = useAuth();
     const { handleOpen } = useSnackbar();
@@ -43,6 +47,7 @@ const LoginWindow = () => {
     return (
         <Form
             onSubmit={onSubmit}
+            initialValues={initialValues}
             render={({ handleSubmit }) => (
                 <form
                     onSubmit={handleSubmit}

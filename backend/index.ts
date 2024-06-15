@@ -26,16 +26,16 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: "500kb" }));
 
-const emailOptions = {
-    from: "Employee Leave Management <s89779320@gmail.com>",
-    to: "kalczugag@gmail.com",
-    subject: "Employee Leave Management: OTP Verification",
-    html: otpEmail({ email: "kalczugag@gmail.com", code: 669534 }),
-};
+// const emailOptions = {
+//     from: "Employee Leave Management <s89779320@gmail.com>",
+//     to: "kalczugag@gmail.com",
+//     subject: "Employee Leave Management: OTP Verification",
+//     html: otpEmail({ email: "kalczugag@gmail.com", code: 669534 }),
+// };
 
-sendEmail(emailOptions).catch((err: any) => {
-    console.error("Error sending email:", err);
-});
+// sendEmail(emailOptions).catch((err: any) => {
+//     console.error("Error sending email:", err);
+// });
 
 if (!process.env.DATABASE) {
     throw new Error("DATABASE environment variable is not set");

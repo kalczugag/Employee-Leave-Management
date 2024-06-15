@@ -21,11 +21,11 @@ const ContactUs = () => {
                     </a>
                 </li>
                 <li>
-                    <strong>Phone:</strong> +1 (555) 123-4567
+                    <strong>Phone:</strong> +48 123-456-789
                 </li>
                 <li>
-                    <strong>Address:</strong> 123 Main Street, Suite 400,
-                    Anytown, USA
+                    <strong>Address:</strong> Aleje Jerozolimskie 4, Warsaw,
+                    Poland
                 </li>
             </ul>
         </DefaultPage>

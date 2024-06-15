@@ -40,7 +40,7 @@
     "scripts": {
         "start": "vite",
         "build": "tsc && vite build",
-        "dev": "concurrently \"npm:start\" \"cd ../backend && npm dev\"",
+        "dev": "concurrently \"npm:start\" \"cd ../backend && npm run dev\"",
         "serve": "vite preview",
         "test": "vitest",
         "test:ui": "vitest --ui"

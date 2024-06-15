@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import LoginForm from "../../forms/LoginForm";
 import RegisterForm from "../../forms/RegisterForm";
@@ -5,14 +6,40 @@ import ResetPasswordForm from "../../forms/ResetPasswordForm";
 import { SignType } from "../../enums/signType.enum";
 import Logo from "../Logo";
 import Footer from "../Footer";
+import { Fab, IconButton, Tooltip, Box } from "@mui/material";
+import { Key, ContentCopy } from "@mui/icons-material";
 
 const AuthContainer = () => {
     const { pathname } = useLocation();
+    const [loginCredentials, setLoginCredentials] = useState({
+        email: "",
+        password: "",
+    });
+
+    const handleSetCredentials = () => {
+        setLoginCredentials({
+            email: "leave@test.com",
+            password: "admin",
+        });
+    };
 
     return (
         <div>
-            <div className="flex flex-col bg-white shadow rounded w-screen md:min-w-96 md:w-full">
+            <div className="relative flex flex-col bg-white shadow rounded w-screen md:min-w-96 md:w-full">
                 <Logo primary />
+                {process.env.NODE_ENV === "development" && (
+                    <Box className="absolute top-1 left-1">
+                        <Tooltip title="Set Credentials">
+                            <Fab
+                                onClick={handleSetCredentials}
+                                color="primary"
+                                aria-label="add"
+                            >
+                                <Key />
+                            </Fab>
+                        </Tooltip>
+                    </Box>
+                )}
                 <div className="flex flex-col text-center px-8 py-4">
                     {pathname === SignType.Reset ? (
                         <>
@@ -40,7 +67,7 @@ const AuthContainer = () => {
                 </div>
                 <div>
                     {pathname === SignType.Login ? (
-                        <LoginForm />
+                        <LoginForm initialValues={loginCredentials} />
                     ) : pathname === SignType.Register ? (
                         <RegisterForm />
                     ) : pathname === SignType.Reset ? (
