@@ -14,9 +14,9 @@ const EmployeeNew = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isFetching } = useGetAllDepartmentsQuery(
-        "shortName,details,status,createdAt,updatedAt,active,__v"
-    );
+    const { data, isFetching } = useGetAllDepartmentsQuery({
+        fields: "shortName,details,status,createdAt,updatedAt,active,__v",
+    });
     const [addEmployee] = useAddEmployeeMutation();
 
     if (!data) {
