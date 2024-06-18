@@ -1,28 +1,23 @@
 import { ReactNode, forwardRef, useState } from "react";
 import {
-    Button,
     Dialog,
-    ListItemText,
-    ListItemButton,
-    List,
-    Divider,
-    AppBar,
-    Toolbar,
     Tooltip,
     IconButton,
-    Typography,
-    SvgIconTypeMap,
     Slide,
+    AppBar,
+    Typography,
+    Button,
+    Toolbar,
 } from "@mui/material";
+import { Close } from "@mui/icons-material";
 import { TransitionProps } from "@mui/material/transitions";
-import { Close, EmailOutlined } from "@mui/icons-material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 interface DialogProps {
     label: string;
     buttonIcon: JSX.Element;
     children?: ReactNode;
     fullScreen?: boolean;
+    onSubmit?: () => void;
 }
 
 const Transition = forwardRef(function Transition(
@@ -39,6 +34,7 @@ const FullScreenDialog = ({
     buttonIcon,
     children,
     fullScreen,
+    onSubmit,
 }: DialogProps) => {
     const [open, setOpen] = useState<boolean>(false);
 
@@ -50,8 +46,15 @@ const FullScreenDialog = ({
         setOpen(false);
     };
 
+    const handleSubmit = () => {
+        if (onSubmit) {
+            onSubmit();
+        }
+        handleClose();
+    };
+
     return (
-        <>
+        <div>
             <Tooltip title="Send Email">
                 <IconButton onClick={handleClickOpen}>{buttonIcon}</IconButton>
             </Tooltip>
@@ -61,7 +64,6 @@ const FullScreenDialog = ({
                 onClose={handleClose}
                 TransitionComponent={Transition}
             >
-                {children}
                 <AppBar sx={{ position: "relative" }}>
                     <Toolbar>
                         <IconButton
@@ -77,30 +79,20 @@ const FullScreenDialog = ({
                             variant="h6"
                             component="div"
                         >
-                            {label}
+                            Send Email
                         </Typography>
-                        <Button autoFocus color="inherit" onClick={handleClose}>
-                            save
+                        <Button
+                            autoFocus
+                            color="inherit"
+                            onClick={handleSubmit}
+                        >
+                            send
                         </Button>
                     </Toolbar>
                 </AppBar>
-                <List>
-                    <ListItemButton>
-                        <ListItemText
-                            primary="Phone ringtone"
-                            secondary="Titania"
-                        />
-                    </ListItemButton>
-                    <Divider />
-                    <ListItemButton>
-                        <ListItemText
-                            primary="Default notification ringtone"
-                            secondary="Tethys"
-                        />
-                    </ListItemButton>
-                </List>
+                {children}
             </Dialog>
-        </>
+        </div>
     );
 };
 

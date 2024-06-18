@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetEmployeeQuery } from "../../../store";
 import { Phone, EmailOutlined } from "@mui/icons-material";
-import { Tooltip, IconButton } from "@mui/material";
+import { Tooltip, IconButton, Box, TextField } from "@mui/material";
 import DefaultPage from "../../../layout/DefaultPage";
 import Dialog from "@components/Dialog";
 import Modal from "@components/Modal";
@@ -10,9 +10,15 @@ import Modal from "@components/Modal";
 const ProfileCard = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const [openImg, setOpenImg] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
 
     const { data } = useGetEmployeeQuery({ id: id! });
+
+    const handleSubmit = () => {
+        console.log(message);
+    };
 
     return (
         <>
@@ -35,8 +41,23 @@ const ProfileCard = () => {
                             <Dialog
                                 label="Send Email"
                                 buttonIcon={<EmailOutlined />}
+                                onSubmit={handleSubmit}
                                 fullScreen
-                            />
+                            >
+                                <Box sx={{ p: 2 }}>
+                                    <TextField
+                                        label="Message"
+                                        multiline
+                                        rows={8}
+                                        variant="outlined"
+                                        fullWidth
+                                        value={message}
+                                        onChange={(e) =>
+                                            setMessage(e.target.value)
+                                        }
+                                    />
+                                </Box>
+                            </Dialog>
                             <Tooltip title="Mobile Number">
                                 <IconButton
                                 // href={`mailto:${data?.email}?subject=Email%20Subject&body=Email%20Body`}
