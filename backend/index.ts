@@ -40,10 +40,10 @@ sendEmail(emailOptions).catch((err: any) => {
 if (!process.env.DATABASE) {
     throw new Error("DATABASE environment variable is not set");
 }
-const mongo_url = process.env.DATABASE;
-mongoose.Promise = Promise;
-mongoose.connect(mongo_url);
-mongoose.connection.on("error", (error: Error) => console.log(error));
+// const mongo_url = process.env.DATABASE;
+// mongoose.Promise = Promise;
+// mongoose.connect(mongo_url);
+// mongoose.connection.on("error", (error: Error) => console.log(error));
 
 app.use("/api", router());
 

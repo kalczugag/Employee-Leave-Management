@@ -1,19 +1,15 @@
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
-import nodemailerSendgrid from "nodemailer-sendgrid";
+import { htmlToText } from "nodemailer-html-to-text";
 import type { Options as EmailOptions } from "nodemailer/lib/mailer";
 
-// Load environment variables
 dotenv.config({ path: ".env.local" });
 dotenv.config({ path: ".env" });
 
 console.log("Environment variables loaded.");
 console.log("SMTP_PASS:", process.env.SMTP_PASS ? "Loaded" : "Not Loaded");
 
-export const sendEmail = async (
-    emailOptions: EmailOptions,
-    smtpConfig?: any
-): Promise<void> => {
+export const sendEmail = async (emailOptions: EmailOptions): Promise<void> => {
     try {
         if (!process.env.SMTP_PASS) {
             throw new Error("SMTP_PASS environment variable is not set");
@@ -28,6 +24,8 @@ export const sendEmail = async (
                 pass: process.env.SMTP_PASS,
             },
         });
+
+        transporter.use("compile", htmlToText());
 
         console.log("Transporter created. Sending email...");
         const info = await transporter.sendMail({
