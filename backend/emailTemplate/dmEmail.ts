@@ -1,4 +1,11 @@
-export const dmEmail = () => {
+interface dmEmailProps {
+    message: string;
+    sender: string;
+    recipient: string;
+    date: string;
+}
+
+export const dmEmail = (data: dmEmailProps) => {
     return `<table
             width="500px"
             style="
@@ -45,7 +52,7 @@ export const dmEmail = () => {
             </tr>
             <tr>
                 <td style="padding-top: 20px">
-                    <h1>Hi there, name</h1>
+                    <h1>Hi there, ${data.recipient}</h1>
                     <p>You have a new message.</p>
                 </td>
             </tr>
@@ -63,11 +70,7 @@ export const dmEmail = () => {
                         style="font-size: 36px; font-weight: 700"
                     >
                         <tr>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Odio corporis assumenda obcaecati similique
-                            adipisci ex eius esse est, repellendus tempore
-                            consequuntur magnam. Nobis eaque illo consequuntur
-                            sunt exercitationem placeat praesentium!
+                            ${data.message}
                         </tr>
                     </table>
                 </td>
@@ -81,7 +84,7 @@ export const dmEmail = () => {
                             font-size: 14px;
                         "
                     >
-                        Sent by name on date
+                        Sent by ${data.sender} on ${data.date}
                     </p>
                 </td>
             </tr>
