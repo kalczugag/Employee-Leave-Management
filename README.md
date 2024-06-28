@@ -5,9 +5,7 @@
 -   [Introduction](#introduction)
 -   [Features](#features)
 -   [Tech Stack](#tech-stack)
--   [Getting Started](#getting-started)
--   [Installation](#installation)
--   [Usage](#usage)
+-   [Installation](./INSTALLATION.md)
 -   [Contributing](#contributing)
 -   [License](#license)
 
@@ -38,37 +36,6 @@ Employee Leave Management is a full-stack web application built using the MERN s
     -   Express.js
     -   MongoDB for database
     -   Nodemailer for email notifications
-
-## Getting Started
-
-To get started with the Employee Leave Management app, follow the steps below:
-
-## Installation
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/kalczugag/Employee-Leave-Management.git
-    cd Employee-Leave-Management
-
-    ```
-
-2. Install dependencies for the server and client:
-
-    ```bash
-    npm install
-    npm install --prefix client
-
-    ```
-
-3. Set up environment variables:
-
-    - Create a .env file in the server directory and add necessary environment variables (e.g., MongoDB connection string, email configuration).
-
-4. Start the development server (both server and client):
-    ```bash
-    npm run dev
-    ```
 
 ## Contributing
 
