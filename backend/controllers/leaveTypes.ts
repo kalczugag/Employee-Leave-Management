@@ -59,12 +59,20 @@ export const getLeaveType = async (
     try {
         const { id } = req.params;
 
+        if (!id) {
+            return res.status(400).json({ msg: "User ID is required" });
+        }
+
         const leaveType = await getLeaveTypeById(id);
+
+        if (!leaveType) {
+            return res.status(404).json({ msg: "Leave type not found" });
+        }
 
         return res.status(200).json(leaveType);
     } catch (error) {
         console.log(error);
-        return res.sendStatus(400);
+        return res.status(500).json({ msg: "Internal server error" });
     }
 };
 

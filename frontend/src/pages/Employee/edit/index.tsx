@@ -6,6 +6,8 @@ import useAuth from "../../../hooks/useAuth";
 import DefaultPage from "../../../layout/DefaultPage";
 import { FormView } from "../../../forms/FormView";
 import UserFormFields from "../../../containers/Forms/UserFormFields";
+import NotFound from "@components/NotFound";
+import LoadingBackdrop from "@components/LoadingBackdrop";
 
 const EmployeeEdit = () => {
     const { id } = useParams();
@@ -14,11 +16,15 @@ const EmployeeEdit = () => {
     const namesList = useNamesListDepartment();
     const { user } = useAuth();
 
-    const { data } = useGetEmployeeQuery({ id: id! });
+    const { data, isLoading, isSuccess } = useGetEmployeeQuery({ id: id! });
     const [editEmployee, result] = useEditEmployeeMutation();
 
-    if (!data) {
-        return null;
+    if (isLoading) {
+        return <LoadingBackdrop isLoading={isLoading} />;
+    }
+
+    if (!data || !isSuccess) {
+        return <NotFound />;
     }
 
     const handleSubmit = (values: user) => {

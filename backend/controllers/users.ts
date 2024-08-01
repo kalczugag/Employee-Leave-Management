@@ -51,6 +51,11 @@ export const getAllUsers = async (
 export const getUser = async (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ msg: "User ID is required" });
+        }
+
         let selectQuery = "";
 
         if (req.query.fields) {
@@ -64,14 +69,16 @@ export const getUser = async (req: express.Request, res: express.Response) => {
 
         const user = await getUserById(id).select(selectQuery);
 
+        console.log("xd", user);
+
         if (!user) {
-            res.sendStatus(400);
+            return res.status(404).json({ msg: "User not found" });
         }
 
         return res.status(200).json(user);
-    } catch (error) {
-        console.log(error);
-        return res.sendStatus(400);
+    } catch (error: any) {
+        console.log(error.message);
+        return res.status(500).json({ msg: "Internal server error" });
     }
 };
 

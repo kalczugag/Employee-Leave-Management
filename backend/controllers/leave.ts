@@ -116,12 +116,20 @@ export const getLeave = async (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
 
-        const leaves = await getLeaveById(id);
+        if (!id) {
+            return res.status(400).json({ msg: "User ID is required" });
+        }
 
-        return res.status(200).json(leaves);
+        const leave = await getLeaveById(id);
+
+        if (!leave) {
+            return res.status(404).json({ msg: "Leave not found" });
+        }
+
+        return res.status(200).json(leave);
     } catch (error) {
         console.log(error);
-        return res.sendStatus(400);
+        return res.status(500).json({ msg: "Internal server error" });
     }
 };
 

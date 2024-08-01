@@ -13,6 +13,8 @@ import {
     FormCheckbox,
 } from "../../../forms/FormView";
 import type { Department } from "@typ/department";
+import NotFound from "@components/NotFound";
+import LoadingBackdrop from "@components/LoadingBackdrop";
 
 const DepartmentEdit = () => {
     const { id } = useParams();
@@ -20,11 +22,15 @@ const DepartmentEdit = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data } = useGetDepartmentQuery(id || "");
+    const { data, isLoading, isSuccess } = useGetDepartmentQuery(id || "");
     const [editDepartment, result] = useEditDepartmentMutation();
 
-    if (!data) {
-        return null;
+    if (isLoading) {
+        return <LoadingBackdrop isLoading={isLoading} />;
+    }
+
+    if (!data || !isSuccess) {
+        return <NotFound />;
     }
 
     const handleSubmit = (values: Department) => {
@@ -54,10 +60,16 @@ const DepartmentEdit = () => {
                     }}
                 />
                 <FormEditor
-                    options={{ label: "Department Details", name: "details" }}
+                    options={{
+                        label: "Department Details",
+                        name: "details",
+                    }}
                 />
                 <FormCheckbox
-                    options={{ label: "Department Status", name: "active" }}
+                    options={{
+                        label: "Department Status",
+                        name: "active",
+                    }}
                 />
             </FormView>
         </DefaultPage>

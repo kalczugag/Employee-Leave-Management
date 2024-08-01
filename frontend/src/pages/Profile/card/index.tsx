@@ -1,20 +1,29 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetEmployeeQuery } from "../../../store";
 import { Phone, EmailOutlined } from "@mui/icons-material";
 import { Tooltip, IconButton, Box, TextField } from "@mui/material";
 import DefaultPage from "../../../layout/DefaultPage";
 import Dialog from "@components/Dialog";
 import Modal from "@components/Modal";
+import NotFound from "@components/NotFound";
+import LoadingBackdrop from "@components/LoadingBackdrop";
 
 const ProfileCard = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
 
     const [openImg, setOpenImg] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
 
-    const { data } = useGetEmployeeQuery({ id: id! });
+    const { data, isLoading, isSuccess } = useGetEmployeeQuery({ id: id! });
+
+    if (isLoading) {
+        return <LoadingBackdrop isLoading={isLoading} />;
+    }
+
+    if (!data || !isSuccess) {
+        return <NotFound />;
+    }
 
     const handleSubmit = () => {
         console.log(message);

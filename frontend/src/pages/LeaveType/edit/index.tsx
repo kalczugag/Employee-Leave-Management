@@ -14,6 +14,8 @@ import {
 } from "../../../forms/FormView";
 import DefaultPage from "../../../layout/DefaultPage";
 import type { LeaveType } from "@typ/leaveType";
+import NotFound from "@components/NotFound";
+import LoadingBackdrop from "@components/LoadingBackdrop";
 
 const LeaveTypeEdit = () => {
     const { id } = useParams();
@@ -21,8 +23,16 @@ const LeaveTypeEdit = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data } = useGetLeaveTypeQuery(id || "");
+    const { data, isLoading, isSuccess } = useGetLeaveTypeQuery(id || "");
     const [editLeaveType, result] = useEditLeaveTypeMutation();
+
+    if (isLoading) {
+        return <LoadingBackdrop isLoading={isLoading} />;
+    }
+
+    if (!data || !isSuccess) {
+        return <NotFound />;
+    }
 
     const handleSubmit = (values: LeaveType) => {
         editLeaveType(values).then(() => {
@@ -50,10 +60,16 @@ const LeaveTypeEdit = () => {
                     }}
                 />
                 <FormEditor
-                    options={{ label: "Leave Type Details", name: "details" }}
+                    options={{
+                        label: "Leave Type Details",
+                        name: "details",
+                    }}
                 />
                 <FormCheckbox
-                    options={{ label: "Leave Type Status", name: "active" }}
+                    options={{
+                        label: "Leave Type Status",
+                        name: "active",
+                    }}
                 />
             </FormView>
         </DefaultPage>

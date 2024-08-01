@@ -59,12 +59,19 @@ export const getDepartment = async (
     try {
         const { id } = req.params;
 
+        if (!id) {
+            return res.status(400).json({ msg: "User ID is required" });
+        }
+
         const department = await getDepartmentById(id);
+
+        if (!department) {
+            return res.status(404).json({ msg: "Department type not found" });
+        }
 
         return res.status(200).json(department);
     } catch (error) {
-        console.log(error);
-        return res.sendStatus(400);
+        return res.status(500).json({ msg: "Internal server error" });
     }
 };
 
