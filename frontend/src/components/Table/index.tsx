@@ -178,32 +178,49 @@ const CustomPaginationActionsTable = ({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(pageSize > 0
-                            ? rowData.slice(0, pageSize)
-                            : rowData
-                        ).map((row, rowIndex) => (
-                            <TableRow key={rowIndex}>
-                                {headerOptions.map(({ render }, colIndex) => {
-                                    if (colIndex === 0) {
-                                        return (
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                key={colIndex}
-                                            >
-                                                {render(row)}
-                                            </TableCell>
-                                        );
-                                    }
-
-                                    return (
-                                        <TableCell key={colIndex} align="right">
-                                            {render(row)}
-                                        </TableCell>
-                                    );
-                                })}
+                        {rowData.length === 0 && !isLoading ? (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={headerOptions.length}
+                                    align="center"
+                                    sx={{ fontSize: "24px" }}
+                                >
+                                    No data available
+                                </TableCell>
                             </TableRow>
-                        ))}
+                        ) : (
+                            (pageSize > 0
+                                ? rowData.slice(0, pageSize)
+                                : rowData
+                            ).map((row, rowIndex) => (
+                                <TableRow key={rowIndex}>
+                                    {headerOptions.map(
+                                        ({ render }, colIndex) => {
+                                            if (colIndex === 0) {
+                                                return (
+                                                    <TableCell
+                                                        component="th"
+                                                        scope="row"
+                                                        key={colIndex}
+                                                    >
+                                                        {render(row)}
+                                                    </TableCell>
+                                                );
+                                            }
+
+                                            return (
+                                                <TableCell
+                                                    key={colIndex}
+                                                    align="right"
+                                                >
+                                                    {render(row)}
+                                                </TableCell>
+                                            );
+                                        }
+                                    )}
+                                </TableRow>
+                            ))
+                        )}
                     </TableBody>
                     <TableFooter>
                         <TableRow>

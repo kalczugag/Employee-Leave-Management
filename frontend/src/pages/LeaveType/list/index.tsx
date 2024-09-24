@@ -15,12 +15,8 @@ const LeaveTypeList = () => {
     const { user } = useAuth();
     const arg = usePagination();
 
-    const { data, isLoading, isFetching } = useGetLeaveTypesQuery(arg);
+    const { data, isFetching } = useGetLeaveTypesQuery(arg);
     const [deleteLeaveType, result] = useDeleteLeaveTypeMutation();
-
-    if (!data && !isLoading) {
-        return null;
-    }
 
     const leaveTypeData = Array.isArray(data?.leaveTypes)
         ? data!.leaveTypes.map((row) => ({

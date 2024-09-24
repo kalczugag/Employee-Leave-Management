@@ -15,15 +15,11 @@ const EmployeeList = () => {
     const { user } = useAuth();
     const { page, pageSize } = usePagination();
 
-    const { data, isLoading, isFetching } = useGetEmployeesQuery({
+    const { data, isFetching } = useGetEmployeesQuery({
         page,
         pageSize,
     });
     const [deleteEmployee, result] = useDeleteEmployeeMutation();
-
-    if (!data && !isLoading) {
-        return null;
-    }
 
     const employeeData = Array.isArray(data?.users)
         ? data!.users.map((row) => ({

@@ -13,12 +13,8 @@ const DepartmentList = () => {
     const { handleOpen } = useSnackbar();
     const { user } = useAuth();
 
-    const { data, isLoading, isFetching } = useGetAllDepartmentsQuery();
+    const { data, isFetching } = useGetAllDepartmentsQuery();
     const [deleteDepartment, result] = useDeleteDepartmentMutation();
-
-    if (!data && !isLoading) {
-        return null;
-    }
 
     const departmentdata = Array.isArray(data?.departments)
         ? data!.departments.map((row) => ({

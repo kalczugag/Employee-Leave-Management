@@ -46,7 +46,7 @@ const Stats = () => {
         );
     }
 
-    if (error || !statsData) {
+    if (error || (!statsData && user?.roles === "staff")) {
         return (
             <div className="col-span-2 md:col-span-4 flex flex-col justify-center items-center h-full">
                 <img
@@ -91,7 +91,7 @@ const Stats = () => {
                     />
                 </>
             ) : (
-                <ChartView data={statsData} />
+                statsData && <ChartView data={statsData} />
             )}
         </div>
     );
